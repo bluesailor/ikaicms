@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - 统一 AI 调用服务
+ * Yikai CMS - 统一 AI 调用服务
  *
  * 支持供应商：OpenAI、Claude、DeepSeek、Qwen（通义千问）、智谱AI (GLM)
  * 所有供应商均使用 OpenAI 兼容 API 格式（Claude 除外）
@@ -37,8 +37,8 @@ class AiService
         'deepseek' => [
             'name'     => 'DeepSeek',
             'base_url' => 'https://api.deepseek.com/v1',
-            'models'   => ['deepseek-chat', 'deepseek-reasoner'],
-            'default'  => 'deepseek-chat',
+            'models'   => ['deepseek-v4-flash', 'deepseek-v4-pro', 'deepseek-chat', 'deepseek-reasoner'],
+            'default'  => 'deepseek-v4-flash',
             'format'   => 'openai',
         ],
         'qwen' => [
@@ -259,7 +259,7 @@ class AiService
     public static function encryptKey(string $plaintext): string
     {
         if (!$plaintext) return '';
-        $key = defined('ENCRYPT_KEY') ? ENCRYPT_KEY : 'ikaicms_default_key';
+        $key = defined('ENCRYPT_KEY') ? ENCRYPT_KEY : 'yikaicms_default_key';
         $iv = substr(md5($key), 0, 16);
         $encrypted = openssl_encrypt($plaintext, 'AES-128-CBC', $key, 0, $iv);
         return $encrypted ?: $plaintext;
@@ -271,7 +271,7 @@ class AiService
     public static function decryptKey(string $ciphertext): string
     {
         if (!$ciphertext) return '';
-        $key = defined('ENCRYPT_KEY') ? ENCRYPT_KEY : 'ikaicms_default_key';
+        $key = defined('ENCRYPT_KEY') ? ENCRYPT_KEY : 'yikaicms_default_key';
         $iv = substr(md5($key), 0, 16);
         $decrypted = openssl_decrypt($ciphertext, 'AES-128-CBC', $key, 0, $iv);
         // 如果解密失败，可能是旧的明文 key，直接返回

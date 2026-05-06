@@ -255,6 +255,29 @@ $upgrades = [
     ],
 
     [
+        'id'    => '20260507_deepseek_v4_models',
+        'title' => 'DeepSeek API v4 模型升级',
+        'desc'  => 'DeepSeek 新版 v4 模型 (deepseek-v4-flash / deepseek-v4-pro) 替代旧的 deepseek-chat / deepseek-reasoner。升级后默认使用 v4-flash (1元/M tokens 输入,2元/M tokens 输出)。',
+        'check' => function () {
+            // 已升级标志: ai_model 不等于旧 deepseek-chat / deepseek-reasoner (或者非 deepseek 用户视为已升级)
+            $provider = (string)db()->fetchColumn("SELECT value FROM " . DB_PREFIX . "settings WHERE `key`='ai_provider'");
+            if ($provider !== 'deepseek') return true;
+            $model = (string)db()->fetchColumn("SELECT value FROM " . DB_PREFIX . "settings WHERE `key`='ai_model'");
+            return !in_array($model, ['deepseek-chat', 'deepseek-reasoner', ''], true);
+        },
+        'php' => function () {
+            $provider = (string)db()->fetchColumn("SELECT value FROM " . DB_PREFIX . "settings WHERE `key`='ai_provider'");
+            if ($provider !== 'deepseek') {
+                return 'DeepSeek 未启用,跳过模型升级';
+            }
+            $model = (string)db()->fetchColumn("SELECT value FROM " . DB_PREFIX . "settings WHERE `key`='ai_model'");
+            $newModel = ($model === 'deepseek-reasoner') ? 'deepseek-v4-pro' : 'deepseek-v4-flash';
+            db()->execute("UPDATE " . DB_PREFIX . "settings SET value=? WHERE `key`='ai_model'", [$newModel]);
+            return "DeepSeek 模型已升级: $model → $newModel";
+        },
+    ],
+
+    [
         'id'    => '20260330_brands_table',
         'title' => '品牌管理',
         'desc'  => '新增品牌管理表(yikai_brands)，支持品牌Logo、产地、介绍等，产品可关联品牌。',
@@ -511,11 +534,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'check
 
 // AJAX 执行升级
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['run'])) {
+    // 抑制响应被任何 warning/notice 污染 (会破坏 JSON 解析)
+    ob_start();
+
     $runIds = (array)$_POST['run'];
     $results = [];
     foreach ($upgrades as $up) {
         if (!in_array($up['id'], $runIds)) continue;
-        if ($up['check']()) {
+        try {
+            // check() 也可能抛错(连不上 DB / 表不存在 / 权限等),包进 try/catch
+            $alreadyDone = (bool)$up['check']();
+        } catch (\Throwable $e) {
+            $results[$up['id']] = ['status' => 'error', 'message' => 'check failed: ' . $e->getMessage()];
+            continue;
+        }
+        if ($alreadyDone) {
             $results[$up['id']] = ['status' => 'skipped', 'message' => '已是最新，无需升级'];
             continue;
         }
@@ -534,7 +567,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['run'])) {
                 }
                 $results[$up['id']] = ['status' => 'success', 'message' => __('upgrade_success')];
             }
-            adminLog('upgrade', 'execute', '执行升级: ' . $up['title']);
+            // adminLog 失败不影响升级响应
+            try { adminLog('upgrade', 'execute', '执行升级: ' . $up['title']); } catch (\Throwable $e) {}
         } catch (\Throwable $e) {
             $results[$up['id']] = ['status' => 'error', 'message' => $e->getMessage()];
         }
@@ -548,8 +582,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['run'])) {
         }
     } catch (\Throwable $e) {}
 
-    header('Content-Type: application/json');
-    echo json_encode(['code' => 0, 'data' => $results]);
+    // 丢弃任何意外输出 (warnings/notices/BOM/echo 等)
+    ob_end_clean();
+
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['code' => 0, 'data' => $results], JSON_UNESCAPED_UNICODE);
     exit;
 }
 

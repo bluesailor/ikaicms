@@ -107,11 +107,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'updated_at' => time(),
         ]);
     }
-    adminLog('page', 'edit', '编辑单页：' . $channelData['name']);
+    adminLog('page', 'edit', sprintf(__('pe_log_edit'), $channelData['name']));
     success();
 }
 
-$pageTitle = '编辑单页 - ' . $page['name'];
+$pageTitle = sprintf(__('pe_edit_page_title'), $page['name']);
 $currentMenu = 'page';
 
 require_once ROOT_PATH . '/admin/includes/header.php';
@@ -132,8 +132,8 @@ require_once ROOT_PATH . '/admin/includes/header.php';
 <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-start gap-3">
     <svg class="w-5 h-5 text-amber-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     <div class="text-sm text-amber-800">
-        <p>此页面当前使用<strong>排版编辑器</strong>管理内容。在此处保存将切换为富文本模式，排版布局信息将丢失。</p>
-        <p class="mt-1"><a href="/admin/page_edit_advance.php?id=<?php echo $id; ?>" class="text-primary hover:underline font-medium">前往排版编辑器</a></p>
+        <p><?php echo __('pe_advance_warning'); ?></p>
+        <p class="mt-1"><a href="/admin/page_edit_advance.php?id=<?php echo $id; ?>" class="text-primary hover:underline font-medium"><?php echo __('pe_go_advance'); ?></a></p>
     </div>
 </div>
 <?php endif; ?>
@@ -143,11 +143,11 @@ require_once ROOT_PATH . '/admin/includes/header.php';
     <svg class="w-5 h-5 text-amber-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     <div class="text-sm text-amber-800">
         <?php if (!empty($redirectTarget['_is_url'])): ?>
-        <p>前台访问此页面时，将自动跳转到：<strong><?php echo e($redirectTarget['name']); ?></strong></p>
+        <p><?php echo __('pe_redirect_to'); ?><strong><?php echo e($redirectTarget['name']); ?></strong></p>
         <?php else: ?>
-        <p>前台访问「<?php echo e($page['name']); ?>」时，将自动跳转到子栏目「<strong><?php echo e($redirectTarget['name']); ?></strong>」，此页面内容不会直接展示。</p>
+        <p><?php echo sprintf(__('pe_redirect_child_intro'), e($page['name']), e($redirectTarget['name'])); ?></p>
         <?php endif; ?>
-        <p class="mt-1 text-amber-600">如需修改跳转行为，请前往 <a href="/admin/channel.php?edit=<?php echo $id; ?>" class="underline hover:text-amber-800">栏目管理</a> 调整「跳转方式」设置。</p>
+        <p class="mt-1 text-amber-600"><?php echo sprintf(__('pe_redirect_change_hint'), '<a href="/admin/channel.php?edit=' . $id . '" class="underline hover:text-amber-800">' . __('pe_channel_management') . '</a>'); ?></p>
     </div>
 </div>
 <?php endif; ?>
@@ -167,7 +167,7 @@ require_once ROOT_PATH . '/admin/includes/header.php';
                 <div>
                     <label class="block text-sm text-gray-700 mb-1"><?php echo __('admin_slug'); ?> (Slug)</label>
                     <input type="text" name="slug" value="<?php echo e($page['slug']); ?>"
-                           class="w-full border rounded px-4 py-2" placeholder="如：about-us，留空自动生成">
+                           class="w-full border rounded px-4 py-2" placeholder="<?php echo __('pe_slug_ph'); ?>">
                 </div>
             </div>
 
@@ -184,7 +184,7 @@ require_once ROOT_PATH . '/admin/includes/header.php';
                     <button type="button" onclick="uploadImage()"
                             class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded text-sm inline-flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                        上传图片</button>
+                        <?php echo __('admin_upload_image'); ?></button>
                     <button type="button" onclick="pickImageFromMedia()"
                             class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm inline-flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -216,12 +216,12 @@ require_once ROOT_PATH . '/admin/includes/header.php';
             <div>
                 <label class="block text-sm text-gray-700 mb-1"><?php echo __('admin_seo_title'); ?></label>
                 <input type="text" name="seo_title" value="<?php echo e($page['seo_title']); ?>"
-                       class="w-full border rounded px-4 py-2" placeholder="留空使用页面名称">
+                       class="w-full border rounded px-4 py-2" placeholder="<?php echo __('pe_seo_title_ph'); ?>">
             </div>
             <div>
                 <label class="block text-sm text-gray-700 mb-1"><?php echo __('admin_seo_keywords'); ?></label>
                 <input type="text" name="seo_keywords" value="<?php echo e($page['seo_keywords']); ?>"
-                       class="w-full border rounded px-4 py-2" placeholder="多个关键词用逗号分隔">
+                       class="w-full border rounded px-4 py-2" placeholder="<?php echo __('pe_seo_keywords_ph'); ?>">
             </div>
             <div>
                 <label class="block text-sm text-gray-700 mb-1"><?php echo __('admin_seo_description'); ?></label>

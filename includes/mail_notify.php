@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - 邮件通知
+ * Yikai CMS - 邮件通知
  *
  * 基于后台可编辑的邮件模板发送通知，支持 {{变量}} 替换
  */
@@ -13,7 +13,7 @@ declare(strict_types=1);
 function renderMailTemplate(string $template, array $vars): string
 {
     // 公共变量
-    $vars['site_name'] = $vars['site_name'] ?? config('site_name', 'ikaiCMS');
+    $vars['site_name'] = $vars['site_name'] ?? config('site_name', 'Yikai CMS');
     $vars['site_url']  = $vars['site_url'] ?? rtrim(config('site_url', ''), '/');
     $vars['date']      = $vars['date'] ?? date('Y-m-d H:i:s');
 
@@ -40,8 +40,19 @@ function sendTemplateMail(string $to, string $tplPrefix, array $vars): bool
     $subject = renderMailTemplate($subjectTpl, $vars);
     $body    = renderMailTemplate($bodyTpl, $vars);
 
+    // 过滤器：允许插件修改邮件内容/收件人
+    $mail = apply_filters('mail_notify', [
+        'to'      => $to,
+        'subject' => $subject,
+        'body'    => $body,
+        'tpl'     => $tplPrefix,
+        'vars'    => $vars,
+    ]);
+
+    if (empty($mail) || empty($mail['to'])) return false;
+
     try {
-        $result = sendMail($to, $subject, $body);
+        $result = sendMail($mail['to'], $mail['subject'], $mail['body']);
         return $result === true;
     } catch (\Throwable $e) {
         return false;

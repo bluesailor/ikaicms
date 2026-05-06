@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - 插件加载器
+ * Yikai CMS - 插件加载器
  *
  * 扫描 /plugins/ 目录，加载已启用的插件
  * PHP 8.0+
@@ -61,6 +61,17 @@ function loadActivePlugins(): void
     $loaded = true;
 
     $slugs = getActivePlugins();
+    // Pass 1: 加载 register.php（早期注册，先于 main.php）
+    foreach ($slugs as $slug) {
+        if (!preg_match('/^[a-z0-9]([a-z0-9\-]*[a-z0-9])?$/', $slug)) {
+            continue;
+        }
+        $registerFile = ROOT_PATH . '/plugins/' . $slug . '/register.php';
+        if (file_exists($registerFile)) {
+            require_once $registerFile;
+        }
+    }
+    // Pass 2: 加载 main.php
     foreach ($slugs as $slug) {
         if (!preg_match('/^[a-z0-9]([a-z0-9\-]*[a-z0-9])?$/', $slug)) {
             continue;

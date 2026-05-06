@@ -20,7 +20,7 @@ if (!empty($_SESSION['admin_id'])) {
 // ============================================================
 // 语言切换 / 浏览器检测
 // ============================================================
-$supportedLangs = ['zh-CN' => '中文', 'ja' => '日本語'];
+$supportedLangs = ['zh-CN' => '中文', 'en' => 'English', 'ja' => '日本語'];
 
 // 1. URL ?lang=xxx 切换 (重定向去掉参数,避免后续刷新冲突)
 if (isset($_GET['lang']) && isset($supportedLangs[$_GET['lang']])) {
@@ -36,6 +36,8 @@ if (empty($_SESSION['login_lang'])) {
         $_SESSION['login_lang'] = 'zh-CN';
     } elseif (str_starts_with($first, 'ja')) {
         $_SESSION['login_lang'] = 'ja';
+    } elseif (str_starts_with($first, 'en')) {
+        $_SESSION['login_lang'] = 'en';
     }
     // 都不匹配则不设, getLang() 走原有 admin_lang / 默认逻辑
 }
@@ -122,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- 语言切换 -->
         <div class="flex items-center justify-center gap-2 mt-4">
             <?php
-            $flagFile = ['zh-CN' => 'cn', 'ja' => 'jp'];
+            $flagFile = ['zh-CN' => 'cn', 'en' => 'us', 'ja' => 'jp'];
             foreach ($supportedLangs as $code => $label):
                 $active = $currentLang === $code;
             ?>

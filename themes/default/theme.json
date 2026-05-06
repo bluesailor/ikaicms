@@ -1,8 +1,18 @@
 {
     "name": "Default",
-    "description": "ikaiCMS デフォルトテーマ。シンプルで洗練された企業サイトテンプレート",
+    "description": "YikaiCMS 默认主题，简洁大方的企业官网模板",
     "version": "1.0.0",
-    "author": "ikai Inc.",
-    "screenshot": "assets/images/screenshot.png",
-    "supports": ["banner", "about", "stats", "testimonials", "advantage", "cta", "channel"]
+    "author": "Yikai",
+    "screenshot": "assets\/images\/screenshot.png",
+    "supports": [
+        "banner",
+        "about",
+        "stats",
+        "testimonials",
+        "advantage",
+        "cta",
+        "channel"
+    ],
+    "name_en": "Default",
+    "description_en": "Default YikaiCMS theme, a clean and simple corporate website template"
 }

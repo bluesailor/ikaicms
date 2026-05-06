@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - 公共函数库
+ * Yikai CMS - 公共函数库
  *
  * PHP 8.0+
  */
@@ -224,15 +224,22 @@ function getDefaults(string $group = ''): array
 // ============================================================
 
 /**
- * 生成 slug（空标题时返回空串，交给 resolveSlug 兜底）
- * 不再依赖 composer 的 pinyin 库。
+ * 根据中文标题生成 slug（取前6个字的拼音）
  */
 function generateSlug(string $title, int $maxChars = 6): string
 {
-    // 如果标题里有 ASCII 字母数字（英文/日文罗马字），抽出来做 slug
-    $ascii = preg_replace('/[^a-zA-Z0-9]+/', '-', $title);
-    $ascii = strtolower(trim((string) $ascii, '-'));
-    return $ascii;
+    require_once ROOT_PATH . '/vendor/autoload.php';
+    // 取前 N 个中文字符
+    $short = mb_substr(trim($title), 0, $maxChars);
+    if ($short === '') {
+        return '';
+    }
+    $pinyin = new \Overtrue\Pinyin\Pinyin();
+    $slug = $pinyin->permalink($short, '-');
+    // 只保留字母数字和横杠
+    $slug = preg_replace('/[^a-z0-9\-]/', '', $slug);
+    // 去除首尾横杠
+    return trim($slug, '-');
 }
 
 /**
@@ -245,36 +252,25 @@ function generateSlug(string $title, int $maxChars = 6): string
  */
 function resolveSlug(string $input, string $title, string $table, int $excludeId = 0): string
 {
-    // slug 前缀根据表名推断
-    static $prefixMap = [
-        'products'   => 'p',
-        'contents'   => 'c',
-        'articles'   => 'a',
-        'categories' => 'cat',
-    ];
-    $prefix = $prefixMap[$table] ?? 'item';
-
     if (empty($input)) {
-        // 优先从标题提取 ASCII 字母数字
         $slug = generateSlug($title);
         if (empty($slug)) {
-            // 兜底：p-YYYYMMDD-NNNNN（5 位随机）
-            $slug = $prefix . '-' . date('Ymd') . '-' . sprintf('%05d', mt_rand(0, 99999));
+            $slug = 'item-' . time();
         }
     } else {
         $slug = preg_replace('/[^a-zA-Z0-9\-]/', '', $input);
         $slug = strtolower(trim($slug, '-'));
         if (empty($slug)) {
-            $slug = $prefix . '-' . date('Ymd') . '-' . sprintf('%05d', mt_rand(0, 99999));
+            $slug = 'item-' . time();
         }
     }
 
-    // 检查重复，冲突时追加 5 位随机数
+    // 检查重复
     $where = $excludeId > 0 ? 'slug = ? AND id != ?' : 'slug = ?';
     $params = $excludeId > 0 ? [$slug, $excludeId] : [$slug];
     $exists = db()->fetchOne('SELECT id FROM ' . DB_PREFIX . $table . ' WHERE ' . $where, $params);
     if ($exists) {
-        $slug = $slug . '-' . sprintf('%05d', mt_rand(0, 99999));
+        $slug = $slug . '-' . time();
     }
 
     return $slug;
@@ -294,15 +290,15 @@ function getLang(): string
     static $lang = null;
     if ($lang !== null) return $lang;
 
-    // 登录页临时切换语言: admin/login.php 设置, 登录成功后 unset
-    if (!empty($_SESSION['login_lang'])) {
-        $lang = $_SESSION['login_lang'];
+    $isAdmin = str_contains($_SERVER['REQUEST_URI'] ?? '', '/admin/');
+
+    if (!$isAdmin && defined('SITE_LANG')) {
+        // Frontend: SITE_LANG is set by init.php based on user's language selection (URL/cookie)
+        $lang = SITE_LANG;
         return $lang;
     }
 
-    $isAdmin = str_contains($_SERVER['REQUEST_URI'] ?? '', '/admin/');
-
-    // 尝试从数据库读取
+    // Admin or pre-init: read from database
     try {
         $settings = new SettingModel();
         if ($isAdmin) {
@@ -315,7 +311,6 @@ function getLang(): string
         // 数据库未初始化时忽略
     }
 
-    // 兜底：config.php 常量
     if (empty($lang)) {
         if ($isAdmin && defined('ADMIN_LANG')) {
             $lang = ADMIN_LANG;
@@ -375,6 +370,80 @@ function __(string $key, array $params = []): string
     }
 
     return $text;
+}
+
+/**
+ * 多语言感知的配置读取：默认语言用 config，其他语言用语言包
+ */
+function configLang(string $configKey, string $langKey = ''): string
+{
+    if (!$langKey) $langKey = $configKey;
+    $lang = siteLang();
+    $defaultLang = (string)config('site_lang', 'zh-CN');
+    if ($lang !== $defaultLang) {
+        $langVal = config($configKey . '_' . $lang, '');
+        if ($langVal !== '') return $langVal;
+        return __($langKey);
+    }
+    return config($configKey, '') ?: __($langKey);
+}
+
+/**
+ * 多语言感知的 JSON 配置读取
+ * 非默认语言时优先读 {key}_{lang}，没有则回退默认
+ */
+function configJsonLang(string $configKey): string
+{
+    $lang = siteLang();
+    $defaultLang = (string)config('site_lang', 'zh-CN');
+    if ($lang !== $defaultLang) {
+        $langVal = config($configKey . '_' . $lang, '');
+        if ($langVal !== '') return $langVal;
+    }
+    return config($configKey, '') ?: '';
+}
+
+/**
+ * AI 翻译文本字段（标题+摘要）
+ */
+function aiTranslateFields(string $title, string $summary, string $toLang): array
+{
+    $langName = availableLanguages()[$toLang] ?? $toLang;
+    $translatedTitle = dictTranslateTo($title, $toLang) ?: $title;
+    $translatedSummary = $summary;
+
+    require_once ROOT_PATH . '/includes/AiService.php';
+    $encryptedKey = config('ai_api_key', '');
+    $aiKey = $encryptedKey ? AiService::decryptKey($encryptedKey) : '';
+    if ($aiKey && ($title || $summary)) {
+        $ai = new AiService(config('ai_provider', 'openai'), $aiKey, config('ai_model', 'gpt-4o-mini'));
+        $prompt = "Translate to {$langName}. Return JSON: {\"title\":\"...\",\"summary\":\"...\"}. No explanation.\n\nTitle: {$title}\nSummary: {$summary}";
+        $result = $ai->chat($prompt, 'Return only valid JSON.', 0.3);
+        if ($result['success']) {
+            $json = json_decode(preg_replace('/^```json\s*|```\s*$/m', '', trim($result['content'] ?? '')), true);
+            if ($json) {
+                $translatedTitle = $json['title'] ?? $translatedTitle;
+                $translatedSummary = $json['summary'] ?? $translatedSummary;
+            }
+        }
+    }
+    return ['title' => $translatedTitle, 'summary' => $translatedSummary];
+}
+
+/**
+ * 查找对应语言的栏目ID（通过 translation_group_id）
+ */
+function findTranslatedChannelId(int $srcChannelId, string $toLang): int
+{
+    if ($srcChannelId <= 0) return 0;
+    $srcChannel = channelModel()->find($srcChannelId);
+    if (!$srcChannel) return 0;
+    $chGroupId = (int)($srcChannel['translation_group_id'] ?: $srcChannel['id']);
+    $target = channelModel()->queryOne(
+        "SELECT id FROM " . channelModel()->tableName() . " WHERE translation_group_id = ? AND lang = ?",
+        [$chGroupId, $toLang]
+    );
+    return $target ? (int)$target['id'] : 0;
 }
 
 /**
@@ -449,8 +518,11 @@ function getChannel(int $id): ?array
 /**
  * 通过slug获取栏目
  */
-function getChannelBySlug(string $slug): ?array
+function getChannelBySlug(string $slug, bool $langAware = false): ?array
 {
+    if ($langAware) {
+        return channelModel()->findBySlugLang($slug);
+    }
     return channelModel()->findBySlug($slug);
 }
 
@@ -1182,7 +1254,7 @@ function sendMail(string $to, string $subject, string $body, array $attachments 
     $smtpPass = config('smtp_pass');
     $smtpSecure = config('smtp_secure', 'ssl');
     $mailFrom = config('mail_from', $smtpUser);
-    $mailName = config('mail_from_name', config('site_name', 'ikaiCMS'));
+    $mailName = config('mail_from_name', config('site_name', 'Yikai CMS'));
 
     if (!$smtpHost || !$smtpUser || !$smtpPass) {
         return '邮件服务器未配置';
@@ -1800,7 +1872,7 @@ function jsonFieldsToTemplate(array $fields): string
 
     $lines[] = '';
     $lines[] = '<div class="mt-4">';
-    $lines[] = '    [submit "提交"]';
+    $lines[] = '    [submit "' . __('form_submit') . '"]';
     $lines[] = '</div>';
 
     return implode("\n", $lines);
@@ -1900,7 +1972,7 @@ function renderFormTagHtml(array $tag): string
             return $html;
 
         case 'submit':
-            $text = e($tag['text'] ?? '提交');
+            $text = e($tag['text'] ?? __('form_submit'));
             return '<button type="submit" class="bg-primary hover:bg-secondary text-white px-6 py-2.5 rounded-lg transition">' . $text . '</button>';
 
         default:
@@ -1960,7 +2032,7 @@ function renderFormTemplate(string $slug): string
     $renderedBody = preg_replace_callback(
         '/\[submit(?:\s+"([^"]*)")?\]/',
         function ($m) {
-            $text = $m[1] ?? '送信する';
+            $text = $m[1] ?? __('form_submit');
             return renderFormTagHtml(['type' => 'submit', 'text' => $text]);
         },
         $renderedBody
@@ -1980,15 +2052,15 @@ function renderFormTemplate(string $slug): string
     $html .= 'if(!window._shortcodeFormInit){window._shortcodeFormInit=true;';
     $html .= 'window.submitShortcodeForm=function(e,slug){';
     $html .= 'e.preventDefault();var form=e.target;var btn=form.querySelector("button[type=submit]");';
-    $html .= 'btn.disabled=true;btn.textContent="送信中...";';
+    $html .= 'btn.disabled=true;btn.textContent=' . json_encode(__('form_submitting')) . ';';
     $html .= 'var fd=new FormData(form);';
     $html .= 'fetch("/form_submit.php",{method:"POST",body:fd}).then(r=>r.json()).then(function(data){';
     $html .= 'var msgEl=document.getElementById("shortcode-form-"+slug+"-msg");';
     $html .= 'msgEl.classList.remove("hidden","bg-green-50","text-green-600","bg-red-50","text-red-600");';
     $html .= 'if(data.code===0){msgEl.className+=" bg-green-50 text-green-600";msgEl.textContent=data.msg;form.reset();}';
     $html .= 'else{msgEl.className+=" bg-red-50 text-red-600";msgEl.textContent=data.msg;}';
-    $html .= 'msgEl.classList.remove("hidden");btn.disabled=false;btn.textContent="送信する";';
-    $html .= '}).catch(function(){btn.disabled=false;btn.textContent="送信する";});return false;};';
+    $html .= 'msgEl.classList.remove("hidden");btn.disabled=false;btn.textContent=' . json_encode(__('form_submit')) . ';';
+    $html .= '}).catch(function(){btn.disabled=false;btn.textContent=' . json_encode(__('form_submit')) . ';});return false;};';
     $html .= '}</script>';
 
     return $html;
@@ -2138,4 +2210,156 @@ function renderBlocksToHtml(string $blocksJson): string
     }
 
     return $html;
+}
+
+// ============================================================
+// 通用元数据辅助函数（基于 yikai_metas 表）
+// ============================================================
+
+/**
+ * 读取单个 meta；未找到返回 $default
+ */
+function getMeta(string $ownerType, int $ownerId, string $key, mixed $default = null): mixed
+{
+    try {
+        if (!db()->tableExists('metas')) return $default;
+        return metaModel()->get($ownerType, $ownerId, $key, $default);
+    } catch (\Throwable $e) {
+        return $default;
+    }
+}
+
+/**
+ * 写入/更新 meta
+ */
+function setMeta(string $ownerType, int $ownerId, string $key, mixed $value): bool
+{
+    try {
+        if (!db()->tableExists('metas')) return false;
+        return metaModel()->set($ownerType, $ownerId, $key, $value);
+    } catch (\Throwable $e) {
+        return false;
+    }
+}
+
+/**
+ * 删除 meta；$key 为空时删除该 owner 全部 meta
+ */
+function delMeta(string $ownerType, int $ownerId, string $key = ''): int
+{
+    try {
+        if (!db()->tableExists('metas')) return 0;
+        return metaModel()->del($ownerType, $ownerId, $key);
+    } catch (\Throwable $e) {
+        return 0;
+    }
+}
+
+/**
+ * 读取某 owner 的全部 meta，返回 [key => value]
+ */
+function getAllMeta(string $ownerType, int $ownerId): array
+{
+    try {
+        if (!db()->tableExists('metas')) return [];
+        return metaModel()->getAllByOwner($ownerType, $ownerId);
+    } catch (\Throwable $e) {
+        return [];
+    }
+}
+
+// ============================================================
+// 多语言辅助
+// ============================================================
+
+/**
+ * 检测某表是否已有 lang 列（升级后才有），结果缓存
+ */
+function isMultiLangEnabled(string $table = 'contents'): bool
+{
+    static $switcherOn = null;
+    if ($switcherOn === null) {
+        try {
+            $switcherOn = (string)config('show_lang_switcher', '0') === '1';
+        } catch (\Throwable $e) {
+            $switcherOn = false;
+        }
+    }
+    if (!$switcherOn) return false;
+
+    static $cache = [];
+    if (isset($cache[$table])) return $cache[$table];
+    try {
+        $tableName = DB_PREFIX . $table;
+        if (db()->isSqlite()) {
+            $cache[$table] = (bool)db()->fetchOne("SELECT 1 FROM pragma_table_info('{$tableName}') WHERE name='lang'");
+        } else {
+            $cache[$table] = !empty(db()->fetchAll("SHOW COLUMNS FROM `{$tableName}` LIKE 'lang'"));
+        }
+    } catch (\Throwable $e) {
+        $cache[$table] = false;
+    }
+    return $cache[$table];
+}
+
+/**
+ * 获取当前站点语言
+ */
+function siteLang(): string
+{
+    return defined('SITE_LANG') ? SITE_LANG : (string)config('site_lang', 'zh-CN');
+}
+
+/**
+ * 获取配置的可用语言列表
+ */
+function availableLanguages(): array
+{
+    static $langs = null;
+    if ($langs !== null) return $langs;
+    $labels = ['zh-CN' => '中文', 'ja' => '日本語', 'en' => 'English', 'ko' => '한국어', 'fr' => 'Français', 'de' => 'Deutsch', 'es' => 'Español'];
+    $langs = [];
+    $files = glob(ROOT_PATH . '/lang/*.php') ?: [];
+    foreach ($files as $f) {
+        $code = basename($f, '.php');
+        if (strpos($code, 'dict-') === 0) continue;
+        $langs[$code] = $labels[$code] ?? $code;
+    }
+    return $langs;
+}
+
+/**
+ * 字典翻译（查词典，未命中返回 null）
+ * 支持 zh→en, zh→ja 等，自动加载对应词典文件
+ */
+function dictTranslate(string $text, string $from = 'zh', string $to = 'en'): ?string
+{
+    static $dicts = [];
+    $key = "{$from}-{$to}";
+    if (!isset($dicts[$key])) {
+        $file = ROOT_PATH . "/lang/dict-{$key}.php";
+        $dicts[$key] = file_exists($file) ? (require $file) : [];
+    }
+    return $dicts[$key][trim($text)] ?? null;
+}
+
+/**
+ * 根据目标语言代码查词典翻译
+ */
+function dictTranslateTo(string $text, string $targetLang): ?string
+{
+    $to = str_replace('zh-CN', '', $targetLang);
+    if (!$to) return $text;
+    return dictTranslate($text, 'zh', $to);
+}
+
+/**
+ * 生成带语言前缀的 URL
+ */
+function langUrl(string $url, string $lang = ''): string
+{
+    $lang = $lang ?: siteLang();
+    $defaultLang = (string)config('site_lang', 'zh-CN');
+    if ($lang === $defaultLang) return $url;
+    return '/' . $lang . ltrim($url, '/');
 }

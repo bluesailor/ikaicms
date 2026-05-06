@@ -100,7 +100,12 @@ require_once ROOT_PATH . '/admin/includes/header.php';
                 <div class="flex items-start justify-between">
                     <div>
                         <h3 class="font-bold text-gray-800"><?php echo e($theme['name']); ?></h3>
-                        <p class="text-sm text-gray-500 mt-1"><?php echo e($theme['description'] ?? ''); ?></p>
+                        <p class="text-sm text-gray-500 mt-1"><?php
+                            $lang = getLang();
+                            $descKey = ($lang === 'en' && !empty($theme['description_en'])) ? 'description_en'
+                                : (($lang === 'ja' && !empty($theme['description_ja'])) ? 'description_ja' : 'description');
+                            echo e($theme[$descKey] ?? '');
+                        ?></p>
                     </div>
                 </div>
                 <div class="flex items-center gap-4 mt-3 text-xs text-gray-400">

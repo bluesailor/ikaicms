@@ -199,7 +199,7 @@ require_once ROOT_PATH . '/admin/includes/header.php';
                     <div>
                         <label class="block text-gray-700 mb-1"><?php echo __('admin_seo_keywords'); ?></label>
                         <input type="text" name="seo_keywords" value="<?php echo e($content['seo_keywords'] ?? ''); ?>"
-                               class="w-full border rounded px-4 py-2" placeholder="多个关键词用逗号分隔">
+                               class="w-full border rounded px-4 py-2" placeholder="<?php echo __('pe_seo_keywords_ph'); ?>">
                     </div>
                     <div>
                         <label class="block text-gray-700 mb-1"><?php echo __('admin_seo_description'); ?></label>
@@ -448,7 +448,7 @@ document.getElementById('attachmentFileInput').addEventListener('change', async 
 $contentHtml = json_encode($content['content'] ?? '', JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP);
 $extraJs = '<script>
 var editor = initWangEditor("#toolbar-container", "#editor-container", {
-    placeholder: "请输入内容...",
+    placeholder: "' . __("editor_placeholder") . '",
     html: ' . $contentHtml . ',
     uploadUrl: "/admin/upload.php",
     onChange: function(editor) {
@@ -467,13 +467,13 @@ document.getElementById("contentForm").addEventListener("submit", async function
         const data = await safeJson(response);
 
         if (data.code === 0) {
-            showMessage("<?php echo __('msg_save_success'); ?>");
+            showMessage("' . __("msg_save_success") . '");
             setTimeout(function() { location.href = "/admin/content.php"; }, 1000);
         } else {
             showMessage(data.msg, "error");
         }
     } catch (err) {
-        showMessage("请求失败", "error");
+        showMessage("' . __("admin_fail") . '", "error");
     }
 });
 </script>';

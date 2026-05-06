@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - Model 基类
+ * Yikai CMS - Model 基类
  *
  * 提供通用 CRUD 操作，所有 Model 子类继承此类。
  * 基于现有 Database 类（db() 单例），不替换，只封装。

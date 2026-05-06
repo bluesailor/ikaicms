@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - 前台头部
+ * Yikai CMS - 前台头部
  *
  * PHP 8.0+
  */
@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 // 获取站点配置
-$siteName = config('site_name', 'ikaiCMS');
+$siteName = config('site_name', 'Yikai CMS');
 $siteLogo = config('site_logo', '');
 $siteKeywords = config('site_keywords', '');
 $siteDescription = config('site_description', '');
@@ -190,12 +190,12 @@ function getChannelUrl(array $channel): string {
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     <?php echo e($memberInfo['nickname']); ?>
                 </a>
-                <a href="/member/logout.php" class="hover:text-primary transition opacity-70">ログアウト</a>
+                <a href="/member/logout.php" class="hover:text-primary transition opacity-70">退出</a>
                 <?php else: ?>
-                <a href="/member/login.php" class="hover:text-primary transition">ログイン</a>
+                <a href="/member/login.php" class="hover:text-primary transition">登录</a>
                 <?php if (config('allow_member_register') === '1'): ?>
                 <span class="text-gray-300">|</span>
-                <a href="/member/register.php" class="hover:text-primary transition">新規登録</a>
+                <a href="/member/register.php" class="hover:text-primary transition">注册</a>
                 <?php endif; ?>
                 <?php endif; ?>
                 <?php endif; ?>
@@ -223,16 +223,16 @@ function getChannelUrl(array $channel): string {
                     <?php if (isMemberLoggedIn()): ?>
                     <?php $memberInfo = getMemberInfo(); ?>
                     <a href="/member/profile.php" class="hover:text-primary transition"><?php echo e($memberInfo['nickname']); ?></a>
-                    <a href="/member/logout.php" class="hover:text-primary transition opacity-60">ログアウト</a>
+                    <a href="/member/logout.php" class="hover:text-primary transition opacity-60">退出</a>
                     <?php else: ?>
-                    <a href="/member/login.php" class="hover:text-primary transition">ログイン</a>
+                    <a href="/member/login.php" class="hover:text-primary transition">登录</a>
                     <?php if (config('allow_member_register') === '1'): ?>
-                    <a href="/member/register.php" class="hover:text-primary transition">新規登録</a>
+                    <a href="/member/register.php" class="hover:text-primary transition">注册</a>
                     <?php endif; ?>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
-                <button id="mobileMenuBtn" class="md:hidden p-2" style="color: <?php echo e($headerTextColor); ?>" aria-label="メニュー">
+                <button id="mobileMenuBtn" class="md:hidden p-2" style="color: <?php echo e($headerTextColor); ?>" aria-label="菜单">
                     <div class="hamburger" id="hamburgerIcon">
                         <span></span>
                         <span></span>
@@ -339,16 +339,16 @@ function getChannelUrl(array $channel): string {
                     <?php if (isMemberLoggedIn()): ?>
                     <?php $memberInfo = $memberInfo ?? getMemberInfo(); ?>
                     <a href="/member/profile.php" class="px-3 py-2 hover:text-primary transition text-sm" style="color: <?php echo e($headerTextColor); ?>"><?php echo e($memberInfo['nickname']); ?></a>
-                    <a href="/member/logout.php" class="px-2 py-2 hover:text-primary transition text-sm opacity-60" style="color: <?php echo e($headerTextColor); ?>">ログアウト</a>
+                    <a href="/member/logout.php" class="px-2 py-2 hover:text-primary transition text-sm opacity-60" style="color: <?php echo e($headerTextColor); ?>">退出</a>
                     <?php else: ?>
-                    <a href="/member/login.php" class="px-3 py-2 hover:text-primary transition text-sm" style="color: <?php echo e($headerTextColor); ?>">ログイン</a>
+                    <a href="/member/login.php" class="px-3 py-2 hover:text-primary transition text-sm" style="color: <?php echo e($headerTextColor); ?>">登录</a>
                     <?php if (config('allow_member_register') === '1'): ?>
-                    <a href="/member/register.php" class="px-2 py-2 hover:text-primary transition text-sm" style="color: <?php echo e($headerTextColor); ?>">新規登録</a>
+                    <a href="/member/register.php" class="px-2 py-2 hover:text-primary transition text-sm" style="color: <?php echo e($headerTextColor); ?>">注册</a>
                     <?php endif; ?>
                     <?php endif; ?>
                     <?php endif; ?>
                 </nav>
-                <button id="mobileMenuBtn" class="md:hidden p-2" style="color: <?php echo e($headerTextColor); ?>" aria-label="メニュー">
+                <button id="mobileMenuBtn" class="md:hidden p-2" style="color: <?php echo e($headerTextColor); ?>" aria-label="菜单">
                     <div class="hamburger" id="hamburgerIcon">
                         <span></span>
                         <span></span>
@@ -391,12 +391,12 @@ function getChannelUrl(array $channel): string {
                 <div class="border-t border-gray-100 pt-2 mt-2">
                     <?php if (isMemberLoggedIn()): ?>
                     <?php $memberInfo = $memberInfo ?? getMemberInfo(); ?>
-                    <a href="/member/profile.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>">マイページ (<?php echo e($memberInfo['nickname']); ?>)</a>
-                    <a href="/member/logout.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>; opacity: 0.7">ログアウト</a>
+                    <a href="/member/profile.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>">会员中心 (<?php echo e($memberInfo['nickname']); ?>)</a>
+                    <a href="/member/logout.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>; opacity: 0.7">退出登录</a>
                     <?php else: ?>
-                    <a href="/member/login.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>">ログイン</a>
+                    <a href="/member/login.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>">会员登录</a>
                     <?php if (config('allow_member_register') === '1'): ?>
-                    <a href="/member/register.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>">新規登録</a>
+                    <a href="/member/register.php" class="block py-2 hover:text-primary" style="color: <?php echo e($headerTextColor); ?>">会员注册</a>
                     <?php endif; ?>
                     <?php endif; ?>
                 </div>

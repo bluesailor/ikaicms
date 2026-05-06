@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - 钩子系统
+ * Yikai CMS - 钩子系统
  *
  * 提供 WordPress 风格的 action/filter 机制
  * PHP 8.0+

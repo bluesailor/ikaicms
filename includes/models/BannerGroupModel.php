@@ -1,6 +1,6 @@
 <?php
 /**
- * ikaiCMS - 轮播图分组 Model
+ * Yikai CMS - 轮播图分组 Model
  *
  * PHP 8.0+
  */

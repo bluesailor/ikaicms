@@ -41,7 +41,7 @@ function renderFooterContent(string $content): string {
     // {{qrcode}}
     if (str_contains($content, '{{qrcode}}')) {
         $qrcode = config('contact_qrcode');
-        $html = $qrcode ? '<img src="' . e($qrcode) . '" alt="QRコード" class="w-24 h-24">' : '';
+        $html = $qrcode ? '<img src="' . e($qrcode) . '" alt="二维码" class="w-24 h-24">' : '';
         $content = str_replace('{{qrcode}}', $html, $content);
     }
 
@@ -82,7 +82,7 @@ if ($footerBgImage) {
             <!-- 无自定义列时的默认布局 -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
-                    <h3 class="text-white text-lg font-bold mb-4"><?php echo e(config('site_name', 'ikaiCMS')); ?></h3>
+                    <h3 class="text-white text-lg font-bold mb-4"><?php echo e(config('site_name', 'Yikai CMS')); ?></h3>
                     <p class="text-sm leading-relaxed"><?php echo e(config('site_description', '')); ?></p>
                 </div>
                 <div>
@@ -105,7 +105,7 @@ if ($footerBgImage) {
             if (!empty($links)):
             ?>
             <div class="border-t border-gray-700 mt-8 pt-8">
-                <h4 class="text-white font-medium mb-4"><?php echo config('home_links_title', 'パートナー'); ?></h4>
+                <h4 class="text-white font-medium mb-4"><?php echo config('home_links_title', '合作伙伴'); ?></h4>
                 <div class="flex flex-wrap gap-4">
                     <?php foreach ($links as $link): ?>
                     <a href="<?php echo e($link['url']); ?>" target="_blank" rel="nofollow"
@@ -160,7 +160,7 @@ if ($footerBgImage) {
         <div class="border-t border-gray-700">
             <div class="container mx-auto px-4 py-4 flex flex-wrap gap-4 items-center justify-between text-sm">
                 <div>
-                    &copy; <?php echo date('Y'); ?> <?php echo e(config('site_name', 'ikaiCMS')); ?> <?php echo __('footer_copyright'); ?>.
+                    &copy; <?php echo date('Y'); ?> <?php echo e(config('site_name', 'Yikai CMS')); ?> <?php echo __('footer_copyright'); ?>.
                 </div>
                 <div class="flex flex-wrap gap-4">
                     <?php if ($icp = config('site_icp')): ?>

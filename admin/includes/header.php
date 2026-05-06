@@ -407,12 +407,14 @@ foreach ($sidebarGroups as $group => $_menuItems) {
 
                 <!-- 右侧工具栏 -->
                 <div class="flex items-center gap-4">
-                    <!-- 中日文切换 -->
-                    <?php $currentAdminLang = config('admin_lang', 'ja'); ?>
+                    <!-- 语言切换 (中 / 英 / 日) -->
+                    <?php $currentAdminLang = config('admin_lang', 'zh-CN'); ?>
                     <div class="flex items-center gap-1 text-sm">
-                        <button onclick="switchAdminLang('ja')" class="px-2 py-1 rounded transition <?php echo $currentAdminLang === 'ja' ? 'bg-primary text-white' : 'text-gray-400 hover:text-primary'; ?>">日本語</button>
+                        <button onclick="switchAdminLang('zh-CN')" class="px-2 py-1 rounded transition <?php echo $currentAdminLang === 'zh-CN' ? 'bg-primary text-white' : 'text-gray-400 hover:text-primary'; ?>">中文</button>
                         <span class="text-gray-300">|</span>
-                        <button onclick="switchAdminLang('zh-CN')" class="px-2 py-1 rounded transition <?php echo $currentAdminLang !== 'ja' ? 'bg-primary text-white' : 'text-gray-400 hover:text-primary'; ?>">中文</button>
+                        <button onclick="switchAdminLang('en')" class="px-2 py-1 rounded transition <?php echo $currentAdminLang === 'en' ? 'bg-primary text-white' : 'text-gray-400 hover:text-primary'; ?>">EN</button>
+                        <span class="text-gray-300">|</span>
+                        <button onclick="switchAdminLang('ja')" class="px-2 py-1 rounded transition <?php echo $currentAdminLang === 'ja' ? 'bg-primary text-white' : 'text-gray-400 hover:text-primary'; ?>">日本語</button>
                     </div>
 
                     <a href="/" target="_blank" class="text-gray-500 hover:text-primary" title="<?php echo __('admin_visit_frontend'); ?>">
