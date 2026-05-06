@@ -1,0 +1,8 @@
+{
+    "name": "Minimal",
+    "description": "ミニマルデザインテーマ。余白を活かしたシンプルなレイアウト、デザイン事務所やクリエイティブスタジオに最適",
+    "version": "1.0.0",
+    "author": "ikai Inc.",
+    "screenshot": "assets/images/screenshot.png",
+    "supports": ["banner", "about", "stats", "testimonials", "advantage", "cta", "channel"]
+}

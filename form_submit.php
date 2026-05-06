@@ -1,0 +1,114 @@
+<?php
+/**
+ * ikaiCMS - 短码表单提交处理
+ */
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/includes/init.php';
+
+header('Content-Type: application/json; charset=utf-8');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['code' => 1, 'msg' => '無効なリクエスト']);
+    exit;
+}
+
+// 表单提交频率限制
+$clientIp = getClientIp();
+$throttleRemain = checkFormThrottle($clientIp);
+if ($throttleRemain > 0) {
+    echo json_encode(['code' => 1, 'msg' => '送信頻度が高すぎます。' . ceil($throttleRemain / 60) . '分後に再試行してください']);
+    exit;
+}
+
+$slug = trim(post('form_slug', ''));
+if (empty($slug)) {
+    echo json_encode(['code' => 1, 'msg' => '無効なフォーム']);
+    exit;
+}
+
+// 获取模板
+$template = formTemplateModel()->findBySlug($slug);
+if (!$template) {
+    echo json_encode(['code' => 1, 'msg' => 'フォームが見つかりません']);
+    exit;
+}
+
+$fieldsRaw = $template['fields'] ?? '';
+
+// 从模板解析字段定义（兼容旧 JSON 和新 CF7 模板）
+if (isJsonFields($fieldsRaw)) {
+    $fields = json_decode($fieldsRaw, true);
+} else {
+    $fields = parseFormTags($fieldsRaw);
+}
+
+// 验证必填字段
+$formData = [];
+foreach ($fields as $field) {
+    $key = $field['key'] ?? $field['name'] ?? '';
+    if ($key === '') continue;
+    $type = $field['type'] ?? 'text';
+
+    // checkbox 提交为数组
+    if ($type === 'checkbox') {
+        $arr = $_POST[$key] ?? [];
+        if (!is_array($arr)) $arr = [$arr];
+        $arr = array_map('trim', $arr);
+        $arr = array_filter($arr, fn($v) => $v !== '');
+        if (!empty($field['required']) && empty($arr)) {
+            echo json_encode(['code' => 1, 'msg' => ($field['label'] ?? $key) . 'は必須です']);
+            exit;
+        }
+        $formData[$key] = implode(', ', $arr);
+        continue;
+    }
+
+    $value = trim(post($key, ''));
+    if (!empty($field['required']) && $value === '') {
+        echo json_encode(['code' => 1, 'msg' => ($field['label'] ?? $key) . 'は必須です']);
+        exit;
+    }
+    // 邮箱格式验证
+    if ($type === 'email' && $value !== '' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['code' => 1, 'msg' => 'メールアドレスの形式が正しくありません']);
+        exit;
+    }
+    $formData[$key] = $value;
+}
+
+// 产品询盘关联
+$productId    = (int)post('product_id', '0');
+$productTitle = trim(post('product_title', ''));
+$source       = $productId > 0 ? 'product' : ($slug === 'product-inquiry' ? 'product' : 'contact');
+
+// 存入 ik_forms
+$data = [
+    'type'          => $slug,
+    'product_id'    => $productId,
+    'product_title' => $productTitle,
+    'source'        => $source,
+    'name'          => $formData['name'] ?? '',
+    'phone'         => $formData['phone'] ?? '',
+    'email'         => $formData['email'] ?? '',
+    'company'       => $formData['company'] ?? '',
+    'content'       => $formData['content'] ?? '',
+    'extra'         => json_encode($formData, JSON_UNESCAPED_UNICODE),
+    'ip'            => getClientIp(),
+    'user_agent'    => mb_substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 500),
+    'status'        => 0,
+    'created_at'    => time(),
+];
+
+formModel()->create($data);
+
+// 邮件通知
+require_once __DIR__ . '/includes/mail_notify.php';
+notifyNewInquiry($data);
+
+// 记录提交频率
+recordFormSubmit($clientIp);
+
+$msg = $template['success_message'] ?: '送信完了しました。お問い合わせありがとうございます。';
+echo json_encode(['code' => 0, 'msg' => $msg]);

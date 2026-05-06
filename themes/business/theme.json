@@ -1,0 +1,11 @@
+{
+    "name": "Business",
+    "description": "ダークビジネス風テンプレート。建築・工事・製造業に最適",
+    "version": "1.0.0",
+    "author": "Yikai CMS",
+    "screenshot": "screenshot.png",
+    "colors": {
+        "primary": "#3B6CF5",
+        "secondary": "#2554d4"
+    }
+}

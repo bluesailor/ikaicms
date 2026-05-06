@@ -1,0 +1,29 @@
+{
+    "name": "yikai/ikaicms",
+    "description": "ikai CMS - lightweight Japanese-market enterprise CMS with dual-language admin (CN/JP). Built with PHP 8.0+, no framework dependency.",
+    "type": "project",
+    "keywords": ["cms", "content-management", "php", "enterprise", "lightweight", "japanese", "multilingual", "dual-language"],
+    "homepage": "https://www.ikaicms.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yikai",
+            "homepage": "https://www.ikaicms.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-pdo": "*",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "ext-gd": "*",
+        "overtrue/pinyin": "^6.0"
+    },
+    "require-dev": {
+        "vimeo/psalm": "6.4.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

@@ -1,0 +1,45 @@
+# Configuration (contains DB credentials)
+config/config.php
+config/installed.lock
+
+# User data
+uploads/*
+!uploads/.gitkeep
+storage/*
+!storage/.gitkeep
+
+# Cache
+storage/cache/
+
+# Logs
+storage/logs/
+
+# Database backups
+storage/backups/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node
+node_modules/
+
+# Screenshots (dev only)
+2026-*.png
+
+# Composer dependencies (use composer install)
+vendor/
+composer.phar
+
+# Project notes (FTP creds, dev memos)
+docs/
+
+# Install lock at root
+/installed.lock
