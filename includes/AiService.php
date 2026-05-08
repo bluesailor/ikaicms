@@ -20,6 +20,13 @@ class AiService
 
     // 供应商配置表
     private const PROVIDERS = [
+        'deepseek' => [
+            'name'     => 'DeepSeek',
+            'base_url' => 'https://api.deepseek.com/v1',
+            'models'   => ['deepseek-v4-flash', 'deepseek-v4-pro', 'deepseek-chat', 'deepseek-reasoner'],
+            'default'  => 'deepseek-v4-flash',
+            'format'   => 'openai',
+        ],
         'openai' => [
             'name'     => 'OpenAI',
             'base_url' => 'https://api.openai.com/v1',
@@ -33,13 +40,6 @@ class AiService
             'models'   => ['claude-sonnet-4-20250514', 'claude-haiku-4-20250414', 'claude-3-5-sonnet-20241022'],
             'default'  => 'claude-sonnet-4-20250514',
             'format'   => 'anthropic',
-        ],
-        'deepseek' => [
-            'name'     => 'DeepSeek',
-            'base_url' => 'https://api.deepseek.com/v1',
-            'models'   => ['deepseek-v4-flash', 'deepseek-v4-pro', 'deepseek-chat', 'deepseek-reasoner'],
-            'default'  => 'deepseek-v4-flash',
-            'format'   => 'openai',
         ],
         'qwen' => [
             'name'     => '通义千问 (Qwen)',
@@ -59,7 +59,7 @@ class AiService
 
     public function __construct(?string $provider = null, ?string $apiKey = null, ?string $model = null)
     {
-        $this->provider = $provider ?: config('ai_provider', 'openai');
+        $this->provider = $provider ?: config('ai_provider', 'deepseek');
         $this->apiKey   = $apiKey ?: self::decryptKey(config('ai_api_key', ''));
         $this->model    = $model ?: config('ai_model', '');
         $this->baseUrl  = config('ai_base_url', '');
@@ -119,6 +119,114 @@ class AiService
             $this->logUsage($result);
             return $result;
         }
+    }
+
+    /**
+     * 带工具调用（function-calling）的 agent 循环。
+     * 让 AI 自主决定调用哪个 ability，自动执行并把结果回灌，直到 AI 给出最终回复或达到 maxIter。
+     *
+     * @param string $prompt        用户原始提问
+     * @param array  $abilityNames  允许使用的 ability 名列表；空数组 = 全部
+     * @param string $system        系统提示词
+     * @param int    $maxIter       最大工具循环次数
+     * @return array ['success', 'content', 'tool_calls' => [...], 'error']
+     */
+    public function chatWithTools(string $prompt, array $abilityNames = [], string $system = '', float $temperature = 0.7, int $maxIter = 5): array
+    {
+        if (!$this->isConfigured()) {
+            return ['success' => false, 'content' => '', 'tool_calls' => [], 'error' => 'AI 未配置'];
+        }
+        if (!class_exists('Abilities')) {
+            return ['success' => false, 'content' => '', 'tool_calls' => [], 'error' => 'Abilities 注册中心未加载'];
+        }
+        $cfg = self::PROVIDERS[$this->provider] ?? self::PROVIDERS['openai'];
+        if ($cfg['format'] !== 'openai') {
+            return ['success' => false, 'content' => '', 'tool_calls' => [], 'error' => '当前供应商暂不支持 tool-calling（仅 OpenAI 兼容协议）'];
+        }
+
+        $tools = Abilities::asOpenAITools($abilityNames ?: null);
+        if ($tools === []) {
+            return ['success' => false, 'content' => '', 'tool_calls' => [], 'error' => '没有可用的 ability'];
+        }
+
+        $messages = [];
+        if ($system !== '') {
+            $messages[] = ['role' => 'system', 'content' => $system];
+        }
+        $messages[] = ['role' => 'user', 'content' => $prompt];
+
+        $callsLog = [];
+
+        for ($iter = 0; $iter < $maxIter; $iter++) {
+            $payload = [
+                'model'       => $this->model,
+                'messages'    => $messages,
+                'temperature' => $temperature,
+                'tools'       => $tools,
+                'tool_choice' => 'auto',
+                'max_tokens'  => 4096,
+            ];
+
+            $resp = $this->httpPost(
+                rtrim($this->baseUrl, '/') . '/chat/completions',
+                $payload,
+                ['Authorization: Bearer ' . $this->apiKey, 'Content-Type: application/json']
+            );
+            if (!$resp['success']) {
+                return ['success' => false, 'content' => '', 'tool_calls' => $callsLog, 'error' => $resp['error']];
+            }
+
+            $data = json_decode($resp['body'], true);
+            $msg  = $data['choices'][0]['message'] ?? null;
+            if (!$msg) {
+                return ['success' => false, 'content' => '', 'tool_calls' => $callsLog, 'error' => 'Empty AI response'];
+            }
+
+            $toolCalls = $msg['tool_calls'] ?? [];
+            if (empty($toolCalls)) {
+                // 终态：返回最终内容
+                $usage = $data['usage'] ?? [];
+                $this->logUsage([
+                    'success' => true,
+                    'prompt_tokens' => (int)($usage['prompt_tokens'] ?? 0),
+                    'completion_tokens' => (int)($usage['completion_tokens'] ?? 0),
+                    'total_tokens' => (int)($usage['total_tokens'] ?? 0),
+                ]);
+                return [
+                    'success'    => true,
+                    'content'    => trim((string)($msg['content'] ?? '')),
+                    'tool_calls' => $callsLog,
+                    'error'      => '',
+                ];
+            }
+
+            // 把 assistant 的 tool_calls 消息加入历史
+            $messages[] = $msg;
+
+            // 逐个执行
+            foreach ($toolCalls as $call) {
+                $fnName = $call['function']['name'] ?? '';
+                $argRaw = $call['function']['arguments'] ?? '{}';
+                $args   = json_decode($argRaw, true);
+                if (!is_array($args)) $args = [];
+
+                $exec = Abilities::execute($fnName, $args);
+                $callsLog[] = ['name' => $fnName, 'args' => $args, 'result' => $exec];
+
+                $messages[] = [
+                    'role'         => 'tool',
+                    'tool_call_id' => $call['id'] ?? '',
+                    'content'      => json_encode($exec, JSON_UNESCAPED_UNICODE),
+                ];
+            }
+        }
+
+        return [
+            'success'    => false,
+            'content'    => '',
+            'tool_calls' => $callsLog,
+            'error'      => "Reached max iterations ({$maxIter}) without final answer",
+        ];
     }
 
     /**

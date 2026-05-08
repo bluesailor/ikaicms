@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 // 获取站点配置
-$siteName = config('site_name', 'ikaiCMS');
+$siteName = config('site_name', 'Yikai CMS');
 $siteLogo = config('site_logo', '');
 $siteKeywords = config('site_keywords', '');
 $siteDescription = config('site_description', '');
@@ -196,7 +196,7 @@ function getChannelUrl(array $channel): string {
                 <nav class="hidden md:flex items-center gap-8">
                     <?php if (config('nav_home_show', '1') !== '0'): ?>
                     <a href="/" class="text-sm tracking-wide transition <?php echo isset($isHomePage) && $isHomePage ? 'text-gray-900 font-medium' : 'text-gray-500 hover:text-gray-900'; ?>">
-                        <?php echo e(config('nav_home_text', '') ?: __('nav_home')); ?>
+                        <?php echo e(configLang('nav_home_text', 'nav_home')); ?>
                     </a>
                     <?php endif; ?>
                     <?php foreach ($navChannels as $navItem): ?>
@@ -236,7 +236,7 @@ function getChannelUrl(array $channel): string {
         <nav id="mobileMenu" class="md:hidden hidden border-t border-gray-100 bg-white">
             <div class="container mx-auto px-6 py-6 space-y-4">
                 <?php if (config('nav_home_show', '1') !== '0'): ?>
-                <a href="/" class="block text-sm tracking-wide text-gray-600 hover:text-gray-900"><?php echo e(config('nav_home_text', '') ?: __('nav_home')); ?></a>
+                <a href="/" class="block text-sm tracking-wide text-gray-600 hover:text-gray-900"><?php echo e(configLang('nav_home_text', 'nav_home')); ?></a>
                 <?php endif; ?>
                 <?php foreach ($navChannels as $navItem): ?>
                 <a href="<?php echo getChannelUrl($navItem); ?>"
@@ -245,13 +245,7 @@ function getChannelUrl(array $channel): string {
                     <?php echo e($navItem['name']); ?>
                 </a>
                 <?php if (!empty($navItem['children'])): ?>
-                <?php foreach ($navItem['children'] as $child): ?>
-                <a href="<?php echo getChannelUrl($child); ?>"
-                   <?php echo $child['type'] === 'link' ? 'target="' . e($child['link_target'] ?: '_self') . '"' : ''; ?>
-                   class="block text-sm tracking-wide text-gray-400 hover:text-gray-900 pl-4">
-                    <?php echo e($child['name']); ?>
-                </a>
-                <?php endforeach; ?>
+                <?php echo renderNavMobileItems($navItem['children'], 0, '', 'block text-sm tracking-wide text-gray-400 hover:text-gray-900'); ?>
                 <?php endif; ?>
                 <?php endforeach; ?>
                 <?php if ($showMemberEntry): ?>

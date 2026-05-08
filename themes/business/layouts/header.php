@@ -89,7 +89,7 @@ $isTransparentHeader = !empty($isHomePage);
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-    <!-- 导航栏 -->
+    <!-- Navigation bar -->
     <header class="<?php echo $isTransparentHeader ? 'nav-transparent' : 'nav-solid shadow-lg'; ?> transition-all duration-300">
         <div class="container mx-auto px-4">
             <div class="flex items-center justify-between h-16 md:h-20">
@@ -102,7 +102,7 @@ $isTransparentHeader = !empty($isHomePage);
                     <?php endif; ?>
                 </a>
 
-                <!-- 桌面导航 -->
+                <!-- Desktop navigation -->
                 <nav class="hidden md:flex items-center gap-1">
                     <?php if (config('nav_home_show', '1') !== '0'): ?>
                     <a href="/" class="nav-link px-4 py-2 text-sm font-medium transition <?php echo isset($isHomePage) && $isHomePage ? 'text-white font-bold' : ''; ?>">
@@ -121,9 +121,7 @@ $isTransparentHeader = !empty($isHomePage);
                             <svg class="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </a>
                         <div class="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl border py-2 min-w-[160px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                            <?php foreach ($navItem['children'] as $child): ?>
-                            <a href="<?php echo getChannelUrl($child); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition"><?php echo e($child['name']); ?></a>
-                            <?php endforeach; ?>
+                            <?php echo renderNavDropdownItems($navItem['children'], 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition'); ?>
                         </div>
                     </div>
                     <?php else: ?>
@@ -133,20 +131,20 @@ $isTransparentHeader = !empty($isHomePage);
                     <?php endif; ?>
                     <?php endforeach; ?>
 
-                    <!-- CTA按钮 -->
+                    <!-- CTA button -->
                     <a href="/contact.html" class="ml-3 bg-primary hover:bg-secondary text-white px-5 py-2 rounded-full text-sm font-medium transition">
                         <?php echo __('detail_consult'); ?>
                     </a>
                 </nav>
 
-                <!-- 移动端菜单按钮 -->
+                <!-- mobile menu button -->
                 <button id="mobileMenuBtn" class="md:hidden p-2 text-white" aria-label="<?php echo __('menu_label'); ?>">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- 移动端菜单 -->
+        <!-- Mobile menu -->
         <nav id="mobileMenu" class="md:hidden hidden bg-slate-800 border-t border-slate-700">
             <div class="container mx-auto px-4 py-4">
                 <?php if (config('nav_home_show', '1') !== '0'): ?>
@@ -156,9 +154,7 @@ $isTransparentHeader = !empty($isHomePage);
                 <a href="<?php echo getChannelUrl($navItem); ?>" class="block py-2 text-gray-300 hover:text-white"><?php echo e($navItem['name']); ?></a>
                 <?php if (!empty($navItem['children'])): ?>
                 <div class="pl-4">
-                    <?php foreach ($navItem['children'] as $child): ?>
-                    <a href="<?php echo getChannelUrl($child); ?>" class="block py-1.5 text-gray-400 hover:text-white text-sm"><?php echo e($child['name']); ?></a>
-                    <?php endforeach; ?>
+                    <?php echo renderNavMobileItems($navItem['children'], 0, '', 'block py-1.5 text-gray-400 hover:text-white text-sm'); ?>
                 </div>
                 <?php endif; ?>
                 <?php endforeach; ?>
@@ -168,5 +164,5 @@ $isTransparentHeader = !empty($isHomePage);
 
     <?php do_action('ik_header_after'); ?>
 
-    <!-- 主内容 -->
+    <!-- Main content -->
     <main class="flex-1">
