@@ -49,7 +49,7 @@ $navChannels = getNavChannels();
 require_once theme_path('layouts/header.php');
 ?>
 
-<!-- 面包屑 -->
+<!-- Breadcrumb -->
 <div class="bg-gray-100 py-4">
     <div class="container mx-auto px-4">
         <div class="flex items-center gap-2 text-sm text-gray-600">
@@ -68,7 +68,7 @@ require_once theme_path('layouts/header.php');
     <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
             <article class="bg-white rounded-lg shadow overflow-hidden">
-                <!-- 标题区 -->
+                <!-- Title area -->
                 <div class="p-6 md:p-8 border-b">
                     <h1 class="text-2xl md:text-3xl font-bold text-dark leading-tight">
                         <?php echo e($job['title']); ?>
@@ -89,7 +89,7 @@ require_once theme_path('layouts/header.php');
                     </div>
                 </div>
 
-                <!-- 招聘信息 -->
+                <!-- Job info -->
                 <div class="p-6 md:p-8 border-b bg-blue-50">
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                         <?php if ($job['salary']): ?>
@@ -135,7 +135,7 @@ require_once theme_path('layouts/header.php');
                     </div>
                 </div>
 
-                <!-- 任职要求 -->
+                <!-- Job requirements -->
                 <?php if ($job['requirements']): ?>
                 <div class="p-6 md:p-8 border-b">
                     <h2 class="text-lg font-bold text-dark mb-4">応募条件</h2>
@@ -143,14 +143,14 @@ require_once theme_path('layouts/header.php');
                 </div>
                 <?php endif; ?>
 
-                <!-- 职位详情 -->
+                <!-- Job detail -->
                 <?php if ($job['content']): ?>
                 <div class="p-6 md:p-8 prose prose-lg max-w-none">
                     <?php echo sanitizeHtml($job['content']); ?>
                 </div>
                 <?php endif; ?>
 
-                <!-- 返回列表 -->
+                <!-- Back to list -->
                 <div class="p-6 md:p-8 border-t bg-gray-50 text-center">
                     <?php if ($channel): ?>
                     <a href="<?php echo channelUrl($channel); ?>" class="inline-flex items-center gap-2 text-primary hover:underline">

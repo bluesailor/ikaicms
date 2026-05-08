@@ -35,7 +35,7 @@ if ($aboutChannel) {
 require_once ROOT_PATH . '/includes/header.php';
 ?>
 
-<!-- 页面头部 -->
+<!-- Page header -->
 <?php
 $breadcrumbItems = [];
 if ($aboutChannel) {
@@ -46,11 +46,11 @@ $channel = ['name' => __('nav_history'), 'description' => __('history_hero_desc'
 require theme_path('partials/page-hero.php');
 ?>
 
-<!-- 时间线主体 -->
+<!-- Timeline body -->
 <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap lg:flex-nowrap gap-8">
-        <!-- 主内容区 -->
+        <!-- Main content area -->
         <div class="w-full lg:flex-1">
         <?php if (empty($timelines)): ?>
         <div class="text-center py-20 text-gray-500">
@@ -61,7 +61,7 @@ require theme_path('partials/page-hero.php');
         </div>
         <?php else: ?>
 
-        <!-- 时间线容器（统一走 timelineBlock，可被短码 [timeline] 复用） -->
+        <!-- Timeline container (timelineBlock + [timeline] shortcode) -->
         <?php
         // 预览模式下，URL 参数 ?layout=xxx 可临时覆盖（仅 _preview=1 时生效）
         $previewLayout = $isPreview && in_array($_GET['layout'] ?? '', ['vertical', 'horizontal', 'compact'], true)
@@ -73,7 +73,7 @@ require theme_path('partials/page-hero.php');
         <?php endif; ?>
         </div>
 
-        <!-- 侧边栏 -->
+        <!-- Sidebar -->
         <?php if (!empty($sidebarChannels)): ?>
         <div class="w-full lg:w-72 flex-shrink-0">
             <div class="bg-white rounded-lg shadow sticky top-24">
@@ -90,7 +90,7 @@ require theme_path('partials/page-hero.php');
                 </div>
             </div>
 
-            <!-- 联系方式 -->
+            <!-- Contact info -->
             <div class="bg-white rounded-lg shadow mt-6">
                 <div class="px-4 py-3 border-b font-bold text-dark"><?php echo __('footer_contact'); ?></div>
                 <div class="p-4 space-y-3 text-sm">
@@ -126,7 +126,7 @@ require theme_path('partials/page-hero.php');
     </div>
 </section>
 
-<!-- 统计数据 -->
+<!-- Stats -->
 <?php if (!empty($timelines)): ?>
 <section class="py-16 bg-gray-900 text-white">
     <div class="container mx-auto px-4">
@@ -160,7 +160,7 @@ require theme_path('partials/page-hero.php');
 </section>
 <?php endif; ?>
 
-<!-- 轻量 scroll-anim（替代 AOS） -->
+<!-- Lightweight scroll-anim (replacing AOS) -->
 <script src="/assets/js/scroll-anim.js" defer></script>
 
 <?php

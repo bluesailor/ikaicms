@@ -72,7 +72,7 @@ $navChannels = getNavChannels();
 require_once theme_path('layouts/header.php');
 ?>
 
-<!-- 页面头部 -->
+<!-- Page header -->
 <?php
 $breadcrumbItems = [];
 if ($category) {
@@ -90,7 +90,7 @@ $channel = $_heroChannelBackup;
 unset($_heroChannelBackup);
 ?>
 
-<!-- 分类导航 + 搜索 -->
+<!-- Category nav + search -->
 <div class="bg-white border-b">
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap items-center justify-between gap-4 py-4">
@@ -138,7 +138,7 @@ unset($_heroChannelBackup);
     </div>
 </div>
 
-<!-- 文章列表 -->
+<!-- Article list -->
 <section class="py-12">
     <div class="container mx-auto px-4">
         <?php if (!empty($articles)): ?>
@@ -183,7 +183,7 @@ unset($_heroChannelBackup);
             <?php endforeach; ?>
         </div>
 
-        <!-- 分页 -->
+        <!-- Pagination -->
         <?php if ($total > $perPage): ?>
         <?php
         $totalPages = (int)ceil($total / $perPage);

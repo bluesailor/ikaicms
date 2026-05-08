@@ -49,7 +49,7 @@ $gridCols = match (count($contactCards)) {
 require_once theme_path('layouts/header.php');
 ?>
 
-<!-- 页面头部 -->
+<!-- Page header -->
 <?php
 $breadcrumbItems = [['name' => __('contact_title'), 'url' => '']];
 if (!$channel) {
@@ -60,7 +60,7 @@ require theme_path('partials/page-hero.php');
 
 <section class="py-12">
     <div class="container mx-auto px-4">
-        <!-- 联系信息卡片 -->
+        <!-- Contact info cards -->
         <?php if (!empty($contactCards)): ?>
         <div class="grid grid-cols-1 <?php echo $gridCols; ?> gap-6 mb-12">
             <?php foreach ($contactCards as $card): ?>
@@ -84,7 +84,7 @@ require theme_path('partials/page-hero.php');
         <?php endif; ?>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- 留言表单 -->
+            <!-- Message form -->
             <div class="bg-white rounded-lg shadow p-6 md:p-8">
                 <?php $formTitle = configLang('contact_form_title', 'contact_form_title'); ?>
                 <h2 class="text-xl font-bold text-dark mb-2"><?php echo e($formTitle); ?></h2>
@@ -97,10 +97,10 @@ require theme_path('partials/page-hero.php');
                 <?php echo renderFormTemplate('contact'); ?>
             </div>
 
-            <!-- 地图或二维码 -->
+            <!-- Map or QR code -->
             <div class="bg-white rounded-lg shadow overflow-hidden">
                 <?php if ($mapImage = config('contact_map')): ?>
-                <img loading="lazy" src="<?php echo e($mapImage); ?>" alt="地图" class="w-full h-full object-cover">
+                <img loading="lazy" src="<?php echo e($mapImage); ?>" alt="地図" class="w-full h-full object-cover">
                 <?php elseif ($qrcode = config('contact_qrcode')): ?>
                 <div class="h-full flex flex-col items-center justify-center p-8">
                     <h3 class="text-xl font-bold text-dark mb-6"><?php echo __('contact_qr_title'); ?></h3>

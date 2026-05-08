@@ -81,7 +81,7 @@ if (!empty($content['cover'])) {
 require_once theme_path('layouts/header.php');
 ?>
 
-<!-- 面包屑 -->
+<!-- Breadcrumb -->
 <div class="bg-gray-100 py-4">
     <div class="container mx-auto px-4">
         <div class="flex items-center gap-2 text-sm text-gray-600">
@@ -118,10 +118,10 @@ require_once theme_path('layouts/header.php');
 <section class="py-12">
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap lg:flex-nowrap gap-8">
-            <!-- 主内容区 -->
+            <!-- Main content area -->
             <div class="w-full lg:flex-1">
                 <article class="bg-white rounded-lg shadow overflow-hidden">
-                    <!-- 标题区 -->
+                    <!-- Title area -->
                     <div class="p-6 md:p-8 border-b">
                         <h1 class="text-2xl md:text-3xl font-bold text-dark leading-tight">
                             <?php echo e($content['title']); ?>
@@ -153,7 +153,7 @@ require_once theme_path('layouts/header.php');
                     </div>
 
                     <?php if ($content['channel_type'] === 'case'): ?>
-                    <!-- 案例信息卡片 -->
+                    <!-- Case info card -->
                     <?php if ($content['client_name'] || $content['industry'] || $content['duration'] || $content['result_metric']): ?>
                     <div class="px-6 md:px-8 pt-6">
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-5">
@@ -187,7 +187,7 @@ require_once theme_path('layouts/header.php');
                     </div>
                     <?php endif; ?>
                     <?php if ($content['cover']): ?>
-                    <!-- 案例封面图 -->
+                    <!-- Case cover -->
                     <div class="px-6 md:px-8 pt-6 cursor-zoom-in" onclick="openCaseLightbox(0)">
                         <img loading="lazy" src="<?php echo e($content['cover']); ?>" alt="<?php echo e($content['title']); ?>"
                              class="w-full rounded-lg hover:opacity-95 transition">
@@ -196,7 +196,7 @@ require_once theme_path('layouts/header.php');
                     <?php endif; ?>
 
                     <?php if ($content['channel_type'] === 'product'): ?>
-                    <!-- 产品信息 -->
+                    <!-- Product info -->
                     <div class="p-6 md:p-8 border-b bg-gray-50">
                         <div class="flex flex-wrap gap-8">
                             <?php if ($content['cover']): ?>
@@ -231,7 +231,7 @@ require_once theme_path('layouts/header.php');
                     <?php endif; ?>
 
                     <?php if ($content['channel_type'] === 'download'): ?>
-                    <!-- 下载信息 -->
+                    <!-- Download info -->
                     <div class="p-6 md:p-8 border-b bg-green-50">
                         <div class="flex flex-wrap items-center justify-between gap-4">
                             <div class="flex items-center gap-6">
@@ -250,12 +250,12 @@ require_once theme_path('layouts/header.php');
                     </div>
                     <?php endif; ?>
 
-                    <!-- 正文内容 -->
+                    <!-- Body content -->
                     <div class="p-6 md:p-8 prose prose-lg max-w-none">
                         <?php echo apply_filters('content_output', parseShortcodes($content['content'] ?? ''), $content); ?>
                     </div>
 
-                    <!-- 图片画廊（lightbox）-->
+                    <!-- Image gallery (lightbox) -->
                     <?php
                     $galleryImages = [];
                     if (!empty($content['images'])) {
@@ -286,7 +286,7 @@ require_once theme_path('layouts/header.php');
                     </div>
                     <?php endif; ?>
 
-                    <!-- 上下篇 -->
+                    <!-- Previous/Next -->
                     <div class="p-6 md:p-8 border-t bg-gray-50">
                         <div class="flex flex-wrap justify-between gap-4 text-sm">
                             <div>
@@ -314,10 +314,10 @@ require_once theme_path('layouts/header.php');
                 </article>
             </div>
 
-            <!-- 侧边栏 -->
+            <!-- Sidebar -->
             <div class="w-full lg:w-80 space-y-6">
                 <?php if (!empty($downloadSidebarCats)): ?>
-                <!-- 下载分类 -->
+                <!-- Download categories -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-4 py-3 border-b font-bold text-dark bg-primary text-white rounded-t-lg"><?php echo __('list_download_category'); ?></div>
                     <div class="divide-y">
@@ -331,7 +331,7 @@ require_once theme_path('layouts/header.php');
                 </div>
                 <?php endif; ?>
 
-                <!-- 相关内容 -->
+                <!-- Related content -->
                 <?php if (!empty($relatedContents)): ?>
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-4 py-3 border-b font-bold text-dark"><?php echo __('detail_related'); ?></div>
@@ -352,7 +352,7 @@ require_once theme_path('layouts/header.php');
                 </div>
                 <?php endif; ?>
 
-                <!-- 联系方式 -->
+                <!-- Contact info -->
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-4 py-3 border-b font-bold text-dark"><?php echo __('footer_contact'); ?></div>
                     <div class="p-4 space-y-3 text-sm">
@@ -380,7 +380,7 @@ require_once theme_path('layouts/header.php');
 </section>
 
 <?php if (!empty($galleryImages)): ?>
-<!-- 案例/内容 Lightbox 画廊 -->
+<!-- Case/Content Lightbox gallery -->
 <div id="case-lightbox" class="hidden fixed inset-0 z-[9999] bg-black/90 items-center justify-center" onclick="if(event.target === this) closeCaseLightbox()">
     <button type="button" onclick="closeCaseLightbox()" class="absolute top-4 right-4 text-white/80 hover:text-white p-2" aria-label="<?php echo __('lightbox_close'); ?>">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -390,12 +390,12 @@ require_once theme_path('layouts/header.php');
     <div id="case-lightbox-counter" class="absolute top-5 left-5 text-white/80 text-sm font-medium">1 / <?php echo count($galleryImages); ?></div>
 
     <?php if (count($galleryImages) > 1): ?>
-    <button type="button" onclick="caseLightboxPrev()" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="上一张">
+    <button type="button" onclick="caseLightboxPrev()" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="前へ">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
     </button>
-    <button type="button" onclick="caseLightboxNext()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="下一张">
+    <button type="button" onclick="caseLightboxNext()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="次へ">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>

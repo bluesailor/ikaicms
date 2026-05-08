@@ -277,20 +277,20 @@ if ($isProductType) {
 }
 ?>
 
-<!-- 页面头部 -->
+<!-- Page header -->
 <?php require theme_path('partials/page-hero.php'); ?>
 
-<!-- 子栏目导航（横向分类标签） -->
+<!-- Sub-channel nav (horizontal tabs) -->
 <?php
 $horizNav = $subChannels;
 $horizRootChannel = $channel;
 // 下载类型不使用 channel 子栏目做水平导航（改用 download_categories）
 ?>
 <?php if ($showProductTopNav): ?>
-<!-- 产品顶栏模式：分类筛选面板 -->
+<!-- Product topbar mode: category filter panel -->
 <div class="bg-white border-b">
     <div class="container mx-auto px-4 py-4">
-        <!-- 搜索框 -->
+        <!-- Search box -->
         <div class="flex items-center justify-between mb-4">
             <div class="text-sm text-gray-500">
                 <?php echo __('list_total'); ?> <span class="text-primary font-medium"><?php echo $total; ?></span> <?php echo __('list_items'); ?>
@@ -318,7 +318,7 @@ $horizRootChannel = $channel;
                 <?php endif; ?>
             </form>
         </div>
-        <!-- 分类筛选 -->
+        <!-- Category filter -->
         <div class="border rounded-lg text-sm">
             <div class="px-4 py-2 bg-gray-50 border-b flex items-center gap-2">
                 <span class="text-gray-600 font-medium">製品カテゴリ:</span>
@@ -396,11 +396,11 @@ $horizRootChannel = $channel;
 </div>
 <?php endif; ?>
 
-<!-- 内容列表 -->
+<!-- Content list -->
 <section class="py-12">
     <div class="container mx-auto px-4">
         <?php if ($showProductTopNav): ?>
-        <!-- 产品顶栏模式：全宽4列网格 -->
+        <!-- Product topbar mode: full-width 4-col grid -->
         <?php if (!empty($contents)): ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <?php foreach ($contents as $item): ?>
@@ -413,7 +413,7 @@ $horizRootChannel = $channel;
         </div>
         <?php endif; ?>
 
-        <!-- 分页 -->
+        <!-- Pagination -->
         <?php
         $totalPages = (int)ceil($total / $perPage);
         $pageUrl = function(int $p) use ($channel, $keyword, $productCategory): string {
@@ -431,11 +431,11 @@ $horizRootChannel = $channel;
         ?>
 
         <?php elseif ($showSidebar): ?>
-        <!-- 产品/案例：带侧边栏布局 -->
+        <!-- Product/Case: layout with sidebar -->
         <div class="flex flex-wrap lg:flex-nowrap gap-8">
-            <!-- 左侧分类菜单 -->
+            <!-- Left category menu -->
             <div class="w-full lg:w-64 flex-shrink-0 space-y-4">
-                <!-- 搜索框 -->
+                <!-- Search box -->
                 <div class="bg-white rounded-lg shadow p-4">
                     <form method="get" action="<?php echo channelUrl($channel); ?>">
                         <div class="relative">
@@ -461,16 +461,16 @@ $horizRootChannel = $channel;
                     <?php endif; ?>
                 </div>
 
-                <!-- 分类菜单 -->
+                <!-- Category menu -->
                 <div class="bg-white rounded-lg shadow overflow-hidden sticky top-20">
-                    <!-- 分类标题 -->
+                    <!-- Category title -->
                     <div class="bg-primary text-white px-4 py-3 font-bold">
                         <?php echo e($rootChannel['name']); ?>
                     </div>
-                    <!-- 分类列表 -->
+                    <!-- Category list -->
                     <div class="divide-y">
                         <?php if ($isProductType): ?>
-                        <!-- 产品分类 -->
+                        <!-- Product categories -->
                         <a href="<?php echo channelUrl($rootChannel); ?>"
                            class="block px-4 py-3 hover:bg-gray-50 transition <?php echo ($channel['parent_id'] == 0) ? 'text-primary font-medium bg-blue-50' : 'text-gray-700'; ?>">
                             <?php echo __('all'); ?><?php echo __('list_product'); ?>
@@ -517,7 +517,7 @@ $horizRootChannel = $channel;
                         renderProductCategoryTree($categoryTree, 0, $productCategoryId);
                         ?>
                         <?php else: ?>
-                        <!-- 栏目分类（案例等） -->
+                        <!-- Channel categories (cases etc.) -->
                         <a href="<?php echo channelUrl($rootChannel); ?>"
                            class="block px-4 py-3 hover:bg-gray-50 transition <?php echo $channelId === (int)$rootChannel['id'] ? 'text-primary font-medium bg-blue-50' : 'text-gray-700'; ?>">
                             <?php echo __('all'); ?><?php echo e($rootChannel['name']); ?>
@@ -562,9 +562,9 @@ $horizRootChannel = $channel;
                 </div>
             </div>
 
-            <!-- 右侧产品列表 -->
+            <!-- Right product list -->
             <div class="flex-1 min-w-0">
-                <!-- 列表头部 -->
+                <!-- List header -->
                 <div class="flex items-center justify-between mb-6">
                     <div class="text-gray-600">
                         <?php if ($keyword !== ''): ?>
@@ -586,7 +586,7 @@ $horizRootChannel = $channel;
                 </div>
                 <?php endif; ?>
 
-                <!-- 分页 -->
+                <!-- Pagination -->
                 <?php
                 $totalPages = (int)ceil($total / $perPage);
                 $pageUrl = function(int $p) use ($channel, $keyword, $isProductType, $productCategory): string {
@@ -614,7 +614,7 @@ $horizRootChannel = $channel;
         </div>
 
         <?php elseif ($channel['type'] === 'download'): ?>
-        <!-- 下载：表格 + 右侧导航（数据来自 yikai_downloads 表） -->
+        <!-- Download: table + right nav (yikai_downloads) -->
         <div class="flex flex-wrap lg:flex-nowrap gap-8">
             <div class="w-full <?php echo !empty($rightSidebarChannels) ? 'lg:flex-1' : ''; ?>">
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
@@ -739,14 +739,14 @@ $horizRootChannel = $channel;
         </div>
 
         <?php else: ?>
-        <!-- 其他类型的原有布局 -->
+        <!-- Original layout for other types -->
         <?php $hasRightSidebar = !empty($rightSidebarChannels); ?>
         <?php if ($hasRightSidebar): ?><div class="flex flex-wrap lg:flex-nowrap gap-8"><div class="w-full lg:flex-1"><?php endif; ?>
 
         <?php if (!empty($contents) || !empty($jobs ?? [])): ?>
 
         <?php if ($channel['type'] === 'case'): ?>
-        <!-- 案例：图文网格 -->
+        <!-- Case: image+text grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <?php foreach ($contents as $item): ?>
             <?php require theme_path('partials/case-card.php'); ?>
@@ -754,7 +754,7 @@ $horizRootChannel = $channel;
         </div>
 
         <?php elseif ($channel['type'] === 'job'): ?>
-        <!-- 招聘：卡片列表（数据来自 yikai_jobs 表） -->
+        <!-- Job: card list (yikai_jobs table) -->
         <?php if (!empty($jobs)): ?>
         <div class="space-y-4">
             <?php foreach ($jobs as $item): ?>
@@ -764,7 +764,7 @@ $horizRootChannel = $channel;
         <?php endif; ?>
 
         <?php else: ?>
-        <!-- 文章：图文列表 -->
+        <!-- Article: image+text list -->
         <div class="space-y-6">
             <?php foreach ($contents as $item): ?>
             <?php require theme_path('partials/article-card.php'); ?>
@@ -772,7 +772,7 @@ $horizRootChannel = $channel;
         </div>
         <?php endif; ?>
 
-        <!-- 分页 -->
+        <!-- Pagination -->
         <?php
         $totalPages = (int)ceil($total / $perPage);
         $pageUrl = function(int $p) use ($channel, $keyword): string {
@@ -805,7 +805,7 @@ $horizRootChannel = $channel;
 
 <?php if ($showSidebar): ?>
 <script>
-// 分类菜单展开/收起
+// Toggle category menu
 document.querySelectorAll('.category-toggle').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
         e.preventDefault();

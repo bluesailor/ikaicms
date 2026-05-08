@@ -41,7 +41,7 @@ function renderFooterContent(string $content): string {
     // {{qrcode}}
     if (str_contains($content, '{{qrcode}}')) {
         $qrcode = config('contact_qrcode');
-        $html = $qrcode ? '<img src="' . e($qrcode) . '" alt="二维码" class="w-24 h-24">' : '';
+        $html = $qrcode ? '<img src="' . e($qrcode) . '" alt="QRコード" class="w-24 h-24">' : '';
         $content = str_replace('{{qrcode}}', $html, $content);
     }
 
@@ -61,7 +61,7 @@ if ($footerBgImage) {
 
     <?php do_action('ik_footer_before'); ?>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer class="mt-auto" style="<?php echo $footerBgStyle; ?> color: <?php echo e($footerTextColor); ?>">
         <div class="container mx-auto px-4 py-12">
             <?php if (!empty($footerColumns)): ?>
@@ -79,7 +79,7 @@ if ($footerBgImage) {
                 <?php endforeach; ?>
             </div>
             <?php else: ?>
-            <!-- 无自定义列时的默认布局 -->
+            <!-- Default layout (no custom columns) -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="md:col-span-2">
                     <h3 class="text-white text-lg font-bold mb-4"><?php echo e(config('site_name', 'Yikai CMS')); ?></h3>
@@ -98,7 +98,7 @@ if ($footerBgImage) {
             </div>
             <?php endif; ?>
 
-            <!-- 合作伙伴 -->
+            <!-- Partners -->
             <?php
             $showLinks = config('home_show_links', '1') === '1';
             $links = $showLinks ? linkModel()->getActive() : [];
@@ -118,7 +118,7 @@ if ($footerBgImage) {
             <?php endif; ?>
         </div>
 
-        <!-- 页脚导航 -->
+        <!-- Footer navigation -->
         <?php
         $footerNav = json_decode(config('footer_nav') ?: '[]', true) ?: [];
         if (!empty($footerNav)):
@@ -156,7 +156,7 @@ if ($footerBgImage) {
         </div>
         <?php endif; ?>
 
-        <!-- 版权信息 -->
+        <!-- Copyright -->
         <div class="border-t border-gray-700">
             <div class="container mx-auto px-4 py-4 flex flex-wrap gap-4 items-center justify-between text-sm">
                 <div>
@@ -180,7 +180,7 @@ if ($footerBgImage) {
     </footer>
 
     <script>
-        // 移动端菜单切换
+        // Mobile menu toggle
         document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
             const menu = document.getElementById('mobileMenu');
             const hamburger = document.getElementById('hamburgerIcon');
@@ -189,7 +189,7 @@ if ($footerBgImage) {
         });
     </script>
 
-    <!-- 通用 Lightbox -->
+    <!-- Universal Lightbox -->
     <div id="ik-lightbox" class="fixed inset-0 z-[200] bg-black/80 hidden items-center justify-center cursor-zoom-out" onclick="if(event.target===this){this.classList.add('hidden');this.classList.remove('flex');document.body.style.overflow=''}">
         <button onclick="this.parentElement.classList.add('hidden');this.parentElement.classList.remove('flex');document.body.style.overflow=''" class="absolute top-4 right-4 text-white/80 hover:text-white text-4xl leading-none cursor-pointer">&times;</button>
         <img id="ik-lightbox-img" src="" class="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl" onclick="event.stopPropagation()">
@@ -218,7 +218,7 @@ if ($footerBgImage) {
     });
     </script>
 
-    <!-- 滚动入场动画 -->
+    <!-- Scroll entrance animation -->
     <script>
     (function(){
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -229,7 +229,7 @@ if ($footerBgImage) {
                     entry.target.classList.add('animated');
                     observer.unobserve(entry.target);
 
-                    // 数字滚动动画
+                    // Number scroll animation
                     entry.target.querySelectorAll('.stat-number[data-count]').forEach(function(el) {
                         animateNumber(el);
                     });

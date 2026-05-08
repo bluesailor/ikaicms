@@ -133,7 +133,7 @@ new Swiper(".banner-swiper", {
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }
 });
 
-// 首页产品分类筛选
+// Home page product category filter
 (function() {
     const nav = document.getElementById("productCategoryNav");
     const grid = document.getElementById("productGrid");
@@ -146,7 +146,7 @@ new Swiper(".banner-swiper", {
         btn.addEventListener("click", function() {
             const cat = this.dataset.category;
 
-            // 更新按钮状态
+            // Update button state
             buttons.forEach(b => {
                 b.classList.remove("bg-primary", "text-white");
                 b.classList.add("bg-gray-100", "text-gray-600");
@@ -154,7 +154,7 @@ new Swiper(".banner-swiper", {
             this.classList.remove("bg-gray-100", "text-gray-600");
             this.classList.add("bg-primary", "text-white");
 
-            // 筛选产品
+            // Filter products
             items.forEach(item => {
                 const itemCat = item.dataset.category;
                 if (cat === "all" || itemCat === cat) {

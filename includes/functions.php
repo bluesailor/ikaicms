@@ -2070,7 +2070,7 @@ function renderFormTemplate(string $slug): string
 {
     $template = formTemplateModel()->findBySlug($slug);
     if (!$template) {
-        return '<!-- 表单不存在: ' . e($slug) . ' -->';
+        return '<!-- Form not found: ' . e($slug) . ' -->';
     }
 
     $fieldsRaw = $template['fields'] ?? '';

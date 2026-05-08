@@ -6,7 +6,6 @@
 PRAGMA foreign_keys = OFF;
 
 -- -----------------------------------------------------------
--- 用户表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_users;
 CREATE TABLE yikai_users (
@@ -28,7 +27,6 @@ CREATE INDEX idx_users_status ON yikai_users(status);
 CREATE INDEX idx_users_role ON yikai_users(role_id);
 
 -- -----------------------------------------------------------
--- 角色表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_roles;
 CREATE TABLE yikai_roles (
@@ -41,7 +39,6 @@ CREATE TABLE yikai_roles (
 );
 
 -- -----------------------------------------------------------
--- 栏目表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_channels;
 CREATE TABLE yikai_channels (
@@ -143,7 +140,6 @@ CREATE INDEX idx_contents_hot ON yikai_contents(is_hot);
 CREATE INDEX idx_contents_lang ON yikai_contents(lang);
 
 -- -----------------------------------------------------------
--- 媒体库
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_media;
 CREATE TABLE yikai_media (
@@ -166,7 +162,6 @@ CREATE INDEX idx_media_admin ON yikai_media(admin_id);
 CREATE INDEX idx_media_md5 ON yikai_media(md5);
 
 -- -----------------------------------------------------------
--- 配置表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_settings;
 CREATE TABLE yikai_settings (
@@ -183,7 +178,6 @@ CREATE TABLE yikai_settings (
 CREATE INDEX idx_settings_group ON yikai_settings("group");
 
 -- -----------------------------------------------------------
--- 表单数据
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_forms;
 CREATE TABLE yikai_forms (
@@ -212,7 +206,6 @@ CREATE INDEX idx_forms_product ON yikai_forms(product_id);
 CREATE INDEX idx_forms_source ON yikai_forms(source);
 
 -- -----------------------------------------------------------
--- 操作日志
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_admin_logs;
 CREATE TABLE yikai_admin_logs (
@@ -234,7 +227,6 @@ CREATE INDEX idx_logs_module ON yikai_admin_logs(module);
 CREATE INDEX idx_logs_created ON yikai_admin_logs(created_at);
 
 -- -----------------------------------------------------------
--- 合作伙伴
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_links;
 CREATE TABLE yikai_links (
@@ -253,7 +245,6 @@ CREATE INDEX idx_links_sort ON yikai_links(sort_order);
 CREATE INDEX idx_links_lang ON yikai_links(lang);
 
 -- -----------------------------------------------------------
--- 轮播图
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_banners;
 CREATE TABLE yikai_banners (
@@ -282,7 +273,6 @@ CREATE INDEX idx_banners_status ON yikai_banners(status);
 CREATE INDEX idx_banners_sort ON yikai_banners(sort_order);
 
 -- -----------------------------------------------------------
--- 轮播图分组
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_banner_groups;
 CREATE TABLE yikai_banner_groups (
@@ -298,13 +288,7 @@ CREATE TABLE yikai_banner_groups (
 );
 CREATE UNIQUE INDEX uk_banner_groups_slug ON yikai_banner_groups(slug);
 
-INSERT INTO yikai_banner_groups VALUES (1, '首页', 'home', 650, 300, 5000, 0, 1, 0);
-INSERT INTO yikai_banner_groups VALUES (2, '关于我们', 'about', 500, 250, 5000, 1, 1, 0);
-INSERT INTO yikai_banner_groups VALUES (3, '产品中心', 'product', 500, 250, 5000, 2, 1, 0);
-INSERT INTO yikai_banner_groups VALUES (4, '案例展示', 'case', 500, 250, 5000, 3, 1, 0);
-
 -- -----------------------------------------------------------
--- 文章分类
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_article_categories;
 CREATE TABLE yikai_article_categories (
@@ -326,7 +310,6 @@ CREATE INDEX idx_article_cat_status ON yikai_article_categories(status);
 CREATE INDEX idx_article_cat_sort ON yikai_article_categories(sort_order);
 
 -- -----------------------------------------------------------
--- 文章表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_articles;
 CREATE TABLE yikai_articles (
@@ -359,7 +342,6 @@ CREATE INDEX idx_articles_top ON yikai_articles(is_top);
 CREATE INDEX idx_articles_recommend ON yikai_articles(is_recommend);
 
 -- -----------------------------------------------------------
--- 产品分类
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_product_categories;
 CREATE TABLE yikai_product_categories (
@@ -385,7 +367,6 @@ CREATE INDEX idx_product_cat_status ON yikai_product_categories(status);
 CREATE INDEX idx_product_cat_sort ON yikai_product_categories(sort_order);
 
 -- -----------------------------------------------------------
--- 产品表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_products;
 CREATE TABLE yikai_products (
@@ -428,7 +409,6 @@ CREATE INDEX idx_products_sort ON yikai_products(sort_order);
 CREATE INDEX idx_products_lang ON yikai_products(lang);
 
 -- -----------------------------------------------------------
--- 相册
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_albums;
 CREATE TABLE yikai_albums (
@@ -449,7 +429,6 @@ CREATE INDEX idx_albums_status ON yikai_albums(status);
 CREATE INDEX idx_albums_sort ON yikai_albums(sort_order DESC, id DESC);
 
 -- -----------------------------------------------------------
--- 相册图片
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_album_photos;
 CREATE TABLE yikai_album_photos (
@@ -467,7 +446,6 @@ CREATE INDEX idx_album_photos_album ON yikai_album_photos(album_id);
 CREATE INDEX idx_album_photos_sort ON yikai_album_photos(sort_order DESC, id DESC);
 
 -- -----------------------------------------------------------
--- 下载分类
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_download_categories;
 CREATE TABLE yikai_download_categories (
@@ -480,7 +458,6 @@ CREATE TABLE yikai_download_categories (
 );
 
 -- -----------------------------------------------------------
--- 下载管理
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_downloads;
 CREATE TABLE yikai_downloads (
@@ -510,7 +487,6 @@ CREATE INDEX idx_downloads_sort ON yikai_downloads(sort_order DESC, id DESC);
 CREATE INDEX idx_downloads_lang ON yikai_downloads(lang);
 
 -- -----------------------------------------------------------
--- 招聘管理
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_jobs;
 CREATE TABLE yikai_jobs (
@@ -542,7 +518,6 @@ CREATE INDEX idx_jobs_top ON yikai_jobs(is_top DESC, sort_order DESC, id DESC);
 CREATE INDEX idx_jobs_lang ON yikai_jobs(lang);
 
 -- -----------------------------------------------------------
--- 发展历程时间线
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_timelines;
 CREATE TABLE yikai_timelines (
@@ -567,7 +542,6 @@ CREATE INDEX idx_timelines_sort ON yikai_timelines(sort_order DESC, year DESC, m
 CREATE INDEX idx_timelines_lang ON yikai_timelines(lang);
 
 -- -----------------------------------------------------------
--- 插件表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_plugins;
 CREATE TABLE yikai_plugins (
@@ -579,7 +553,6 @@ CREATE TABLE yikai_plugins (
 );
 
 -- -----------------------------------------------------------
--- 前台会员表
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_members;
 CREATE TABLE yikai_members (
@@ -598,7 +571,6 @@ CREATE TABLE yikai_members (
 CREATE UNIQUE INDEX uk_members_email ON yikai_members(email);
 
 -- -----------------------------------------------------------
--- 表单模板
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_form_templates;
 CREATE TABLE yikai_form_templates (
@@ -612,7 +584,6 @@ CREATE TABLE yikai_form_templates (
 );
 
 -- -----------------------------------------------------------
--- 品牌管理
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_brands;
 CREATE TABLE yikai_brands (
@@ -631,7 +602,6 @@ CREATE TABLE yikai_brands (
 CREATE INDEX idx_brands_lang ON yikai_brands(lang);
 
 -- -----------------------------------------------------------
--- 产品标签
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_product_tags;
 CREATE TABLE yikai_product_tags (
@@ -648,7 +618,6 @@ CREATE INDEX idx_product_tags_group ON yikai_product_tags(group_name);
 CREATE INDEX idx_product_tags_lang ON yikai_product_tags(lang);
 
 -- -----------------------------------------------------------
--- 产品标签关联
 -- -----------------------------------------------------------
 DROP TABLE IF EXISTS yikai_product_tag_map;
 CREATE TABLE yikai_product_tag_map (
@@ -657,10 +626,6 @@ CREATE TABLE yikai_product_tag_map (
     PRIMARY KEY (product_id, tag_id)
 );
 CREATE INDEX idx_tag_map_tag ON yikai_product_tag_map(tag_id);
-
-INSERT INTO yikai_form_templates (id, name, slug, fields, success_message, status, created_at) VALUES
-(1, '联系表单', 'contact', '[{"key":"name","label":"姓名","type":"text","required":true,"placeholder":"请输入姓名"},{"key":"phone","label":"电话","type":"tel","required":true,"placeholder":"请输入电话"},{"key":"email","label":"邮箱","type":"email","required":false,"placeholder":"请输入邮箱"},{"key":"company","label":"公司","type":"text","required":false,"placeholder":"请输入公司名称"},{"key":"content","label":"留言内容","type":"textarea","required":true,"placeholder":"请输入留言内容"}]', '提交成功，感谢您的反馈！', 1, strftime('%s','now')),
-(2, '产品询盘', 'product-inquiry', '[{"key":"name","label":"您的姓名","type":"text","required":true,"placeholder":"请输入姓名"},{"key":"phone","label":"联系电话","type":"tel","required":true,"placeholder":"请输入电话"},{"key":"email","label":"邮箱地址","type":"email","required":false,"placeholder":"请输入邮箱"},{"key":"company","label":"公司名称","type":"text","required":false,"placeholder":"请输入公司名称"},{"key":"content","label":"请描述您的需求","type":"textarea","required":true,"placeholder":"请描述您的需求"}]', '询盘已提交，我们将尽快与您联系！', 1, strftime('%s','now'));
 
 -- -----------------------------------------------------------
 -- AI 调用日志
@@ -712,182 +677,13 @@ CREATE INDEX idx_extfields_owner ON yikai_extfields (owner_type, status, sort_or
 PRAGMA foreign_keys = ON;
 
 -- ============================================================
--- 初始数据
 -- ============================================================
 
--- 默认角色
-INSERT INTO yikai_roles (name, description, permissions, status, created_at) VALUES
-('超级管理员', '拥有全部权限', '["*"]', 1, strftime('%s','now')),
-('编辑', '内容编辑权限', '["content","media"]', 1, strftime('%s','now')),
-('运营', '运营管理权限', '["content","media","form","banner","link"]', 1, strftime('%s','now'));
-
--- 默认配置
-INSERT INTO yikai_settings ("group", "key", value, type, name, tip, sort_order) VALUES
-('basic', 'site_url', '', 'text', '站点域名', '如 https://www.example.com（不含末尾斜杠）', 0),
-('basic', 'site_name', 'Yikai CMS', 'text', '站点名称', '', 1),
-('basic', 'site_keywords', '企业官网,CMS系统,内容管理', 'textarea', 'SEO关键词', '多个关键词用逗号分隔', 2),
-('basic', 'site_description', '专业的企业内容管理系统，助力企业数字化转型', 'textarea', 'SEO描述', '', 3),
-('basic', 'site_logo', '/images/logo.png', 'image', '站点Logo', '', 4),
-('basic', 'site_favicon', '/favicon.ico', 'image', '站点图标', '浏览器标签页图标', 5),
-('basic', 'site_icp', '', 'text', 'ICP备案号', '', 5),
-('basic', 'site_police', '', 'text', '公安备案号', '', 6),
-('basic', 'primary_color', '#3B82F6', 'color', '主题色', '十六进制颜色值', 7),
-('basic', 'secondary_color', '#1D4ED8', 'color', '次要色', '十六进制颜色值', 8),
-('basic', 'banner_height_pc', '650', 'number', '轮播图高度(PC)', '单位像素', 9),
-('basic', 'banner_height_mobile', '300', 'number', '轮播图高度(移动)', '单位像素', 10),
-('basic', 'product_layout', 'sidebar', 'select', '产品列表版式', '', 11),
-('basic', 'show_price', '0', 'select', '显示产品价格', '前台是否显示产品价格', 12),
-('basic', 'product_default_sort', 'default', 'select', '产品默认排序', '前台产品列表的默认排序方式', 15),
-('basic', 'product_sort_options', '["default","newest","views"]', 'text', '可用排序选项', '前台显示的排序选项（JSON数组）', 16),
-('basic', 'site_lang', 'zh-CN', 'select', '前台语言', '前台界面显示语言', 13),
-('basic', 'admin_lang', 'zh-CN', 'select', '后台语言', '后台界面显示语言', 14),
--- 系统
-('system', 'cms_version', '1.4.0', 'text', 'CMS版本号', '系统自动维护，请勿手动修改', 0),
-('system', 'html_cache_enabled', '0', 'select', 'HTML缓存', '{"0":"关闭","1":"开启"}', 10),
-('system', 'html_cache_ttl', '300', 'number', '缓存有效期（秒）', '', 11),
--- 联系方式
-('contact', 'contact_cards', '[{"icon":"phone","label":"联系电话","value":"400-888-8888"},{"icon":"email","label":"电子邮箱","value":"contact@example.com"},{"icon":"location","label":"公司地址","value":"上海市浦东新区XX路XX号"}]', 'contact_cards', '联系信息卡片', '联系我们页面顶部展示的信息卡片', 0),
-('contact', 'contact_phone', '400-888-8888', 'text', '联系电话', '', 1),
-('contact', 'contact_email', 'contact@example.com', 'text', '联系邮箱', '', 2),
-('contact', 'contact_address', '上海市浦东新区XX路XX号', 'textarea', '联系地址', '', 3),
-('contact', 'contact_qrcode', '', 'image', '微信二维码', '', 4),
-('contact', 'contact_map', '', 'image', '地图图片', '', 5),
-('contact', 'contact_form_title', '在线留言', 'text', '表单标题', '', 10),
-('contact', 'contact_form_desc', '', 'textarea', '表单描述', '显示在标题下方的说明文字', 11),
-('contact', 'contact_form_fields', '[{"key":"name","label":"您的姓名","type":"text","required":true,"enabled":true},{"key":"phone","label":"联系电话","type":"tel","required":true,"enabled":true},{"key":"email","label":"电子邮箱","type":"email","required":false,"enabled":true},{"key":"company","label":"公司名称","type":"text","required":false,"enabled":true},{"key":"content","label":"留言内容","type":"textarea","required":true,"enabled":true}]', 'contact_form_fields', '表单字段', '设置表单显示的字段', 12),
-('contact', 'contact_form_success', '提交成功，我们会尽快与您联系！', 'text', '提交成功提示', '', 13),
--- 首页设置
-('home', 'home_about_content', '我们是一家专注于企业数字化转型的科技公司，致力于为客户提供优质的产品与服务。经过多年发展，已成为行业内具有影响力的企业之一。', 'textarea', '关于我们简介', '首页关于我们区块的介绍文字', 1),
-('home', 'home_about_image', 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80', 'image', '关于我们图片', '首页关于我们区块的图片', 2),
-('home', 'home_about_tag_title', '专业服务', 'text', '角标标题', '图片左下角标签标题', 3),
-('home', 'home_about_tag_desc', '品质 · 创新 · 共赢', 'text', '角标描述', '图片左下角标签描述', 4),
-('home', 'home_stat_1_num', '10+', 'text', '统计数字1', '', 5),
-('home', 'home_stat_1_text', '年行业经验', 'text', '统计文字1', '', 6),
-('home', 'home_about_layout', 'text_left', 'select', '关于我们布局', '左文右图或左图右文', 6),
-('home', 'home_stat_2_num', '1000+', 'text', '统计数字2', '', 7),
-('home', 'home_stat_2_text', '服务客户', 'text', '统计文字2', '', 8),
-('home', 'home_stat_3_num', '50+', 'text', '统计数字3', '', 9),
-('home', 'home_stat_3_text', '专业团队', 'text', '统计文字3', '', 10),
-('home', 'home_stat_4_num', '100%', 'text', '统计数字4', '', 11),
-('home', 'home_stat_4_text', '客户满意', 'text', '统计文字4', '', 12),
-('home', 'home_stat_bg', '', 'image', '统计区背景图', '数据统计横栏的背景图片', 12),
-('home', 'home_advantage_desc', '专业团队，优质服务，值得信赖', 'text', '优势区块描述', '', 13),
-('home', 'home_adv_1_icon', 'check-circle', 'icon', '优势1图标', '', 14),
-('home', 'home_adv_1_title', '品质保证', 'text', '优势1标题', '', 14),
-('home', 'home_adv_1_desc', '严格把控产品质量，确保每一件产品都符合标准', 'text', '优势1描述', '', 15),
-('home', 'home_adv_2_icon', 'academic-cap', 'icon', '优势2图标', '', 16),
-('home', 'home_adv_2_title', '技术领先', 'text', '优势2标题', '', 16),
-('home', 'home_adv_2_desc', '持续研发创新，保持技术的领先优势', 'text', '优势2描述', '', 17),
-('home', 'home_adv_3_icon', 'briefcase', 'icon', '优势3图标', '', 18),
-('home', 'home_adv_3_title', '专业服务', 'text', '优势3标题', '', 18),
-('home', 'home_adv_3_desc', '专业团队7x24小时技术支持服务', 'text', '优势3描述', '', 19),
-('home', 'home_adv_4_icon', 'users', 'icon', '优势4图标', '', 20),
-('home', 'home_adv_4_title', '合作共赢', 'text', '优势4标题', '', 20),
-('home', 'home_adv_4_desc', '与客户建立长期合作关系，实现互利共赢', 'text', '优势4描述', '', 21),
-('home', 'home_cta_title', '准备好开始合作了吗？', 'text', 'CTA标题', '行动号召区块标题', 22),
-('home', 'home_cta_desc', '联系我们，获取专业的解决方案', 'text', 'CTA描述', '行动号召区块描述', 23),
-('home', 'home_show_links', '1', 'select', '显示合作伙伴', '是否在页脚显示合作伙伴', 24),
-('home', 'home_links_title', '合作伙伴', 'text', '链接区块标题', '页脚合作伙伴区块的标题', 25),
-('home', 'home_testimonials', '[{"avatar":"","name":"张先生","company":"某科技有限公司","content":"非常专业的服务团队，合作非常愉快！产品质量令人满意。"},{"avatar":"","name":"李女士","company":"某贸易公司","content":"产品质量优秀，售后服务及时，值得信赖的合作伙伴。"},{"avatar":"","name":"王总","company":"某集团公司","content":"多年合作，一直保持高品质的服务水准，强烈推荐！"}]', 'home_testimonials', '客户评价', '首页客户评价区块数据', 26),
-('home', 'home_testimonials_title', '客户评价', 'text', '评价区标题', '客户评价区块的标题', 27),
-('home', 'home_testimonials_desc', '听听合作伙伴怎么说', 'text', '评价区描述', '客户评价区块的副标题', 28),
-('home', 'home_show_banner', '1', 'select', '显示轮播图', '首页Banner轮播图区块', 30),
-('home', 'home_show_about', '1', 'select', '显示关于我们', '首页关于我们简介区块', 31),
-('home', 'home_show_stats', '1', 'select', '显示数据统计', '首页数据统计横栏', 32),
-('home', 'home_show_channels', '1', 'select', '显示栏目区块', '产品中心、新闻资讯等首页展示栏目', 33),
-('home', 'home_show_advantage', '1', 'select', '显示优势展示', '首页我们的优势区块', 34),
-('home', 'home_show_cta', '1', 'select', '显示行动号召', '首页底部CTA行动号召区块', 35),
-('home', 'home_blocks_config', '[{"type":"banner","enabled":true},{"type":"about","enabled":true},{"type":"stats","enabled":true},{"type":"channels","enabled":true},{"type":"testimonials","enabled":true},{"type":"advantage","enabled":true},{"type":"cta","enabled":true}]', 'home_blocks', '首页区块配置', '首页区块顺序与显示配置', 40),
--- 页头设置
-('header', 'topbar_enabled', '0', 'select', '显示顶部通栏', 'Logo上方的通栏区域', 0),
-('header', 'topbar_bg_color', '#f3f4f6', 'color', '通栏背景色', '顶部通栏背景颜色', 1),
-('header', 'topbar_left', '', 'code', '通栏左侧内容', '支持HTML代码，如电话、公告等', 2),
-('header', 'show_member_entry', '0', 'select', '显示会员入口', '导航栏显示会员登录/注册入口', 3),
-('header', 'header_nav_layout', 'right', 'select', '导航布局', 'Logo右侧或Logo下方通栏', 10),
-('header', 'header_sticky', '0', 'select', '固定顶部', '导航栏是否固定在页面顶部', 11),
-('header', 'header_bg_color', '#ffffff', 'color', '背景颜色', '十六进制颜色值', 12),
-('header', 'header_text_color', '#4b5563', 'color', '文字颜色', '十六进制颜色值', 13),
--- 页脚设置
-('footer', 'footer_columns', '[{"title":"关于我们","content":"{{site_description}}","col_span":2},{"title":"联系方式","content":"{{contact_info}}","col_span":1},{"title":"关注我们","content":"{{qrcode}}","col_span":1}]', 'footer_columns', '页脚栏目', '自定义页脚各列内容', 1),
-('footer', 'footer_bg_color', '#1f2937', 'color', '背景颜色', '十六进制颜色值', 2),
-('footer', 'footer_bg_image', '', 'image', '背景图片', '设置后覆盖背景颜色', 3),
-('footer', 'footer_text_color', '#9ca3af', 'color', '文字颜色', '十六进制颜色值', 4),
-('footer', 'footer_nav', '[{"title":"","links":[{"name":"隐私政策","url":"/privacy.html"},{"name":"服务条款","url":"/terms.html"}]}]', 'footer_nav', '页脚导航', '版权栏上方的导航链接分组', 5),
--- 代码注入
-('code', 'custom_head_code', '', 'code', 'Head 代码', '插入到 </head> 前的代码', 1),
-('code', 'custom_body_code', '', 'code', 'Body 代码', '插入到 </body> 前的代码', 2),
--- 邮件设置
-('email', 'smtp_host', '', 'text', 'SMTP服务器', '如：smtp.qq.com', 1),
-('email', 'smtp_port', '465', 'text', 'SMTP端口', 'SSL常用465，TLS常用587', 2),
-('email', 'smtp_secure', 'ssl', 'text', '加密方式', 'ssl/tls/空', 3),
-('email', 'smtp_user', '', 'text', 'SMTP用户名', '通常是完整邮箱地址', 4),
-('email', 'smtp_pass', '', 'text', 'SMTP密码', 'QQ邮箱需使用授权码', 5),
-('email', 'mail_from', '', 'text', '发件人邮箱', '留空则使用SMTP用户名', 6),
-('email', 'mail_from_name', '', 'text', '发件人名称', '留空使用站点名称', 7),
-('email', 'mail_admin', '', 'text', '管理员邮箱', '接收表单提交通知', 8),
-('email', 'mail_notify_form', '0', 'text', '表单提交通知', '1开启/0关闭', 9),
--- 会员设置
-('member', 'allow_member_register', '0', 'switch', '允许会员注册', '是否允许前台会员注册', 1),
-('member', 'download_require_login', '0', 'switch', '下载需要登录', '下载文件是否需要会员登录', 2),
--- 翻译设置
-('translate', 'translate_api', 'deepl', 'select', '翻译API', '选择翻译服务提供商', 1),
-('translate', 'translate_api_key', '', 'text', 'API Key', 'DeepL: 注册获取免费Key', 2),
--- 邮件模板
-('email', 'mail_tpl_register_subject', '欢迎注册 — {{site_name}}', 'textarea', 'mail_tpl_register_subject', '', 20),
-('email', 'mail_tpl_register_body', '{{username}}，您好！\n\n欢迎注册 {{site_name}}！您的帐号已创建成功。\n\n请登录会员中心管理您的帐号：\n{{site_url}}/member/\n\n如有任何问题，请随时联系我们。\n\n{{site_name}}\n{{date}}', 'textarea', 'mail_tpl_register_body', '', 21),
-('email', 'mail_tpl_forgot_subject', '密码找回 — {{site_name}}', 'textarea', 'mail_tpl_forgot_subject', '', 22),
-('email', 'mail_tpl_forgot_body', '{{username}}，您好！\n\n您正在进行密码找回操作，请点击以下链接重置密码：\n{{reset_link}}\n\n链接有效期为 30 分钟，如非本人操作请忽略此邮件。\n\n{{site_name}}\n{{date}}', 'textarea', 'mail_tpl_forgot_body', '', 23),
-('email', 'mail_tpl_reset_subject', '密码已重置 — {{site_name}}', 'textarea', 'mail_tpl_reset_subject', '', 24),
-('email', 'mail_tpl_reset_body', '{{username}}，您好！\n\n您的密码已成功重置。如非本人操作，请立即联系我们修改密码。\n\n{{site_name}}\n{{date}}', 'textarea', 'mail_tpl_reset_body', '', 25),
-('email', 'mail_tpl_inquiry_subject', '新询盘通知：{{product_title}} — {{site_name}}', 'textarea', 'mail_tpl_inquiry_subject', '', 26),
-('email', 'mail_tpl_inquiry_body', '您收到一条新的产品询盘：\n\n产品：{{product_title}}\n姓名：{{name}}\n电话：{{phone}}\n邮箱：{{email}}\n公司：{{company}}\n内容：{{content}}\n\n时间：{{date}}\nIP：{{ip}}\n\n后台查看：{{site_url}}/admin/form.php', 'textarea', 'mail_tpl_inquiry_body', '', 27);
-
 -- ============================================================
--- 初始栏目（标准企业站）
 -- ============================================================
 
 -- @demo:start
-INSERT INTO yikai_channels (id, parent_id, name, slug, type, album_id, description, is_nav, is_home, status, is_system, sort_order, created_at) VALUES
--- 关于我们
-(1, 0, '关于我们', 'about', 'page', 0, '了解我们的企业文化与发展历程', 1, 0, 1, 1, 1, strftime('%s','now')),
-(2, 1, '公司简介', 'company', 'page', 0, '公司基本情况介绍', 1, 0, 1, 1, 1, strftime('%s','now')),
-(3, 1, '企业文化', 'culture', 'page', 0, '企业核心价值观与文化理念', 1, 0, 1, 1, 2, strftime('%s','now')),
-(4, 1, '发展历程', 'history', 'page', 0, '企业发展的重要里程碑', 1, 0, 1, 1, 3, strftime('%s','now')),
-(23, 1, '荣誉资质', 'honor', 'album', 7, '企业获得的荣誉与资质认证', 1, 0, 1, 1, 4, strftime('%s','now')),
-(28, 1, '组织架构', 'organization', 'page', 0, '公司组织架构', 1, 0, 1, 1, 5, strftime('%s','now')),
 
--- 产品中心
-(6, 0, '产品中心', 'product', 'product', 0, '我们的产品与服务', 1, 1, 1, 1, 2, strftime('%s','now')),
-
--- 解决方案
-(9, 0, '解决方案', 'solution', 'case', 0, '行业解决方案与成功案例', 1, 1, 1, 1, 3, strftime('%s','now')),
-(10, 9, '行业方案', 'industry', 'case', 0, '针对不同行业的解决方案', 1, 0, 1, 1, 1, strftime('%s','now')),
-(11, 9, '成功案例', 'cases', 'case', 0, '客户成功案例展示', 1, 0, 1, 1, 2, strftime('%s','now')),
-
--- 新闻资讯
-(12, 0, '新闻资讯', 'news', 'list', 0, '最新动态与行业资讯', 1, 1, 1, 1, 4, strftime('%s','now')),
-(13, 12, '公司新闻', 'company-news', 'list', 0, '公司最新动态', 1, 0, 1, 1, 1, strftime('%s','now')),
-(14, 12, '行业动态', 'industry-news', 'list', 0, '行业最新资讯', 1, 0, 1, 1, 2, strftime('%s','now')),
-
--- 服务支持
-(15, 0, '服务支持', 'service', 'page', 0, '专业的服务与技术支持', 1, 0, 1, 1, 5, strftime('%s','now')),
-(16, 15, '服务流程', 'process', 'page', 0, '标准化服务流程', 1, 0, 1, 1, 1, strftime('%s','now')),
-(17, 15, '常见问题', 'faq', 'list', 0, '常见问题解答', 1, 0, 1, 1, 2, strftime('%s','now')),
-(18, 15, '下载中心', 'download', 'download', 0, '资料与软件下载', 1, 0, 1, 1, 3, strftime('%s','now')),
-
--- 人才招聘
-(19, 0, '人才招聘', 'job', 'job', 0, '加入我们，共创未来', 1, 0, 1, 1, 6, strftime('%s','now')),
-
--- 联系我们
-(20, 0, '联系我们', 'contact', 'page', 0, '联系方式与在线留言', 1, 0, 1, 1, 7, strftime('%s','now')),
-
--- 隐私政策
-(29, 0, '隐私政策', 'privacy', 'page', 0, '网站隐私政策', 0, 0, 1, 1, 98, strftime('%s','now')),
-
--- 服务条款
-(30, 0, '服务条款', 'terms', 'page', 0, '网站服务条款', 0, 0, 1, 1, 99, strftime('%s','now'));
-
--- 设置关于我们页面内容
 UPDATE yikai_channels SET content = '<h2>关于我们</h2>
 <p>我们是一家专注于企业数字化转型的科技公司，致力于为客户提供优质的产品与服务。公司成立于2010年，总部位于上海，是一家集研发、生产、销售、服务于一体的高新技术企业。</p>
 
@@ -908,243 +704,8 @@ UPDATE yikai_channels SET content = '<h2>关于我们</h2>
 -- ============================================================
 
 -- ============================================================
--- 初始示例内容
 -- ============================================================
 
-INSERT INTO yikai_contents (channel_id, type, title, summary, content, cover, is_top, is_recommend, is_hot, views, status, publish_time, created_at, admin_id) VALUES
-
--- 关于我们 - 公司简介
-(2, 'article', '公司简介', '我们是一家专注于企业数字化转型的科技公司，致力于为客户提供优质的产品与服务。',
-'<h2>企业概况</h2>
-<p>公司成立于2010年，总部位于上海，是一家集研发、生产、销售、服务于一体的高新技术企业。经过多年发展，已成为行业内具有影响力的企业之一。</p>
-
-<h2>核心优势</h2>
-<ul>
-<li><strong>技术领先</strong>：拥有多项核心专利技术</li>
-<li><strong>品质保证</strong>：通过ISO9001质量管理体系认证</li>
-<li><strong>服务专业</strong>：7x24小时技术支持</li>
-<li><strong>经验丰富</strong>：服务超过1000家企业客户</li>
-</ul>
-
-<h2>发展愿景</h2>
-<p>以技术创新为驱动，以客户需求为导向，致力于成为行业领先的解决方案提供商。</p>',
-'', 1, 1, 0, 100, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 关于我们 - 企业文化
-(3, 'article', '企业文化', '创新、务实、共赢是我们的核心价值观。',
-'<h2>使命</h2>
-<p>用科技创造价值，为客户提供卓越的产品与服务。</p>
-
-<h2>愿景</h2>
-<p>成为行业最受尊敬的企业，引领行业发展。</p>
-
-<h2>核心价值观</h2>
-<ul>
-<li><strong>创新</strong>：持续创新，追求卓越</li>
-<li><strong>务实</strong>：脚踏实地，精益求精</li>
-<li><strong>共赢</strong>：合作共赢，共同发展</li>
-<li><strong>诚信</strong>：诚实守信，言行一致</li>
-</ul>',
-'', 0, 0, 0, 50, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 产品中心 - 示例产品1
-(7, 'product', '智能管理系统 Pro', '新一代企业智能管理系统，助力企业数字化升级',
-'<h2>产品介绍</h2>
-<p>智能管理系统 Pro 是我们推出的新一代企业管理解决方案，集成了先进的人工智能技术，帮助企业实现智能化运营。</p>
-
-<h2>核心功能</h2>
-<ul>
-<li>智能数据分析</li>
-<li>自动化流程管理</li>
-<li>多端协同办公</li>
-<li>实时监控预警</li>
-</ul>
-
-<h2>产品优势</h2>
-<p>采用云原生架构，支持弹性扩展，安全可靠，部署便捷。</p>',
-'https://picsum.photos/seed/content-product/1200/800', 1, 1, 1, 500, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 产品中心 - 示例产品2
-(7, 'product', '数据分析平台', '强大的数据分析与可视化平台',
-'<h2>产品介绍</h2>
-<p>数据分析平台提供全方位的数据采集、处理、分析和可视化能力，帮助企业洞察业务本质。</p>
-
-<h2>核心功能</h2>
-<ul>
-<li>多源数据接入</li>
-<li>智能数据清洗</li>
-<li>可视化报表</li>
-<li>预测分析</li>
-</ul>',
-'https://picsum.photos/seed/content-product/1200/800', 0, 1, 0, 300, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 解决方案 - 示例案例
-(11, 'case', '某大型制造企业数字化转型项目', '帮助客户实现生产效率提升30%',
-'<h2>项目背景</h2>
-<p>客户是一家大型制造企业，面临生产效率低、管理成本高等问题，急需进行数字化转型。</p>
-
-<h2>解决方案</h2>
-<p>我们为客户量身定制了一套智能制造解决方案，包括：</p>
-<ul>
-<li>生产计划智能排程</li>
-<li>设备状态实时监控</li>
-<li>质量追溯系统</li>
-<li>供应链协同平台</li>
-</ul>
-
-<h2>实施效果</h2>
-<ul>
-<li>生产效率提升 30%</li>
-<li>运营成本降低 20%</li>
-<li>产品良率提高 15%</li>
-</ul>',
-'https://picsum.photos/seed/case-5-cover/1200/800', 1, 1, 0, 200, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 新闻资讯 - 公司新闻
-(13, 'article', '公司荣获"年度最佳科技创新奖"', '在刚刚结束的行业年度评选中，我公司凭借出色的技术创新能力荣获殊荣。',
-'<p>在日前举办的2024年度行业颁奖典礼上，我公司凭借在技术创新领域的突出表现，荣获"年度最佳科技创新奖"。</p>
-
-<p>此次获奖是对我们多年来坚持技术创新的肯定。公司始终将技术研发作为核心竞争力，每年投入大量资源进行产品研发和技术升级。</p>
-
-<p>公司CEO表示："这个奖项是对全体员工努力的认可，我们将继续保持创新精神，为客户创造更大价值。"</p>',
-'https://picsum.photos/seed/news-6/1200/675', 1, 1, 1, 800, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 新闻资讯 - 行业动态
-(14, 'article', '数字化转型趋势报告发布', '最新行业研究报告显示，企业数字化转型已成为必然趋势。',
-'<p>近日，某权威研究机构发布了《2024年企业数字化转型趋势报告》，报告指出：</p>
-
-<ul>
-<li>超过80%的企业已启动数字化转型</li>
-<li>云计算、大数据、AI成为转型三大核心技术</li>
-<li>预计到2025年，数字化投入将增长50%</li>
-</ul>
-
-<p>报告建议企业应尽早规划数字化战略，选择合适的技术合作伙伴，稳步推进转型进程。</p>',
-'https://picsum.photos/seed/news-7/1200/675', 0, 0, 0, 300, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 服务支持 - 服务流程
-(16, 'article', '服务流程', '标准化的服务流程，确保服务质量',
-'<h2>服务流程</h2>
-
-<h3>1. 需求沟通</h3>
-<p>深入了解客户需求，进行详细的需求分析和评估。</p>
-
-<h3>2. 方案设计</h3>
-<p>根据需求定制专属解决方案，提供详细的实施计划。</p>
-
-<h3>3. 项目实施</h3>
-<p>专业团队负责项目部署和实施，确保按时交付。</p>
-
-<h3>4. 培训交付</h3>
-<p>提供系统培训和使用指导，确保顺利上线。</p>
-
-<h3>5. 售后服务</h3>
-<p>7x24小时技术支持，定期回访和系统优化。</p>',
-'', 1, 0, 0, 150, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 服务支持 - 常见问题
-(17, 'article', '如何开始使用我们的产品？', '新用户快速入门指南',
-'<h2>快速入门步骤</h2>
-
-<ol>
-<li><strong>注册账号</strong>：访问官网，点击注册按钮完成账号注册</li>
-<li><strong>选择套餐</strong>：根据需求选择合适的产品套餐</li>
-<li><strong>系统配置</strong>：按照向导完成基础配置</li>
-<li><strong>开始使用</strong>：登录系统即可开始使用</li>
-</ol>
-
-<p>如有任何问题，请联系我们的客服团队。</p>',
-'', 0, 0, 0, 200, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 隐私政策
-(29, 'article', '隐私政策', '本隐私政策说明了我们如何收集、使用和保护您的个人信息。',
-'<h2>隐私政策</h2>
-<p>本隐私政策适用于本网站（以下简称"我们"）提供的所有服务。我们深知个人信息对您的重要性，并会尽全力保护您的个人信息安全。请您在使用我们的服务前，仔细阅读本隐私政策。</p>
-
-<h3>一、信息收集</h3>
-<p>我们可能会收集以下类型的信息：</p>
-<ul>
-<li><strong>个人身份信息</strong>：如姓名、电子邮件地址、电话号码等，仅在您主动提交表单或注册时收集。</li>
-<li><strong>浏览信息</strong>：如IP地址、浏览器类型、访问时间、浏览页面等，通过日志自动记录。</li>
-<li><strong>Cookie信息</strong>：用于改善用户体验和网站功能。</li>
-</ul>
-
-<h3>二、信息使用</h3>
-<p>我们收集的信息将用于以下目的：</p>
-<ul>
-<li>提供、维护和改进我们的服务</li>
-<li>处理您的咨询和请求</li>
-<li>发送服务相关的通知</li>
-<li>防止欺诈和滥用行为</li>
-</ul>
-
-<h3>三、信息保护</h3>
-<p>我们采取合理的技术和管理措施保护您的个人信息安全，防止未经授权的访问、披露、修改或销毁。</p>
-
-<h3>四、信息共享</h3>
-<p>我们不会向第三方出售、出租或以其他方式分享您的个人信息，除非：</p>
-<ul>
-<li>获得您的明确同意</li>
-<li>法律法规要求</li>
-<li>保护我们的合法权益</li>
-</ul>
-
-<h3>五、Cookie使用</h3>
-<p>本网站使用Cookie来改善您的浏览体验。您可以通过浏览器设置管理Cookie偏好。禁用Cookie可能会影响网站部分功能的正常使用。</p>
-
-<h3>六、政策更新</h3>
-<p>我们可能会不时更新本隐私政策。更新后的政策将在本页面发布，建议您定期查阅。</p>
-
-<h3>七、联系我们</h3>
-<p>如果您对本隐私政策有任何疑问，请通过网站联系方式与我们取得联系。</p>',
-'', 0, 0, 0, 0, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
--- 服务条款
-(30, 'article', '服务条款', '使用本网站前请仔细阅读以下服务条款。',
-'<h2>服务条款</h2>
-<p>欢迎访问本网站。请在使用本网站服务之前，仔细阅读以下条款。使用本网站即表示您同意遵守以下条款和条件。</p>
-
-<h3>一、服务说明</h3>
-<p>本网站提供的信息和服务仅供参考。我们保留随时修改、暂停或终止服务的权利，恕不另行通知。</p>
-
-<h3>二、用户行为规范</h3>
-<p>在使用本网站时，您同意：</p>
-<ul>
-<li>不得利用本网站从事违法活动</li>
-<li>不得上传或传播含有病毒、恶意代码的内容</li>
-<li>不得侵犯他人的知识产权或其他合法权益</li>
-<li>不得干扰或破坏网站的正常运行</li>
-<li>遵守中华人民共和国相关法律法规</li>
-</ul>
-
-<h3>三、知识产权</h3>
-<p>本网站的所有内容，包括但不限于文字、图片、音频、视频、软件、程序、版面设计等，均受著作权法和其他知识产权法律法规保护。未经我们书面许可，任何人不得复制、转载、修改或用于商业用途。</p>
-
-<h3>四、免责声明</h3>
-<ul>
-<li>本网站内容仅供一般性参考，不构成任何建议或承诺。</li>
-<li>我们不保证网站内容的准确性、完整性和及时性。</li>
-<li>对于因使用本网站而产生的任何直接或间接损失，我们不承担责任。</li>
-<li>本网站可能包含第三方网站的链接，我们对这些网站的内容不承担任何责任。</li>
-</ul>
-
-<h3>五、账号管理</h3>
-<p>如果您在本网站注册了账号，您有责任妥善保管您的账号信息和密码。因账号信息泄露导致的任何损失由您自行承担。</p>
-
-<h3>六、隐私保护</h3>
-<p>我们重视您的隐私保护，具体请参阅我们的<a href="/privacy.html">隐私政策</a>。</p>
-
-<h3>七、条款修改</h3>
-<p>我们保留随时修改本服务条款的权利。修改后的条款将在本页面发布，继续使用本网站即表示您接受修改后的条款。</p>
-
-<h3>八、适用法律</h3>
-<p>本服务条款受中华人民共和国法律管辖。因本条款引起的任何争议，双方应友好协商解决。</p>
-
-<h3>九、联系方式</h3>
-<p>如果您对本服务条款有任何疑问，请通过网站联系方式与我们取得联系。</p>',
-'', 0, 0, 0, 0, 1, strftime('%s','now'), strftime('%s','now'), 1);
-
--- 案例 #5 补齐案例专用字段 + 多图画廊
 UPDATE yikai_contents SET
     images = 'https://picsum.photos/seed/case-5-a/1200/900
 https://picsum.photos/seed/case-5-b/1200/900
@@ -1161,195 +722,576 @@ WHERE type = 'case' AND title LIKE '某大型制造企业%';
 -- ============================================================
 
 -- ============================================================
--- 初始轮播图
 -- ============================================================
 
-INSERT INTO yikai_banners (position, title, subtitle, btn1_text, btn1_url, btn2_text, btn2_url, image, link_url, link_target, status, sort_order, created_at) VALUES
-('home', '数字化转型解决方案', '助力企业实现智能化升级', '关于我们', '/about.html', '下载中心', '/download.html', 'https://picsum.photos/1920/600?random=1', '/about.html', '_self', 1, 1, strftime('%s','now')),
-('home', '专业的技术服务团队', '7x24小时为您保驾护航', '查看详情', '/about.html', '', '', 'https://picsum.photos/1920/600?random=2', '/about.html', '_self', 1, 2, strftime('%s','now')),
-('home', '创新引领未来', '持续创新，追求卓越', '', '', '', '', 'https://picsum.photos/1920/600?random=3', '/about.html', '_self', 1, 3, strftime('%s','now'));
-
 -- ============================================================
--- 初始合作伙伴
 -- ============================================================
 
-INSERT INTO yikai_links (name, url, description, status, sort_order, created_at) VALUES
-('易开网-域名注册', 'https://www.yikai.cn', '域名注册服务', 1, 1, strftime('%s','now'));
-
 -- ============================================================
--- 初始产品分类
 -- ============================================================
 
-INSERT INTO yikai_product_categories (id, parent_id, name, slug, image, description, status, sort_order, created_at) VALUES
-(1, 0, '智能设备', 'smart-device', '', '智能硬件设备产品系列', 1, 1, strftime('%s','now')),
-(2, 0, '软件服务', 'software', '', '企业软件与云服务产品', 1, 2, strftime('%s','now')),
-(3, 1, '传感器模块', 'sensor-module', '', '各类工业传感器产品', 1, 1, strftime('%s','now')),
-(4, 1, '控制终端', 'control-terminal', '', '工业控制终端设备', 1, 2, strftime('%s','now'));
-
 -- ============================================================
--- 初始产品
 -- ============================================================
 
--- 产品示例：每个产品 6 张图（cover + 5 张 images，演示 lightbox 画廊）
-INSERT INTO yikai_products (id, category_id, title, subtitle, cover, images, summary, content, price, market_price, model, specs, tags, is_top, is_recommend, is_hot, is_new, views, status, sort_order, created_at, updated_at, admin_id) VALUES
-(1, 1, '智能物联网网关', '工业级高性能网关设备', 'https://picsum.photos/seed/p1-cover/800/600',
-'https://picsum.photos/seed/p1-a/1200/900
-https://picsum.photos/seed/p1-b/1200/900
-https://picsum.photos/seed/p1-c/1200/900
-https://picsum.photos/seed/p1-d/1200/900
-https://picsum.photos/seed/p1-e/1200/900',
-'新一代智能物联网网关，支持多协议接入，具备边缘计算能力，适用于工业物联网场景。',
-'<h2>产品介绍</h2>
-<p>本产品是一款高性能工业级物联网网关，专为工业4.0和智能制造场景设计。支持多种工业协议，具备强大的边缘计算能力。</p>
-
-<h2>核心功能</h2>
-<ul>
-<li>支持Modbus、OPC UA、MQTT等多种协议</li>
-<li>边缘计算，本地数据处理</li>
-<li>远程配置与监控</li>
-<li>工业级防护，IP65防护等级</li>
-</ul>
-
-<h2>技术参数</h2>
-<ul>
-<li>处理器：ARM Cortex-A53 四核</li>
-<li>内存：4GB DDR4</li>
-<li>存储：32GB eMMC</li>
-<li>工作温度：-40°C ~ 85°C</li>
-</ul>',
-2999.00, 3599.00, 'IOT-GW-100', '处理器:ARM Cortex-A53
-内存:4GB DDR4
-存储:32GB eMMC
-接口:4xRS485,2xCAN,2xETH', '物联网,网关,工业级', 1, 1, 1, 1, 520, 1, 1, strftime('%s','now'), strftime('%s','now'), 1),
-
-(2, 2, '企业管理云平台', '一站式企业数字化解决方案', 'https://picsum.photos/seed/p2-cover/800/600',
-'https://picsum.photos/seed/p2-a/1200/900
-https://picsum.photos/seed/p2-b/1200/900
-https://picsum.photos/seed/p2-c/1200/900
-https://picsum.photos/seed/p2-d/1200/900
-https://picsum.photos/seed/p2-e/1200/900',
-'集成ERP、CRM、OA等功能的企业管理云平台，助力企业数字化转型。',
-'<h2>平台介绍</h2>
-<p>企业管理云平台是一款面向中小企业的一站式数字化解决方案，整合了企业资源计划(ERP)、客户关系管理(CRM)、办公自动化(OA)等核心功能。</p>
-
-<h2>功能模块</h2>
-<ul>
-<li><strong>ERP模块</strong>：采购、库存、生产、财务一体化管理</li>
-<li><strong>CRM模块</strong>：客户管理、销售跟进、数据分析</li>
-<li><strong>OA模块</strong>：流程审批、日程管理、协同办公</li>
-<li><strong>BI报表</strong>：可视化数据分析与决策支持</li>
-</ul>
-
-<h2>服务优势</h2>
-<ul>
-<li>SaaS部署，无需服务器</li>
-<li>按需付费，灵活扩展</li>
-<li>7x24小时技术支持</li>
-<li>数据安全，多重备份</li>
-</ul>',
-0.00, 0.00, 'EMS-CLOUD-V3', '部署方式:SaaS云端
-用户数:不限
-存储空间:100GB起
-技术支持:7x24小时', '企业管理,云平台,SaaS', 0, 1, 0, 1, 380, 1, 2, strftime('%s','now'), strftime('%s','now'), 1),
-
-(3, 3, '温湿度传感器 TH-200', '高精度工业级温湿度传感器', 'https://picsum.photos/seed/p3-cover/800/600',
-'https://picsum.photos/seed/p3-a/1200/900
-https://picsum.photos/seed/p3-b/1200/900
-https://picsum.photos/seed/p3-c/1200/900
-https://picsum.photos/seed/p3-d/1200/900
-https://picsum.photos/seed/p3-e/1200/900',
-'采用瑞士进口芯片，精度±0.1°C，适用于工业环境监测、仓储管理、智慧农业等场景。',
-NULL, 0.00, 0.00, 'TH-200', NULL, '', 0, 0, 0, 1, 4, 1, 0, strftime('%s','now'), strftime('%s','now'), 1),
-
-(4, 3, '光照传感器 LS-100', '宽范围光照强度传感器', 'https://picsum.photos/seed/p4-cover/800/600',
-'https://picsum.photos/seed/p4-a/1200/900
-https://picsum.photos/seed/p4-b/1200/900
-https://picsum.photos/seed/p4-c/1200/900
-https://picsum.photos/seed/p4-d/1200/900
-https://picsum.photos/seed/p4-e/1200/900',
-'检测范围0-200000Lux，支持RS485/Modbus通信，广泛应用于智慧农业、气象监测。',
-NULL, 0.00, 0.00, 'LS-100', NULL, '', 0, 0, 1, 0, 4, 1, 0, strftime('%s','now'), strftime('%s','now'), 1),
-
-(5, 4, '工业边缘控制器 EC-500', '高性能边缘计算控制终端', 'https://picsum.photos/seed/p5-cover/800/600',
-'https://picsum.photos/seed/p5-a/1200/900
-https://picsum.photos/seed/p5-b/1200/900
-https://picsum.photos/seed/p5-c/1200/900
-https://picsum.photos/seed/p5-d/1200/900
-https://picsum.photos/seed/p5-e/1200/900',
-'搭载ARM Cortex-A72处理器，支持多种工业协议，可本地化运行AI推理模型。',
-NULL, 0.00, 0.00, 'EC-500', NULL, '', 0, 1, 1, 1, 0, 1, 0, strftime('%s','now'), strftime('%s','now'), 1),
-
-(6, 4, '智能网关控制器 GC-300', '多协议融合网关控制器', 'https://picsum.photos/seed/p6-cover/800/600',
-'https://picsum.photos/seed/p6-a/1200/900
-https://picsum.photos/seed/p6-b/1200/900
-https://picsum.photos/seed/p6-c/1200/900
-https://picsum.photos/seed/p6-d/1200/900
-https://picsum.photos/seed/p6-e/1200/900',
-'同时支持Wi-Fi/Zigbee/LoRa/4G通信，内置边缘计算能力，一站式设备管理。',
-NULL, 0.00, 0.00, 'GC-300', NULL, '', 0, 1, 0, 0, 0, 1, 0, strftime('%s','now'), strftime('%s','now'), 1);
-
 -- ============================================================
--- 初始相册
 -- ============================================================
 
-INSERT INTO yikai_albums (id, category_id, name, slug, cover, description, photo_count, sort_order, status, created_at) VALUES
-(7, 0, '荣誉资质', 'honor', '/images/cert-1.jpg', '企业荣誉证书与资质认证', 1, 100, 1, strftime('%s','now')),
-(8, 0, '团队风采', 'team', '', '团队活动与员工风采展示', 0, 90, 1, strftime('%s','now')),
-(9, 0, '企业环境', 'environment', '', '公司办公环境与生产车间', 0, 80, 1, strftime('%s','now'));
-
-INSERT INTO yikai_album_photos (album_id, title, image, thumb, description, sort_order, status, created_at) VALUES
-(7, '授权证书', '/images/cert-1.jpg', '/images/cert-1.jpg', '企业授权认证证书', 1, 1, strftime('%s','now'));
-
 -- ============================================================
--- 初始下载分类
 -- ============================================================
 
-INSERT INTO yikai_download_categories (id, name, description, sort_order, status, created_at) VALUES
-(1, '产品手册', '产品使用手册和说明文档', 1, 1, strftime('%s','now')),
-(2, '软件下载', '软件安装包和工具', 2, 1, strftime('%s','now')),
-(3, '技术文档', '技术规范和开发文档', 3, 1, strftime('%s','now'));
-
 -- ============================================================
--- 初始下载
 -- ============================================================
 
-INSERT INTO yikai_downloads (id, category_id, title, description, file_ext, download_count, sort_order, status, created_at) VALUES
-(1, 1, '产品使用手册 V2.0', '最新版产品使用说明书，包含安装、配置和常见问题解答。', 'pdf', 128, 100, 1, strftime('%s','now')),
-(2, 2, '客户端软件 V3.5.1', '适用于Windows系统的客户端软件安装包。', 'zip', 256, 90, 1, strftime('%s','now')),
-(3, 3, 'API接口文档', '完整的API接口说明文档，供开发者参考。', 'pdf', 89, 80, 1, strftime('%s','now'));
-
 -- ============================================================
--- 初始招聘
 -- ============================================================
 
-INSERT INTO yikai_jobs (id, title, location, salary, job_type, education, experience, headcount, requirements, is_top, sort_order, status, publish_time, created_at) VALUES
-(1, 'PHP高级开发工程师', '上海', '15k-25k', '全职', '本科', '3-5年', '2人', '1. 精通PHP语言，熟练使用Laravel/ThinkPHP等主流框架
-2. 熟悉MySQL数据库设计与优化
-3. 有大型项目开发经验者优先', 1, 100, 1, strftime('%s','now'), strftime('%s','now')),
-(2, '前端开发工程师', '上海', '10k-18k', '全职', '本科', '1-3年', '3人', '1. 精通HTML5/CSS3/JavaScript
-2. 熟练使用Vue/React等前端框架
-3. 有良好的代码规范和团队协作能力', 0, 90, 1, strftime('%s','now'), strftime('%s','now'));
-
 -- ============================================================
--- 初始时间线
 -- ============================================================
 
-INSERT INTO yikai_timelines (id, year, month, day, title, content, icon, color, sort_order, status, created_at) VALUES
-(1, 2024, 6, 0, '品牌升级', '完成品牌全面升级，推出全新视觉形象系统，开启发展新篇章。', 'rocket', 'blue', 100, 1, strftime('%s','now')),
-(2, 2024, 1, 0, '荣获殊荣', '荣获行业"最具创新力企业"称号，产品获得多项专利认证。', 'award', 'yellow', 95, 1, strftime('%s','now')),
-(3, 2023, 8, 0, '战略合作', '与多家知名企业达成战略合作，业务版图进一步扩大。', 'handshake', 'green', 90, 1, strftime('%s','now')),
-(4, 2023, 3, 0, '新品发布', '成功发布新一代核心产品，技术领先行业水平。', 'box', 'purple', 85, 1, strftime('%s','now')),
-(5, 2022, 10, 0, '团队扩展', '团队规模突破100人，建立完善的研发和服务体系。', 'users', 'cyan', 80, 1, strftime('%s','now')),
-(6, 2022, 5, 0, '获得融资', '完成A轮融资，获得知名投资机构数千万投资。', 'trending-up', 'red', 75, 1, strftime('%s','now')),
-(7, 2021, 0, 0, '业务拓展', '业务范围扩展至全国主要城市，服务客户超过500家。', 'map', 'indigo', 70, 1, strftime('%s','now')),
-(8, 2020, 0, 0, '公司成立', '公司正式成立，开始为客户提供专业服务。', 'flag', 'primary', 60, 1, strftime('%s','now'));
-
--- ============================================================
--- 初始插件
--- ============================================================
-
-INSERT INTO yikai_plugins (slug, status, installed_at, activated_at) VALUES
-('search-replace', 1, strftime('%s','now'), strftime('%s','now')),
-('db-backup', 1, strftime('%s','now'), strftime('%s','now')),
-('back-to-top', 1, strftime('%s','now'), strftime('%s','now'));
 -- @demo:end
+
+-- ============================================================
+-- 默认初始数据 (Japanese / 日本語デフォルトデータ)
+-- 自动从 ikai_cms 主数据库生成 — 编辑请重跑 _rebuild_install_sql.php
+-- ============================================================
+
+-- yikai_roles: 3 rows (auto-generated, ja default)
+INSERT INTO yikai_roles (`id`,`name`,`description`,`permissions`,`status`,`created_at`) VALUES
+(1,'超级管理员','拥有全部权限','["*"]',1,1770899116),
+(2,'编辑','内容编辑权限','["content","media"]',1,1770899116),
+(3,'运营','运营管理权限','["content","media","form","banner","link"]',1,1770899116);
+
+-- yikai_settings: 114 rows (auto-generated, ja default)
+INSERT INTO yikai_settings (`id`,`group`,`key`,`value`,`type`,`name`,`tip`,`options`,`sort_order`) VALUES
+(1,'basic','site_name','ikaiCMS','text','サイト名','',NULL,1),
+(2,'basic','site_keywords','企業サイト,CMS,コンテンツ管理','textarea','SEOキーワード','カンマ区切りで複数指定',NULL,2),
+(3,'basic','site_description','企業サイトの構築・運用に最適な軽量CMS','textarea','SEO説明文','',NULL,3),
+(4,'basic','site_logo','/images/logo.png','image','サイトロゴ','',NULL,4),
+(7,'basic','primary_color','#3B82F6','color','メインカラー','16進数カラーコード',NULL,6),
+(8,'basic','secondary_color','#1D4ED8','color','サブカラー','16進数カラーコード',NULL,7),
+(9,'contact','contact_phone','03-0000-0000','text','電話番号','',NULL,1),
+(10,'contact','contact_email','info@example.co.jp','text','メールアドレス','',NULL,2),
+(11,'contact','contact_address','東京都渋谷区XX町X丁目X-X','textarea','住所','',NULL,3),
+(12,'contact','contact_qrcode','','image','QRコード','',NULL,5),
+(13,'contact','contact_map','','image','地図画像','',NULL,6),
+(14,'banner','banner_height_pc',650,'number','スライド高さ(PC)','ピクセル単位',NULL,9),
+(15,'banner','banner_height_mobile',300,'number','スライド高さ(モバイル)','ピクセル単位',NULL,10),
+(16,'home','home_about_content','企業のデジタルトランスフォーメーションに特化したテクノロジー企業として、お客様に高品質な製品とサービスを提供しています。長年の実績を重ね、業界で影響力のある企業へと成長しました。','textarea','会社紹介文','トップページ「会社概要」セクションのテキスト',NULL,1),
+(17,'home','home_about_image','https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80','image','会社紹介画像','トップページ「会社概要」セクションの画像',NULL,2),
+(18,'home','home_about_tag_title','プロフェッショナルサービス','text','バッジタイトル','画像左下のバッジタイトル',NULL,3),
+(19,'home','home_about_tag_desc','品質・革新・共創','text','バッジ説明','画像左下のバッジ説明文',NULL,4),
+(20,'home','home_stat_1_num','10+','text','統計数値1','',NULL,5),
+(21,'home','home_stat_1_text','業界実績','text','統計テキスト1','',NULL,6),
+(22,'home','home_stat_2_num','1000+','text','統計数値2','',NULL,7),
+(23,'home','home_stat_2_text','導入実績','text','統計テキスト2','',NULL,8),
+(24,'home','home_stat_3_num','50+','text','統計数値3','',NULL,9),
+(25,'home','home_stat_3_text','専門チーム','text','統計テキスト3','',NULL,10),
+(26,'home','home_stat_4_num','100%','text','統計数値4','',NULL,11),
+(27,'home','home_stat_4_text','顧客満足度','text','統計テキスト4','',NULL,12),
+(28,'home','home_advantage_desc','プロフェッショナルチームによる高品質サービス','text','強み説明','',NULL,13),
+(29,'home','home_adv_1_title','品質保証','text','強み1タイトル','',NULL,14),
+(30,'home','home_adv_1_desc','厳格な品質管理で、すべての製品が基準を満たすことを保証します','text','強み1説明','',NULL,15),
+(31,'home','home_adv_2_title','技術力','text','強み2タイトル','',NULL,16),
+(32,'home','home_adv_2_desc','継続的な研究開発で、技術の優位性を維持します','text','強み2説明','',NULL,17),
+(33,'home','home_adv_3_title','専門サポート','text','強み3タイトル','',NULL,18),
+(34,'home','home_adv_3_desc','専門チームによる24時間365日テクニカルサポート','text','強み3説明','',NULL,19),
+(35,'home','home_adv_4_title','共創共栄','text','強み4タイトル','',NULL,20),
+(36,'home','home_adv_4_desc','お客様との長期的なパートナーシップで、互いの成長を実現します','text','強み4説明','',NULL,21),
+(37,'home','home_cta_title','お取引を始めませんか？','text','CTAタイトル','アクション誘導セクションのタイトル',NULL,22),
+(38,'home','home_cta_desc','お気軽にご相談ください。最適なソリューションをご提案します','text','CTA説明','アクション誘導セクションの説明',NULL,23),
+(39,'email','smtp_host','','text','SMTPサーバー','例: smtp.gmail.com',NULL,1),
+(40,'email','smtp_port',465,'text','SMTPポート','SSL:465、TLS:587',NULL,2),
+(41,'email','smtp_secure','ssl','text','暗号化方式','ssl/tls/空',NULL,3),
+(42,'email','smtp_user','','text','SMTPユーザー名','メールアドレス',NULL,4),
+(43,'email','smtp_pass','','text','SMTPパスワード','',NULL,5),
+(44,'email','mail_from','','text','送信元メール','空欄ならSMTPユーザー名を使用',NULL,6),
+(45,'email','mail_from_name','','text','送信者名','空欄ならサイト名を使用',NULL,7),
+(46,'email','mail_admin','','text','管理者メール','フォーム通知の送信先',NULL,8),
+(47,'email','mail_notify_form',0,'text','フォーム送信通知','1:有効/0:無効',NULL,9),
+(48,'product','product_layout','sidebar','select','製品リストレイアウト','','{"sidebar":"侧栏模式","top":"顶栏模式"}',11),
+(49,'home','home_show_links',0,'select','パートナー表示','フッターにパートナーロゴを表示',NULL,24),
+(50,'contact','contact_form_title','オンラインお問い合わせ','text','フォームタイトル','',NULL,10),
+(52,'contact','contact_cards','[{"icon":"phone","label":"電話番号","value":"03-0000-0000"},{"icon":"email","label":"メールアドレス","value":"info@example.co.jp"},{"icon":"location","label":"所在地","value":"東京都渋谷区XX町X丁目X-X"},{"icon":"clock","label":"営業時間","value":"平日 9:00〜18:00（土日祝休み）"}]','contact_cards','連絡先カード','お問い合わせページ上部の情報カード（最大4つ）',NULL,0),
+(53,'product','show_price',0,'select','価格表示','フロントで製品価格を表示','{"0":"不显示","1":"显示"}',12),
+(56,'system','cms_version','1.0.0','text','CMSバージョン','システムが自動管理、手動変更不可',NULL,0),
+(57,'header','topbar_enabled',0,'select','トップバー表示','ロゴ上部の通知バーエリア','{"0":"隐藏","1":"显示"}',0),
+(58,'header','topbar_bg_color','#f3f4f6','color','トップバー背景色','トップバーの背景色',NULL,1),
+(59,'header','topbar_left','','code','トップバー左側','HTMLコード対応（電話番号やお知らせなど）',NULL,2),
+(60,'header','header_nav_layout','right','select','ナビレイアウト','ロゴの右側またはロゴの下に配置','{"right":"Logo右侧","below":"Logo下方通栏"}',10),
+(61,'header','header_sticky',0,'select','ヘッダー固定','ナビバーをページ上部に固定','{"1":"是","0":"否"}',11),
+(62,'header','header_bg_color','#ffffff','color','背景色','16進数カラーコード',NULL,12),
+(63,'header','header_text_color','#4b5563','color','文字色','16進数カラーコード',NULL,13),
+(64,'footer','footer_columns','[{"title":"会社概要","content":"{{site_description}}","col_span":2},{"title":"お問い合わせ","content":"{{contact_info}}","col_span":1},{"title":"フォロー","content":"{{qrcode}}","col_span":1}]','footer_columns','フッターカラム','各列コンテンツ（最大4列）',NULL,1),
+(65,'footer','footer_bg_color','#1f2937','color','背景色','16進数カラーコード',NULL,2),
+(66,'footer','footer_bg_image','','image','背景画像','設定すると背景色の代わりに表示',NULL,3),
+(67,'footer','footer_text_color','#9ca3af','color','文字色','16進数カラーコード',NULL,4),
+(68,'basic','site_url','http://ikai.cms','text','サイトURL','例: https://www.example.com（末尾スラッシュなし）',NULL,0),
+(69,'code','custom_head_code','','code','Headコード','</head>直前に挿入（認証、SEOメタタグなど）',NULL,1),
+(70,'code','custom_body_code','','code','Bodyコード','</body>直前に挿入（解析コード、チャットなど）',NULL,2),
+(71,'basic','site_favicon','/favicon.ico','image','ファビコン','ブラウザタブのアイコン（.ico/.png形式）',NULL,5),
+(72,'home','home_show_banner',1,'select','スライドショー表示','トップページバナースライド',NULL,30),
+(73,'home','home_show_about',1,'select','会社概要表示','トップページ会社概要セクション',NULL,31),
+(74,'home','home_show_stats',1,'select','統計データ表示','トップページ統計データセクション',NULL,32),
+(75,'home','home_show_channels',1,'select','カテゴリセクション表示','製品・ニュースなどのトップページ表示',NULL,33),
+(76,'home','home_show_advantage',1,'select','強みセクション表示','トップページ「私たちの強み」セクション',NULL,34),
+(77,'home','home_show_cta',1,'select','CTA表示','トップページ下部のCTAセクション',NULL,35),
+(78,'home','home_blocks_config','[{"type":"banner","enabled":true},{"type":"about","enabled":true,"bg_opacity":100,"text_light":false,"layout":"container"},{"type":"stats","enabled":true,"bg_opacity":100,"text_light":false,"layout":"container"},{"type":"channel:7","enabled":true,"bg_opacity":100,"text_light":false,"layout":"container"},{"type":"channel:9","enabled":true,"bg_opacity":100,"text_light":false,"layout":"container"},{"type":"channel:12","enabled":true,"bg_opacity":100,"text_light":false,"layout":"container"},{"type":"testimonials","enabled":true,"bg_opacity":100,"text_light":false,"layout":"container"},{"type":"advantage","enabled":true,"bg_opacity":100,"text_light":true,"layout":"container"},{"type":"cta","enabled":true,"bg_opacity":100,"text_light":true,"layout":"container"}]','home_blocks','トップページブロック設定','トップページブロックの順序と表示設定',NULL,40),
+(79,'home','home_testimonials','[{"avatar":"","name":"田中様","company":"某テクノロジー株式会社","content":"非常にプロフェッショナルなチームで、素晴らしい協力関係を築けました。製品の品質にも大変満足しています。"},{"avatar":"","name":"佐藤様","company":"某貿易株式会社","content":"製品の品質が優れており、アフターサポートも迅速です。信頼できるパートナーです。"},{"avatar":"","name":"鈴木様","company":"某グループ会社","content":"長年にわたる協力関係の中で、常に高品質なサービスを提供していただいています。強くお勧めします。"}]','home_testimonials','お客様の声','トップページお客様の声セクション',NULL,26),
+(80,'home','home_testimonials_title','お客様の声','text','お客様の声タイトル','',NULL,27),
+(81,'home','home_testimonials_desc','パートナー企業様からのご評価','text','お客様の声説明','',NULL,28),
+(82,'home','home_stat_bg','','image','統計背景画像','データ統計セクションの背景画像',NULL,12),
+(83,'home','home_about_layout','text_left','select','レイアウト','テキスト左/画像左','{"text_left":"左文右图","image_left":"左图右文"}',6),
+(84,'home','home_adv_1_icon','check-circle','icon','強み1アイコン','',NULL,14),
+(85,'home','home_adv_2_icon','academic-cap','icon','強み2アイコン','',NULL,16),
+(86,'home','home_adv_3_icon','briefcase','icon','強み3アイコン','',NULL,18),
+(87,'home','home_adv_4_icon','users','icon','強み4アイコン','',NULL,20),
+(88,'header','show_member_entry',0,'select','会員メニュー表示','ナビバーにログイン/登録リンクを表示','{"0":"隐藏","1":"显示"}',3),
+(89,'member','allow_member_register',0,'switch','会員登録許可','フロントでの会員登録を許可',NULL,1),
+(90,'member','download_require_login',0,'switch','ダウンロードにログイン必要','ファイルダウンロードに会員ログインが必要',NULL,2),
+(91,'home','home_links_title','パートナー','text','リンクセクションタイトル','',NULL,25),
+(93,'footer','footer_nav','[{"title":"","links":[{"name":"プライバシーポリシー","url":"\/privacy.html"},{"name":"利用規約","url":"\/terms.html"}]}]','footer_nav','フッターナビ','著作権バー上のナビリンクグループ',NULL,5),
+(95,'translate','translate_api','deepl','select','翻訳API','翻訳サービスプロバイダーを選択','{"deepl":"DeepL","google":"Google Translate"}',1),
+(96,'translate','translate_api_key','','text','APIキー','DeepL: 無料キーを登録して取得',NULL,2),
+(100,'email','mail_tpl_register_subject','欢迎注册 — {{site_name}}','textarea','mail_tpl_register_subject','',NULL,20),
+(101,'email','mail_tpl_register_body','{{username}}，您好！\n\n欢迎注册 {{site_name}}！您的帐号已创建成功。\n\n请登录会员中心管理您的帐号：\n{{site_url}}/member/\n\n如有任何问题，请随时联系我们。\n\n{{site_name}}\n{{date}}','textarea','mail_tpl_register_body','',NULL,21),
+(102,'email','mail_tpl_forgot_subject','密码找回 — {{site_name}}','textarea','mail_tpl_forgot_subject','',NULL,22),
+(103,'email','mail_tpl_forgot_body','{{username}}，您好！\n\n您正在进行密码找回操作，请点击以下链接重置密码：\n{{reset_link}}\n\n链接有效期为 30 分钟，如非本人操作请忽略此邮件。\n\n{{site_name}}\n{{date}}','textarea','mail_tpl_forgot_body','',NULL,23),
+(104,'email','mail_tpl_reset_subject','密码已重置 — {{site_name}}','textarea','mail_tpl_reset_subject','',NULL,24),
+(105,'email','mail_tpl_reset_body','{{username}}，您好！\n\n您的密码已成功重置。如非本人操作，请立即联系我们修改密码。\n\n{{site_name}}\n{{date}}','textarea','mail_tpl_reset_body','',NULL,25),
+(106,'email','mail_tpl_inquiry_subject','新询盘通知：{{product_title}} — {{site_name}}','textarea','mail_tpl_inquiry_subject','',NULL,26),
+(107,'email','mail_tpl_inquiry_body','您收到一条新的产品询盘：\n\n产品：{{product_title}}\n姓名：{{name}}\n电话：{{phone}}\n邮箱：{{email}}\n公司：{{company}}\n内容：{{content}}\n\n时间：{{date}}\nIP：{{ip}}\n\n后台查看：{{site_url}}/admin/form.php','textarea','mail_tpl_inquiry_body','',NULL,27),
+(110,'contact','contact_form_desc','','textarea','フォーム説明','タイトル下に表示する説明文',NULL,11),
+(111,'contact','contact_form_fields','[{"key":"company","label":"会社名","type":"text","required":false,"enabled":true},{"key":"name","label":"お名前","type":"text","required":true,"enabled":true},{"key":"phone","label":"電話番号","type":"tel","required":false,"enabled":true},{"key":"email","label":"メールアドレス","type":"email","required":true,"enabled":true},{"key":"content","label":"お問い合わせ内容","type":"textarea","required":true,"enabled":true}]','contact_form_fields','フォームフィールド','フォームに表示するフィールドの設定',NULL,12),
+(112,'contact','contact_form_success','送信が完了しました。担当者よりご連絡いたします。','text','送信完了メッセージ','フォーム送信後に表示するメッセージ',NULL,13),
+(113,'contact','contact_hours','平日 9:00〜18:00（土日祝休み）','text','営業時間','例：平日 9:00〜18:00',NULL,4),
+(114,'social','social_links','[]','social_links','SNSリンク','フッター等に表示するSNSアイコンリンク',NULL,1),
+(115,'basic','current_theme','default','text','','',NULL,17),
+(118,'system','admin_lang','ja','select','','',NULL,14),
+(119,'basic','site_lang','ja','select','フロント言語','フロント画面の表示言語','{"zh-CN":"中文","ja":"日本語"}',13),
+(121,'basic','admin_title','ikaiCMS','text','管理画面名称','管理画面左上に表示される名称',NULL,15),
+(122,'basic','admin_copyright','Powered by ikaiCMS | イーカイ株式会社','text','','',NULL,16),
+(123,'header','nav_home_text','ホーム','text','ナビ「ホーム」テキスト','空欄の場合は言語パックのデフォルト値を使用',NULL,0),
+(124,'footer','footer_copyright_text','© {year} {site_name} All Rights Reserved.','text','著作権テキスト','{year}=年、{site_name}=サイト名に自動置換',NULL,6),
+(125,'basic','admin_logo','','image','管理画面ロゴ','空欄の場合テキスト表示',NULL,21),
+(126,'basic','ai_provider','deepseek','text','ai_provider','',NULL,0),
+(127,'basic','ai_api_key','eRbBNABdb3LgisG9R/F6NCLkg89ooDCn7IjQuOwjQX7QPI4gt4GUQlVEqzzZuJc1','text','ai_api_key','',NULL,0),
+(128,'basic','ai_model','deepseek-v4-flash','text','ai_model','',NULL,0),
+(129,'basic','ai_base_url','','text','ai_base_url','',NULL,0);
+
+-- yikai_channels: 17 rows (auto-generated, ja default)
+INSERT INTO yikai_channels (`id`,`lang`,`translation_group_id`,`parent_id`,`name`,`slug`,`type`,`album_id`,`icon`,`image`,`description`,`content`,`redirect_type`,`redirect_url`,`link_url`,`link_target`,`seo_title`,`seo_keywords`,`seo_description`,`is_nav`,`is_home`,`status`,`is_system`,`sort_order`,`created_at`,`updated_at`) VALUES
+(1,'ja',0,0,'会社概要','company','page',0,'','','会社情報','<table style="width:100%;border-collapse:collapse">
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">会社名</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">株式会社○○（かぶしきがいしゃ ○○）</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">設立</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">2020年4月</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">代表者</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">代表取締役　○○ ○○</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">資本金</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">1,000万円</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">従業員数</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">50名（2024年4月現在）</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">事業内容</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">・IoTソリューションの企画・開発・販売<br>・企業向けクラウドサービスの提供<br>・システムインテグレーション<br>・テクニカルサポート・コンサルティング</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">本社所在地</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">〒150-0000<br>東京都渋谷区XX町X丁目X-X XXビル 5F</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">大阪支社</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">〒530-0000<br>大阪府大阪市北区XX町X丁目X-X XXビル 3F</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">電話番号</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">03-0000-0000</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">FAX</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">03-0000-0001</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">メールアドレス</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">info@example.co.jp</td>
+</tr>
+<tr style="border-bottom:1px solid #e5e7eb">
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">取引銀行</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">三菱UFJ銀行 ○○支店<br>みずほ銀行 ○○支店</td>
+</tr>
+<tr>
+<th style="padding:16px 20px;text-align:left;width:180px;background:#f9fafb;font-weight:bold;font-size:14px;color:#374151;vertical-align:top">主要取引先</th>
+<td style="padding:16px 20px;font-size:14px;color:#4b5563">株式会社○○<br>○○株式会社<br>○○グループ（順不同・敬称略）</td>
+</tr>
+</table>','none','','','_self','','','',1,0,1,1,1,1770899116,0),
+(2,'ja',0,1,'代表挨拶','greeting','page',0,'','','代表取締役からのメッセージ',NULL,'none','','','_self','','','',1,0,1,1,1,1770899116,0),
+(3,'ja',0,1,'企業理念','philosophy','page',0,'','','ミッション・ビジョン・バリュー',NULL,'none','','','_self','','','',1,0,1,1,2,1770899116,0),
+(4,'ja',0,1,'沿革','history','page',0,'','','会社の歩み',NULL,'none','','','_self','','','',1,0,1,1,3,1770899116,0),
+(5,'ja',0,1,'アクセス','access','page',0,'','','所在地・交通案内',NULL,'none','','','_self','','','',1,0,1,1,4,1770899116,0),
+(6,'ja',0,0,'事業内容','service','page',0,'','','事業内容のご紹介',NULL,'auto','','','_self','','','',1,0,1,1,2,1770899116,0),
+(7,'ja',0,0,'製品情報','product','product',0,'','','製品・サービス一覧',NULL,'auto','','','_self','','','',1,1,1,1,3,1770899116,0),
+(9,'ja',0,0,'導入事例','works','case',0,'','','お客様の導入事例',NULL,'auto','','','_self','','','',1,1,1,1,4,1770899116,0),
+(12,'ja',0,0,'お知らせ','news','list',0,'','','最新のお知らせ',NULL,'auto','','','_self','','','',1,1,1,1,5,1770899116,0),
+(13,'ja',0,12,'ニュース','company-news','list',0,'','','企業ニュース',NULL,'auto','','','_self','','','',1,0,1,1,1,1770899116,0),
+(14,'ja',0,12,'プレスリリース','press','list',0,'','','プレスリリース',NULL,'auto','','','_self','','','',1,0,1,1,2,1770899116,0),
+(17,'ja',0,0,'よくあるご質問','faq','list',0,'','','お客様からよく寄せられるご質問',NULL,'auto','','','_self','','','',1,0,1,1,7,1770899116,0),
+(19,'ja',0,0,'採用情報','recruit','job',0,'','','一緒に働く仲間を募集しています',NULL,'auto','','','_self','','','',1,0,1,1,6,1770899116,0),
+(20,'ja',0,0,'お問い合わせ','contact','page',0,'','','お問い合わせフォーム',NULL,'none','','','_self','','','',1,0,1,1,8,1770899116,0),
+(29,'ja',0,0,'プライバシーポリシー','privacy','page',0,'','','個人情報の取り扱いについて',NULL,'none','','','_self','','','',0,0,1,1,98,1770899116,0),
+(30,'ja',0,0,'利用規約','terms','page',0,'','','ウェブサイトのご利用条件',NULL,'none','','','_self','','','',0,0,1,1,99,1770899116,0),
+(31,'ja',0,0,'サイトマップ','sitemap-page','page',0,'','','サイト全体の構成',NULL,'none','','','_self','','','',0,0,1,1,97,1770899116,0);
+
+-- yikai_contents: 12 rows (auto-generated, ja default)
+INSERT INTO yikai_contents (`id`,`lang`,`translation_group_id`,`channel_id`,`type`,`title`,`subtitle`,`slug`,`cover`,`images`,`summary`,`content`,`content_type`,`blocks_data`,`author`,`source`,`tags`,`attachment`,`download_count`,`price`,`specs`,`location`,`salary`,`requirements`,`client_name`,`industry`,`duration`,`result_metric`,`headcount`,`job_type`,`education`,`experience`,`is_top`,`is_recommend`,`is_hot`,`views`,`likes`,`seo_title`,`seo_keywords`,`seo_description`,`status`,`sort_order`,`publish_time`,`created_at`,`updated_at`,`admin_id`) VALUES
+(1,'ja',0,2,'article','代表挨拶','','greeting','',NULL,'企業のデジタルトランスフォーメーションに特化し、お客様に高品質な製品とサービスを提供しています。','<h2>ご挨拶</h2>
+<p>平素より格別のお引き立てを賜り、誠にありがとうございます。</p>
+
+<p>当社は2010年の設立以来、企業のデジタルトランスフォーメーションを支援するテクノロジー企業として、研究開発・製造・販売・サポートを一貫して行ってまいりました。おかげさまで、業界において確かな実績と信頼を築くことができました。</p>
+
+<h2>私たちの強み</h2>
+<ul>
+<li><strong>技術力</strong>：複数のコア特許技術を保有</li>
+<li><strong>品質保証</strong>：ISO9001品質マネジメントシステム認証取得</li>
+<li><strong>専門サポート</strong>：24時間365日のテクニカルサポート体制</li>
+<li><strong>豊富な実績</strong>：1,000社以上の企業様にサービスを提供</li>
+</ul>
+
+<h2>今後のビジョン</h2>
+<p>技術革新を原動力とし、お客様のニーズを第一に考え、業界をリードするソリューションプロバイダーを目指してまいります。今後とも変わらぬご支援を賜りますよう、よろしくお願い申し上げます。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',1,1,0,100,0,'','','',1,0,1770899116,1770899116,0,1),
+(2,'ja',0,3,'article','企業理念','','philosophy','',NULL,'ミッション・ビジョン・バリュー','<h2>ミッション（使命）</h2>
+<p>テクノロジーの力で価値を創造し、お客様に卓越した製品とサービスを提供します。</p>
+
+<h2>ビジョン（将来像）</h2>
+<p>業界で最も信頼され、尊敬される企業となり、社会の発展に貢献します。</p>
+
+<h2>バリュー（価値観）</h2>
+<ul>
+<li><strong>革新</strong> — 常に新しい挑戦を続け、卓越を追求します</li>
+<li><strong>誠実</strong> — 誠実さと透明性をすべての行動の基盤とします</li>
+<li><strong>共創</strong> — お客様・パートナー・社員と共に成長します</li>
+<li><strong>品質</strong> — 妥協のない品質で、期待を超える成果を目指します</li>
+</ul>
+
+<h2>行動指針</h2>
+<ul>
+<li>お客様の課題を自分事として捉え、最適なソリューションを提案する</li>
+<li>チームワークを大切にし、多様な視点を活かす</li>
+<li>失敗を恐れず挑戦し、そこから学び成長する</li>
+<li>社会的責任を果たし、持続可能な事業を推進する</li>
+</ul>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,50,0,'','','',1,0,1770899116,1770899116,0,1),
+(5,'ja',0,9,'case','大手製造企業のDXプロジェクト','','manufacturing-dx','/images/case-demo.jpg',NULL,'お客様の生産効率を30%向上させました','<h3>プロジェクト背景</h3>
+<p>クライアントは国内大手製造企業で、5つの生産拠点と2,000台以上の設備を保有。設備データの分断、生産計画の属人化、品質トレーサビリティの困難さなどの課題を抱え��いました。</p>
+<h3>ソリューション</h3>
+<ul>
+<li><strong>設備連携</strong>：200台以上のIoTゲートウェイを導��し、全生産設備のリアルタイムデータ��集を実現</li>
+<li><strong>データ基盤</strong>：統合データプラットフォームを構築し、ERP・MES・WMSシステムを連携</li>
+<li><strong>AI排程</strong>：AIアルゴリズムによるスマートスケジューリングシステムで生産計画を最適化</li>
+<li><strong>品質追跡</strong>：全工程QRコードトレーサビリティ体制を構築</li>
+</ul>
+<h3>導入成果</h3>
+<ul>
+<li>生産効率 <strong>30%</strong> 向上</li>
+<li>設備停止時間 <strong>45%</strong> 削減</li>
+<li>製品不良率 <strong>60%</strong> 低減</li>
+<li>在庫回転率 <strong>25%</strong> 改善</li>
+</ul>
+<p>導入期間6ヶ月、稼働開始から初年度で投資回収を達成しました。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',1,1,0,201,0,'大手製造企業のDXプロジェクト','DX,製造業,IoT,スマートファクトリー','大手製造企業のデジタルトランスフォーメーションを支援し、生産効率30%向上を実現。',1,0,1770899116,1770899116,0,1),
+(6,'ja',0,13,'article','「年間最優秀テクノロジー革新賞」を受賞','','tech-award','https://picsum.photos/800/500?random=11',NULL,'先日開催された業界年間表彰式にて、当社が技術革新分野での優れた成果を評価され、受賞いたしました。','<p>先日開催された2024年度業界表彰式において、当社は技術革新分野での顕著な実績が認められ、「年間最優秀テクノロジー革新賞」を受賞いたしました。</p>
+
+<p>今回の受賞は、長年にわたり技術革新に取り組んできた当社の姿勢が評価されたものです。当社は常に技術研究開発をコア競争力として位置付け、毎年多くのリソースを製品開発と技術向上に投入してまいりました。</p>
+
+<p>代表取締役は「この賞は全社員の努力の成果です。今後も革新の精神を持ち続け、お客様により大きな価値を提供してまいります」と述べました。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',1,1,1,818,0,'','','',1,0,1770899116,1770899116,0,1),
+(7,'ja',0,14,'article','DXトレンドレポート2024を発表','','dx-report','https://picsum.photos/800/500?random=12',NULL,'最新の業界調査レポートにより、企業のDXが不可避のトレンドであることが示されました。','<p>このたび、業界の権威ある調査機関が「2024年企業DXトレンドレポート」を発表しました。主な調査結果は以下の通りです。</p>
+
+<ul>
+<li>80%以上の企業がDXに着手済み</li>
+<li>クラウド、ビッグデータ、AIがDXの3大コア技術</li>
+<li>2025年までにDX関連投資が50%増加する見込み</li>
+</ul>
+
+<p>レポートでは、企業は早期にDX戦略を策定し、適切なテクノロジーパートナーを選定した上で、段階的にDXを推進することを推奨しています。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,307,0,'','','',1,0,1770899116,1770899116,0,1),
+(8,'ja',0,16,'article','サービスフロー','','process','',NULL,'标准化的服务流程，确保服务质量','<div style="max-width:800px;margin:0 auto;">
+<p style="text-align:center;color:#6b7280;margin-bottom:2em;">標準化されたサービスフローで、すべてのプロジェ���トを高品質にお届けします。</p>
+<div style="display:flex;align-items:flex-start;margin-bottom:2em;"><div style="flex-shrink:0;width:60px;height:60px;background:linear-gradient(135deg,#3b82f6,#60a5fa);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;">1</div><div style="margin-left:20px;flex:1;"><h3 style="margin-top:0;margin-bottom:4px;">ヒアリング</h3><p style="color:#6b7280;">お客様の業務課題やご要望を詳しくお伺いし、要件定義書を作成します。</p></div></div>
+<div style="display:flex;align-items:flex-start;margin-bottom:2em;"><div style="flex-shrink:0;width:60px;height:60px;background:linear-gradient(135deg,#10b981,#34d399);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;">2</div><div style="margin-left:20px;flex:1;"><h3 style="margin-top:0;margin-bottom:4px;">設計・提案</h3><p style="color:#6b7280;">システム設計、ハードウェア選定、ネットワーク設計、プロジェクト計画を策定しご提案します。</p></div></div>
+<div style="display:flex;align-items:flex-start;margin-bottom:2em;"><div style="flex-shrink:0;width:60px;height:60px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;">3</div><div style="margin-left:20px;flex:1;"><h3 style="margin-top:0;margin-bottom:4px;">開発・構築</h3><p style="color:#6b7280;">アジャイル開発で定期的に進捗をご報告。重要マイルストーンではお客様にレビューいただきます。</p></div></div>
+<div style="display:flex;align-items:flex-start;margin-bottom:2em;"><div style="flex-shrink:0;width:60px;height:60px;background:linear-gradient(135deg,#f59e0b,#fbbf24);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;">4</div><div style="margin-left:20px;flex:1;"><h3 style="margin-top:0;margin-bottom:4px;">テスト・検収</h3><p style="color:#6b7280;">機能テスト、性能テスト、セキュリティテスト、受入テストを実施し、安定稼働を確認後に本番移行します。</p></div></div>
+<div style="display:flex;align-items:flex-start;margin-bottom:2em;"><div style="flex-shrink:0;width:60px;height:60px;background:linear-gradient(135deg,#ef4444,#f87171);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;">5</div><div style="margin-left:20px;flex:1;"><h3 style="margin-top:0;margin-bottom:4px;">研修・納品</h3><p style="color:#6b7280;">操作研修と技術ドキュメントをご提供し、お客様が独立して運用できるよう支援します。</p></div></div>
+<div style="display:flex;align-items:flex-start;margin-bottom:2em;"><div style="flex-shrink:0;width:60px;height:60px;background:linear-gradient(135deg,#06b6d4,#22d3ee);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:700;">6</div><div style="margin-left:20px;flex:1;"><h3 style="margin-top:0;margin-bottom:4px;">アフターサポート</h3><p style="color:#6b7280;">24時間365日の技術サポート、定期点検、システム最適化を提供します。</p></div></div>
+</div>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',1,0,0,150,0,'サービスフロー','サービスフロー,導入プ��セス','6ステップの標準サービスフロー。',1,0,1770899116,1770899116,0,1),
+(9,'ja',0,17,'article','製品の使い方について','','product-guide','',NULL,'新規ユーザー向けクイックスタートガイド','<h2>クイックスタート手順</h2>
+<ol>
+<li><strong>アカウント登録</strong>：公式サイトにアクセスし、登録ボタンからアカウントを作成します</li>
+<li><strong>プラン選択</strong>：ご利用目的に合ったプランをお選びください</li>
+<li><strong>初期設定</strong>：ガイドに沿って基本設定を行います</li>
+<li><strong>ご利用開始</strong>：ログイン後すぐにご利用いただけます</li>
+</ol>
+<p>ご不明な点がございましたら、<a href="/contact.html">お問い合わせページ</a>よりお気軽にご連絡ください。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,204,0,'','','',1,0,1770899116,1770899116,0,1),
+(13,'ja',0,20,'article','お問い合わせ','','contact','',NULL,NULL,'<p>お気軽にお問い合わせください。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,0,0,'','','',1,0,0,1770899116,1770899116,0),
+(14,'ja',0,29,'article','プライバシーポリシー','','privacy','',NULL,'個人情報の取り扱いについて','<h2>プライバシーポリシー</h2>
+<p>当社（以下「当社」）は、お客様の個人情報の重要性を認識し、個人情報の保護に関する法律（個人情報保護法）を遵守するとともに、以下のプライバシーポリシーに従い、適切な取り扱い及び保護に努めます。</p>
+
+<h3>1. 個人情報の収集</h3>
+<p>当社は、以下の場合に個人情報を収集することがあります。</p>
+<ul>
+<li><strong>お問い合わせフォーム</strong>：お名前、メールアドレス、電話番号、会社名など</li>
+<li><strong>アクセスログ</strong>：IPアドレス、ブラウザの種類、アクセス日時、閲覧ページなど</li>
+<li><strong>Cookie</strong>：ユーザー体験の向上およびサイト機能の改善のために使用します</li>
+</ul>
+
+<h3>2. 個人情報の利用目的</h3>
+<p>収集した個人情報は、以下の目的で利用いたします。</p>
+<ul>
+<li>サービスの提供、維持、改善</li>
+<li>お問い合わせやご依頼への対応</li>
+<li>サービスに関するご連絡・ご案内</li>
+<li>不正行為の防止</li>
+</ul>
+
+<h3>3. 個人情報の管理</h3>
+<p>当社は、個人情報の正確性を保ち、不正アクセス、漏洩、改ざん、紛失を防止するため、適切な技術的・組織的措置を講じます。</p>
+
+<h3>4. 第三者への提供</h3>
+<p>当社は、以下の場合を除き、お客様の個人情報を第三者に提供することはありません。</p>
+<ul>
+<li>お客様の同意がある場合</li>
+<li>法令に基づく場合</li>
+<li>当社の権利・利益を保護するために必要な場合</li>
+</ul>
+
+<h3>5. Cookieの使用について</h3>
+<p>当サイトでは、ユーザー体験の向上のためCookieを使用しています。ブラウザの設定によりCookieの受け入れを拒否することが可能ですが、一部の機能が正常に動作しなくなる場合があります。</p>
+
+<h3>6. プライバシーポリシーの変更</h3>
+<p>当社は、必要に応じて本ポリシーを変更することがあります。変更後のポリシーは当ページに掲載いたします。定期的にご確認いただくことをお勧めいたします。</p>
+
+<h3>7. お問い合わせ</h3>
+<p>本プライバシーポリシーに関するご質問は、<a href="/contact.html">お問い合わせページ</a>よりご連絡ください。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,0,0,'','','',1,0,1770899116,1770899116,0,1),
+(15,'ja',0,30,'article','利用規約','','terms','',NULL,'ウェブサイトのご利用条件','<h2>利用規約</h2>
+<p>本ウェブサイト（以下「当サイト」）をご利用いただく前に、以下の利用規約をよくお読みください。当サイトをご利用になることにより、本規約に同意したものとみなされます。</p>
+
+<h3>1. サービスについて</h3>
+<p>当サイトで提供する情報およびサービスは参考目的であり、予告なく変更、中断、終了する場合があります。</p>
+
+<h3>2. 禁止事項</h3>
+<p>当サイトのご利用にあたり、以下の行為を禁止します。</p>
+<ul>
+<li>法令に違反する行為</li>
+<li>ウイルスや悪意のあるコードを含むコンテンツの送信</li>
+<li>他者の知的財産権その他の権利を侵害する行為</li>
+<li>当サイトの正常な運営を妨害する行為</li>
+</ul>
+
+<h3>3. 知的財産権</h3>
+<p>当サイトに掲載されているすべてのコンテンツ（テキスト、画像、動画、ソフトウェア、デザインを含む）は、著作権法およびその他の知的財産権法により保護されています。当社の書面による許可なく、複製、転載、改変、商用利用することはできません。</p>
+
+<h3>4. 免責事項</h3>
+<ul>
+<li>当サイトの情報は一般的な参考情報であり、いかなる助言や保証を構成するものではありません。</li>
+<li>当サイトの情報の正確性、完全性、最新性について保証するものではありません。</li>
+<li>当サイトの利用に起因するいかなる直接的または間接的な損害についても、当社は責任を負いません。</li>
+<li>当サイトには第三者のウェブサイトへのリンクが含まれる場合がありますが、当社はそれらのサイトの内容について一切の責任を負いません。</li>
+</ul>
+
+<h3>5. アカウント管理</h3>
+<p>当サイトでアカウントを登録された場合、アカウント情報およびパスワードの管理はお客様の責任となります。アカウント情報の漏洩による損害について、当社は責任を負いかねます。</p>
+
+<h3>6. プライバシー</h3>
+<p>個人情報の取り扱いについては、<a href="/privacy.html">プライバシーポリシー</a>をご参照ください。</p>
+
+<h3>7. 規約の変更</h3>
+<p>当社は、本利用規約を随時変更する権利を有します。変更後の規約は当ページに掲載され、当サイトを継続してご利用になることにより、変更後の規約に同意したものとみなされます。</p>
+
+<h3>8. 準拠法</h3>
+<p>本利用規約は日本法に準拠するものとし、本規約に関する紛争については、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</p>
+
+<h3>9. お問い合わせ</h3>
+<p>本利用規約に関するご質問は、<a href="/contact.html">お問い合わせページ</a>よりご連絡ください。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,0,0,'','','',1,0,1770899116,1770899116,0,1),
+(16,'ja',0,4,'article','沿革','','history','',NULL,'会社の歩み','<p>当社の設立から現在までの歩みをご紹介します。</p>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,0,0,'','','',1,0,1775432984,1775432984,1775432984,1),
+(17,'ja',0,5,'article','アクセス','','access','',NULL,'所在地・交通案内','<h2>本社</h2>
+<p>〒150-0000<br>東京都渋谷区XX町X丁目X-X XXビル 5F</p>
+
+<h3>電車でお越しの方</h3>
+<ul>
+<li>JR山手線「渋谷駅」南口より徒歩5分</li>
+<li>東京メトロ銀座線「渋谷駅」出口3より徒歩3分</li>
+</ul>
+
+<h3>お車でお越しの方</h3>
+<p>首都高速3号渋谷線「渋谷IC」より約5分<br>※ビル地下に有料駐車場がございます</p>
+
+<h2>大阪支社</h2>
+<p>〒530-0000<br>大阪府大阪市北区XX町X丁目X-X XXビル 3F</p>
+
+<h3>電車でお越しの方</h3>
+<ul>
+<li>JR大阪環状線「大阪駅」より徒歩8分</li>
+<li>大阪メトロ御堂筋線「梅田駅」より徒歩5分</li>
+</ul>
+
+<h2>お問い合わせ</h2>
+<table style="width:100%;border-collapse:collapse">
+<tr><td style="padding:8px 0;width:120px"><strong>電話番号</strong></td><td style="padding:8px 0">03-0000-0000</td></tr>
+<tr><td style="padding:8px 0"><strong>FAX</strong></td><td style="padding:8px 0">03-0000-0001</td></tr>
+<tr><td style="padding:8px 0"><strong>メール</strong></td><td style="padding:8px 0">info@example.co.jp</td></tr>
+<tr><td style="padding:8px 0"><strong>営業時間</strong></td><td style="padding:8px 0">平日 9:00〜18:00（土日祝休み）</td></tr>
+</table>','html',NULL,'','','','',0,'0.00',NULL,'','',NULL,'','','','','','','','',0,0,0,0,0,'','','',1,0,1775432984,1775432984,1775432984,1);
+
+-- yikai_banner_groups: 4 rows (auto-generated, ja default)
+INSERT INTO yikai_banner_groups (`id`,`name`,`slug`,`height_pc`,`height_mobile`,`autoplay_delay`,`sort_order`,`status`,`created_at`) VALUES
+(1,'首页','home',650,300,5000,0,1,0),
+(2,'关于我们','about',500,250,5000,1,1,0),
+(3,'产品中心','product',500,250,5000,2,1,0),
+(4,'案例展示','case',500,250,5000,3,1,0);
+
+-- yikai_banners: 3 rows (auto-generated, ja default)
+INSERT INTO yikai_banners (`id`,`position`,`lang`,`title`,`subtitle`,`btn1_text`,`btn1_url`,`btn2_text`,`btn2_url`,`image`,`image_mobile`,`link_url`,`link_target`,`start_time`,`end_time`,`status`,`sort_order`,`created_at`) VALUES
+(1,'home','ja','デジタルトランスフォーメーション','企業のスマート化を支援します','会社概要','/company.html','ダウンロード','/download.html','https://picsum.photos/1920/600?random=1','','/company.html','_self',0,0,1,1,1770899116),
+(2,'home','ja','プロフェッショナル技術サポート','24時間365日、安心のサポート体制','詳しく見る','/service.html','','','https://picsum.photos/1920/600?random=2','','/service.html','_self',0,0,1,2,1770899116),
+(3,'home','ja','イノベーションが未来を拓く','継続的な革新で卓越を追求します','','','','','https://picsum.photos/1920/600?random=3','','','_self',0,0,1,3,1770899116);
+
+-- yikai_links: 1 rows (auto-generated, ja default)
+INSERT INTO yikai_links (`id`,`lang`,`name`,`url`,`logo`,`description`,`status`,`sort_order`,`created_at`) VALUES
+(1,'ja','易开网-域名注册','https://www.yikai.cn','','百度搜索引擎',1,1,1770899116);
+
+-- yikai_product_categories: 4 rows (auto-generated, ja default)
+INSERT INTO yikai_product_categories (`id`,`parent_id`,`name`,`slug`,`lang`,`translation_group_id`,`image`,`description`,`seo_title`,`seo_keywords`,`seo_description`,`status`,`is_nav`,`sort_order`,`created_at`) VALUES
+(1,0,'スマートデバイス','smart-device','ja',0,'','スマートハードウェア製品シリーズ','','','',1,1,1,1770899116),
+(2,0,'ソフトウェアサービス','software','ja',0,'','企業向けソフトウェア・クラウドサービス','','','',1,1,2,1770899116),
+(3,1,'センサーモジュール','sensor-module','ja',0,'',NULL,'','','',1,1,1,1770899116),
+(4,1,'制御端末','control-terminal','ja',0,'',NULL,'','','',1,1,2,1770899116);
+
+-- yikai_products: 6 rows (auto-generated, ja default)
+INSERT INTO yikai_products (`id`,`lang`,`translation_group_id`,`category_id`,`brand_id`,`title`,`subtitle`,`slug`,`cover`,`images`,`summary`,`content`,`price`,`market_price`,`model`,`specs`,`tags`,`product_type`,`material`,`scene`,`is_top`,`is_recommend`,`is_hot`,`is_new`,`views`,`status`,`sort_order`,`created_at`,`updated_at`,`admin_id`) VALUES
+(1,'ja',0,1,0,'IoTスマートゲートウェイ','産業用高性能ゲートウェイ','iot-gateway','https://picsum.photos/800/600?random=10','https://picsum.photos/800/600?random=20
+https://picsum.photos/800/600?random=21
+https://picsum.photos/800/600?random=22
+https://picsum.photos/800/600?random=23','マルチプロトコル対応、エッジコンピューティング機能搭載','<h2>製品概要</h2><p>IoTスマートゲートウェイは、MQTT、HTTP、Modbus、OPC UAなど100種以上の通信プロトコルに対応した高性能エッジコンピューティングゲートウェイです。</p><h3>主な特長</h3><ul><li>Wi-Fi/4G/有線LANの複数接続方式に対応</li><li>内蔵エッジコンピューティングエンジン</li><li>100種以上の産業プロトコルに対応</li><li>産業用設計 −40°C〜85°C の広温度動作</li></ul><h3>適用分野</h3><p>スマートファクトリー、スマート農業、スマートシティ、エネルギー管理。</p>','2999.00','3599.00','IOT-GW-100',NULL,'','custom','','',0,1,0,1,11,1,0,1770899116,1770899116,1),
+(2,'ja',0,2,0,'企業管理クラウド','ワンストップ企業DXソリューション','cloud-platform','https://picsum.photos/800/600?random=11',NULL,'ERP・CRM・OA機能を統合','<h2>製品概要</h2><p>ERP・CRM・OAの三大モジュールを統合したワンストップ企業管理クラウドプラットフォームです。</p><h3>機能モジュール</h3><ul><li><strong>ERP</strong> — 購買・在庫・生産・会計の一元管理</li><li><strong>CRM</strong> — 顧客管理・営業パイプライン・実績分析</li><li><strong>OA</strong> — ワークフロー・スケジュール管理・チャット</li></ul><h3>技術的優位性</h3><p>マイクロサービスアーキテクチャにより、オンプレミス・SaaSの両デプロイに対応。</p>','0.00','0.00','EMS-CLOUD-V3',NULL,'','custom','','',0,1,0,1,8,1,0,1770899116,1770899116,1),
+(3,'ja',0,3,0,'温湿度センサー TH-200','高精度産業用温湿度センサー','th200-sensor','https://picsum.photos/800/600?random=12','https://picsum.photos/800/600?random=40
+https://picsum.photos/800/600?random=41','スイス製チップ搭載、精度±0.1°C。産業環境モニタリング、倉庫管理、スマート農業に最適。','<h2>製品概要</h2><p>スイス製高精度チップ搭載、精度±0.1°C / ±1.5%RHの温湿度センサーです。</p><h3>仕様</h3><ul><li>温度範囲：−40°C〜125°C</li><li>湿度範囲：0〜100%RH</li><li>通信：RS485 / Modbus RTU</li><li>電源：DC 12-24V</li><li>保護等級：IP65</li></ul>','0.00','0.00','TH-200',NULL,'','custom','','',0,0,0,1,4,1,0,1770899116,1770899116,1),
+(4,'ja',0,3,0,'照度センサー LS-100','広範囲照度センサー','ls100-sensor','https://picsum.photos/800/600?random=13',NULL,'検出範囲0-200000Lux、RS485/Modbus通信対応。スマート農業・気象観測に幅広く活用。','<h2>製品概要</h2><p>測定範囲0〜200,000 Lux、高感度フォトダイオード採用の照度センサーです。</p><h3>仕様</h3><ul><li>測定範囲：0〜200,000 Lux</li><li>精度：±3%</li><li>通信：RS485 / Modbus</li><li>電源：DC 5-24V</li></ul><h3>適用分野</h3><p>スマート農業、気象観測、照明制御。</p>','0.00','0.00','LS-100',NULL,'','custom','','',0,0,1,0,4,1,0,1770899116,1770899116,1),
+(5,'ja',0,4,0,'産業用エッジコントローラー EC-500','高性能エッジコンピューティング端末','ec500-controller','https://picsum.photos/800/600?random=14','https://picsum.photos/800/600?random=30
+https://picsum.photos/800/600?random=31
+https://picsum.photos/800/600?random=32','ARM Cortex-A72搭載、複数の産業プロトコルに対応、AIモデルのローカル推論に対応。','<h2>製品概要</h2><p>ARM Cortex-A72搭載、AIモデルのローカル推論に対応した産業用エッジコントローラーです。</p><h3>主な特長</h3><ul><li>4コア ARM Cortex-A72、1.8GHz</li><li>4GB RAM / 32GB eMMC</li><li>TensorFlow Lite / ONNX推論対応</li><li>豊富なI/O：4×RS485、2×CAN、4×DI、4×DO</li></ul>','0.00','0.00','EC-500',NULL,'','custom','','',0,1,1,1,1,1,0,1770899116,1770899116,1),
+(6,'ja',0,4,0,'スマートゲートウェイコントローラー GC-300','マルチプロトコル統合ゲートウェイ','gc300-gateway','https://picsum.photos/800/600?random=15',NULL,'Wi-Fi/Zigbee/LoRa/4G同時対応、エッジコンピューティング内蔵、ワンストップデバイス管理。','<h2>製品概要</h2><p>Wi-Fi/Zigbee/LoRa/4Gの4プロトコル同時接続対応のスマートゲートウェイです。</p><h3>主な特長</h3><ul><li>4プロトコル同時接続、最大500台のデバイス管理</li><li>内蔵エッジコンピューティングエンジン</li><li>OTAリモートアップデート対応</li><li>Webベース管理画面、ノーコード設定</li></ul><h3>適用分野</h3><p>スマートビル、スマートホーム、産業IoT。</p>','0.00','0.00','GC-300',NULL,'','custom','','',0,1,0,0,2,1,0,1770899116,1770899116,1);
+
+-- yikai_form_templates: 2 rows (auto-generated, ja default)
+INSERT INTO yikai_form_templates (`id`,`name`,`slug`,`fields`,`success_message`,`status`,`created_at`) VALUES
+(1,'联系表单','contact','[{"key":"company","label":"会社名","type":"text","required":false,"placeholder":"例：株式会社○○"},{"key":"name","label":"お名前","type":"text","required":true,"placeholder":"例：田中 太郎"},{"key":"phone","label":"電話番号","type":"tel","required":false,"placeholder":"例：03-0000-0000"},{"key":"email","label":"メールアドレス","type":"email","required":true,"placeholder":"例：info@example.co.jp"},{"key":"content","label":"お問い合わせ内容","type":"textarea","required":true,"placeholder":"ご質問やご要望をご記入ください"}]','送信が完了しました。担当者よりご連絡いたします。',1,1775345336),
+(2,'产品询盘','product-inquiry','[{"key":"name","label":"您的姓名","type":"text","required":true,"placeholder":"请输入姓名"},{"key":"phone","label":"联系电话","type":"tel","required":true,"placeholder":"请输入电话"},{"key":"email","label":"邮箱地址","type":"email","required":false,"placeholder":"请输入邮箱"},{"key":"company","label":"公司名称","type":"text","required":false,"placeholder":"请输入公司名称"},{"key":"content","label":"请描述您的需求","type":"textarea","required":true,"placeholder":"请描述您的需求"}]','询盘已提交，我们将尽快与您联系！',1,1775345336);
+
+-- yikai_timelines: 8 rows (auto-generated, ja default)
+INSERT INTO yikai_timelines (`id`,`lang`,`year`,`month`,`day`,`title`,`content`,`image`,`icon`,`color`,`sort_order`,`status`,`created_at`,`updated_at`) VALUES
+(1,'ja',2024,6,0,'ブランドリニューアル','コーポレートブランドを刷新。新ビジョンを発表。','','rocket','blue',100,1,1770899116,0),
+(2,'ja',2024,1,0,'受賞','「年間最優秀テクノロジー革新賞」を受賞。','','award','yellow',95,1,1770899116,0),
+(3,'ja',2023,8,0,'戦略提携','大手企業との戦略的パートナーシップを締結。','','handshake','green',90,1,1770899116,0),
+(4,'ja',2023,3,0,'新製品発表','次世代IoTゲートウェイ・クラウドプラットフォームを発表。','','box','purple',85,1,1770899116,0),
+(5,'ja',2022,10,0,'チーム拡充','社員数50名を突破。開発体制を強化。','','users','cyan',80,1,1770899116,0),
+(6,'ja',2022,5,0,'資金調達','シリーズAラウンドにて資金調達を完了。','','trending-up','red',75,1,1770899116,0),
+(7,'ja',2021,0,0,'事業拡大','大阪支社を開設。西日本エリアへの展開を本格化。','','map','indigo',70,1,1770899116,0),
+(8,'ja',2020,0,0,'会社設立','東京都渋谷区にて設立。IoTソリューション事業を開始。','','flag','primary',60,1,1770899116,0);
+
+-- yikai_albums: 3 rows (auto-generated, ja default)
+INSERT INTO yikai_albums (`id`,`category_id`,`name`,`slug`,`cover`,`description`,`photo_count`,`sort_order`,`status`,`created_at`,`updated_at`) VALUES
+(7,0,'荣誉资质','honor','/images/cert-1.jpg','企业荣誉证书与资质认证',1,100,1,1770899116,0),
+(8,0,'团队风采','team','','团队活动与员工风采展示',0,90,1,1770899116,0),
+(9,0,'企业环境','environment','','公司办公环境与生产车间',0,80,1,1770899116,0);
+
+-- yikai_album_photos: 1 rows (auto-generated, ja default)
+INSERT INTO yikai_album_photos (`id`,`album_id`,`title`,`image`,`thumb`,`description`,`sort_order`,`status`,`created_at`) VALUES
+(1,7,'授权证书','/images/cert-1.jpg','/images/cert-1.jpg','企业授权认证证书',1,1,1770899116);
+
+-- yikai_download_categories: 3 rows (auto-generated, ja default)
+INSERT INTO yikai_download_categories (`id`,`name`,`description`,`sort_order`,`status`,`created_at`) VALUES
+(1,'产品手册','产品使用手册和说明文档',1,1,1770899116),
+(2,'软件下载','软件安装包和工具',2,1,1770899116),
+(3,'技术文档','技术规范和开发文档',3,1,1770899116);
+
+-- yikai_downloads: 3 rows (auto-generated, ja default)
+INSERT INTO yikai_downloads (`id`,`category_id`,`lang`,`translation_group_id`,`title`,`description`,`cover`,`file_url`,`file_name`,`file_size`,`file_ext`,`download_count`,`is_external`,`require_login`,`sort_order`,`status`,`created_at`,`updated_at`,`admin_id`) VALUES
+(1,1,'ja',0,'製品マニュアル V2.0','最新版の製品マニュアルです。設定方法やFAQを含みます。','','','',0,'pdf',128,0,0,100,1,1770899116,0,0),
+(2,2,'ja',0,'クライアントソフト V3.5.1','Windows用クライアントソフトウェアのインストーラーです。','','','',0,'zip',256,0,0,90,1,1770899116,0,0),
+(3,3,'ja',0,'API仕様書','開発者向けAPI仕様書の完全版です。','','','',0,'pdf',89,0,0,80,1,1770899116,0,0);
+
+-- yikai_jobs: 2 rows (auto-generated, ja default)
+INSERT INTO yikai_jobs (`id`,`title`,`lang`,`translation_group_id`,`cover`,`summary`,`content`,`location`,`salary`,`job_type`,`education`,`experience`,`headcount`,`requirements`,`views`,`is_top`,`sort_order`,`status`,`publish_time`,`created_at`,`updated_at`,`admin_id`) VALUES
+(1,'PHPシニアエンジニア','ja',0,'','自社プロダクトのバックエンド設計・開発を担当','<p>自社CMS・クラウドサービスのバックエンド設計・開発を担当していただきます。</p>','東京（リモート可）','年収500万〜800万円','正社員','大卒以上','3〜5年','2名','<h3>業務内容</h3>
+<ul>
+<li>自社CMS・クラウドサービスのバックエンド開発</li>
+<li>APIの設計・実装・最適化</li>
+<li>データベース設計・パフォーマンスチューニング</li>
+<li>コードレビュー・技術ドキュメント作成</li>
+</ul>
+
+<h3>応募条件</h3>
+<ul>
+<li>PHPでの開発経験3年以上</li>
+<li>MySQL / PostgreSQLの実務経験</li>
+<li>Gitを用いたチーム開発経験</li>
+<li>REST APIの設計・開発経験</li>
+</ul>
+
+<h3>歓迎スキル</h3>
+<ul>
+<li>Laravel / Symfony等フレームワークの経験</li>
+<li>Docker / Kubernetesの経験</li>
+<li>AWS / GCP等クラウドインフラの経験</li>
+</ul>
+
+<h3>待遇・福利厚生</h3>
+<ul>
+<li>各種社会保険完備</li>
+<li>通勤手当支給</li>
+<li>リモートワーク制度あり</li>
+<li>年間休日120日以上</li>
+<li>書籍購入補助・カンファレンス参加支援</li>
+</ul>',15,1,100,1,1770899116,1770899116,0,1),
+(2,'フロントエンドエンジニア','ja',0,'','自社プロダクトのフロントエンド開発・UI改善を担当','<p>自社プロダクトのフロントエンド開発・UI改善を担当していただきます。</p>','東京（リモート可）','年収400万〜650万円','正社員','大卒以上','1〜3年','1名','<h3>業務内容</h3>
+<ul>
+<li>Webアプリケーションのフロントエンド開発</li>
+<li>UI/UXの改善提案・実装</li>
+<li>レスポンシブデザインの実装</li>
+<li>パフォーマンス最適化</li>
+</ul>
+
+<h3>応募条件</h3>
+<ul>
+<li>HTML / CSS / JavaScriptの実務経験2年以上</li>
+<li>React / Vue.jsいずれかの経験</li>
+<li>Tailwind CSSまたは類似のCSSフレームワーク経験</li>
+</ul>
+
+<h3>歓迎スキル</h3>
+<ul>
+<li>TypeScriptの経験</li>
+<li>Figma等デザインツールの使用経験</li>
+<li>アクセシビリティ（a11y）への理解</li>
+</ul>
+
+<h3>待遇・福利厚生</h3>
+<ul>
+<li>各種社会保険完備</li>
+<li>通勤手当支給</li>
+<li>リモートワーク制度あり</li>
+<li>年間休日120日以上</li>
+<li>書籍購入補助・カンファレンス参加支援</li>
+</ul>',0,0,90,1,1770899116,1770899116,0,1);
+
+-- yikai_plugins: 4 rows (auto-generated, ja default)
+INSERT INTO yikai_plugins (`id`,`slug`,`status`,`installed_at`,`activated_at`) VALUES
+(1,'search-replace',1,1770899116,1770899116),
+(3,'db-backup',1,1770899116,1770899116),
+(4,'back-to-top',1,1770899116,1770899116),
+(5,'translate',1,1775446827,1775446827);
+

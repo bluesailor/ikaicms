@@ -127,7 +127,7 @@ if (!empty($product['price']) && $product['price'] > 0) {
 require_once theme_path('layouts/header.php');
 ?>
 
-<!-- 面包屑 -->
+<!-- Breadcrumb -->
 <div class="bg-gray-100 py-4">
     <div class="container mx-auto px-4">
         <div class="flex items-center gap-2 text-sm text-gray-600">
@@ -150,21 +150,21 @@ require_once theme_path('layouts/header.php');
     </div>
 </div>
 
-<!-- 产品详情 -->
+<!-- Product detail -->
 <section class="py-12">
     <div class="container mx-auto px-4">
         <div class="bg-white rounded-lg shadow overflow-hidden">
-            <!-- 产品主体 -->
+            <!-- Product body -->
             <div class="flex flex-col lg:flex-row">
-                <!-- 左侧图片 -->
+                <!-- Left image -->
                 <div class="lg:w-1/2 p-6">
                     <?php if (!empty($productImages)): ?>
-                    <!-- 主图（点击打开 lightbox） -->
+                    <!-- Main image (click for lightbox) -->
                     <div class="aspect-square overflow-hidden rounded-lg bg-gray-100 mb-4 relative group cursor-zoom-in"
                          onclick="openLightbox(0)">
                         <img loading="lazy" src="<?php echo e($productImages[0]); ?>" alt="<?php echo e($product['title']); ?>"
                              id="mainImage" class="w-full h-full object-contain transition-transform group-hover:scale-105">
-                        <!-- 放大镜图标 -->
+                        <!-- Magnifier icon -->
                         <div class="absolute top-3 right-3 bg-black/50 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h6m0 0v6m0-6L14 10M9 21H3m0 0v-6m0 6l7-7"/>
@@ -176,7 +176,7 @@ require_once theme_path('layouts/header.php');
                         </div>
                         <?php endif; ?>
                     </div>
-                    <!-- 缩略图 -->
+                    <!-- Thumbnail -->
                     <?php if (count($productImages) > 1): ?>
                     <div class="flex gap-2 overflow-x-auto">
                         <?php foreach ($productImages as $i => $img): ?>
@@ -195,7 +195,7 @@ require_once theme_path('layouts/header.php');
                     <?php endif; ?>
                 </div>
 
-                <!-- 右侧信息 -->
+                <!-- Right info -->
                 <div class="lg:w-1/2 p-6 lg:border-l">
                     <h1 class="text-2xl font-bold text-dark mb-2"><?php echo e($product['title']); ?></h1>
 
@@ -224,7 +224,7 @@ require_once theme_path('layouts/header.php');
                     </div>
                     <?php endif; ?>
 
-                    <!-- 标签 -->
+                    <!-- Tags -->
                     <?php if ($product['tags']): ?>
                     <div class="flex flex-wrap gap-2 mb-6">
                         <?php foreach (explode(',', $product['tags']) as $tag): ?>
@@ -235,7 +235,7 @@ require_once theme_path('layouts/header.php');
                     </div>
                     <?php endif; ?>
 
-                    <!-- 咨询信息 -->
+                    <!-- Inquiry info -->
                     <div class="border-t pt-5 mt-2 space-y-3">
                         <?php if (config('contact_phone')): ?>
                         <div class="flex items-center gap-3 text-sm text-gray-600">
@@ -256,7 +256,7 @@ require_once theme_path('layouts/header.php');
                         </a>
                     </div>
 
-                    <!-- 产品询盘表单 -->
+                    <!-- Product inquiry form -->
                     <div class="border-t pt-5 mt-4">
                         <h3 class="text-sm font-bold text-dark mb-3 flex items-center gap-2">
                             <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
@@ -290,7 +290,7 @@ require_once theme_path('layouts/header.php');
                 </div>
             </div>
 
-            <!-- Tab 切换区 -->
+            <!-- Tab switcher -->
             <?php
             $hasSpecs = !empty($specs);
             $hasContent = !empty($product['content']);
@@ -298,7 +298,7 @@ require_once theme_path('layouts/header.php');
             ?>
             <?php if ($tabCount > 0): ?>
             <div class="border-t">
-                <!-- Tab 导航 -->
+                <!-- Tab navigation -->
                 <div class="flex border-b bg-gray-50" id="productTabs">
                     <?php if ($hasContent): ?>
                     <button type="button" class="product-tab px-6 py-4 font-bold text-primary border-b-2 border-primary" data-tab="detail">
@@ -312,7 +312,7 @@ require_once theme_path('layouts/header.php');
                     <?php endif; ?>
                 </div>
 
-                <!-- Tab 内容 -->
+                <!-- Tab content -->
                 <?php if ($hasContent): ?>
                 <div class="tab-panel p-6 prose prose-lg max-w-none" id="tab-detail">
                     <?php echo sanitizeHtml($product['content']); ?>
@@ -337,7 +337,7 @@ require_once theme_path('layouts/header.php');
             <?php endif; ?>
         </div>
 
-        <!-- 上一个/下一个产品 -->
+        <!-- Previous/Next product -->
         <?php if ($prevProduct || $nextProduct): ?>
         <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
             <?php if ($prevProduct): ?>
@@ -374,7 +374,7 @@ require_once theme_path('layouts/header.php');
         </div>
         <?php endif; ?>
 
-        <!-- 相关产品 -->
+        <!-- Related products -->
         <?php if (!empty($relatedProducts)): ?>
         <div class="mt-12">
             <h2 class="text-2xl font-bold text-dark mb-6">相关产品</h2>
@@ -408,38 +408,38 @@ require_once theme_path('layouts/header.php');
 </section>
 
 <?php if (!empty($productImages)): ?>
-<!-- Lightbox 画廊 -->
+<!-- Lightbox gallery -->
 <div id="product-lightbox" class="hidden fixed inset-0 z-[9999] bg-black/90 items-center justify-center" onclick="if(event.target === this) closeLightbox()">
-    <!-- 关闭 -->
+    <!-- Close -->
     <button type="button" onclick="closeLightbox()" class="absolute top-4 right-4 text-white/80 hover:text-white p-2" aria-label="<?php echo __('lightbox_close'); ?>">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
     </button>
-    <!-- 计数 -->
+    <!-- Counter -->
     <div id="lightbox-counter" class="absolute top-5 left-5 text-white/80 text-sm font-medium">1 / <?php echo count($productImages); ?></div>
 
     <?php if (count($productImages) > 1): ?>
-    <!-- 上一张 -->
-    <button type="button" onclick="lightboxPrev()" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="上一张">
+    <!-- Previous -->
+    <button type="button" onclick="lightboxPrev()" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="前へ">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
     </button>
-    <!-- 下一张 -->
-    <button type="button" onclick="lightboxNext()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="下一张">
+    <!-- Next -->
+    <button type="button" onclick="lightboxNext()" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white bg-black/40 hover:bg-black/60 rounded-full p-3" aria-label="次へ">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
         </svg>
     </button>
     <?php endif; ?>
 
-    <!-- 主图 -->
+    <!-- Main image -->
     <img id="lightbox-img" src="<?php echo e($productImages[0]); ?>" alt="<?php echo e($product['title']); ?>"
          class="max-w-[90vw] max-h-[80vh] object-contain select-none">
 
     <?php if (count($productImages) > 1): ?>
-    <!-- 底部缩略图 -->
+    <!-- Bottom thumbnails -->
     <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-4 pb-1">
         <?php foreach ($productImages as $i => $img): ?>
         <button type="button" onclick="event.stopPropagation(); currentImageIdx=<?php echo $i; ?>; renderLightbox(); changeImage(<?php echo $i; ?>);"
@@ -453,12 +453,12 @@ require_once theme_path('layouts/header.php');
 <?php endif; ?>
 
 <script>
-// 产品图片数组
+// Product images array
 var productImages = <?php echo json_encode(array_values($productImages), JSON_UNESCAPED_SLASHES); ?>;
 var currentImageIdx = 0;
 
 function changeImage(idx) {
-    // 兼容旧签名（字符串 src）
+    // Back-compat (string src signature)
     if (typeof idx === 'string') {
         idx = productImages.indexOf(idx);
         if (idx < 0) return;
@@ -477,12 +477,12 @@ function changeImage(idx) {
             btn.classList.add('border-gray-200');
         }
     });
-    // 同步主图右下角的"1 / N"
+    // Sync 1/N indicator on main image
     var counter = document.querySelector('#mainImage').parentElement.querySelector('.absolute.bottom-3');
     if (counter) counter.textContent = (idx + 1) + ' / ' + productImages.length;
 }
 
-// ============ Lightbox 画廊 ============
+// ============ Lightbox gallery ============
 function openLightbox(idx) {
     if (!productImages.length) return;
     currentImageIdx = idx || 0;
@@ -515,14 +515,14 @@ function renderLightbox() {
     var cnt = document.getElementById('lightbox-counter');
     if (img) img.src = productImages[currentImageIdx];
     if (cnt) cnt.textContent = (currentImageIdx + 1) + ' / ' + productImages.length;
-    // 底部缩略图高亮
+    // Highlight bottom thumbnail
     document.querySelectorAll('.lb-thumb').forEach(function(t, i) {
         t.classList.toggle('ring-2', i === currentImageIdx);
         t.classList.toggle('ring-white', i === currentImageIdx);
         t.classList.toggle('opacity-50', i !== currentImageIdx);
     });
 }
-// 键盘操作
+// Keyboard handlers
 document.addEventListener('keydown', function(e) {
     var lb = document.getElementById('product-lightbox');
     if (!lb || lb.classList.contains('hidden')) return;
@@ -530,7 +530,7 @@ document.addEventListener('keydown', function(e) {
     else if (e.key === 'ArrowLeft') lightboxPrev();
     else if (e.key === 'ArrowRight') lightboxNext();
 });
-// 触摸滑动
+// Touch swipe
 (function() {
     var lb = document.getElementById('product-lightbox');
     if (!lb) return;
@@ -542,7 +542,7 @@ document.addEventListener('keydown', function(e) {
     });
 })();
 
-// Tab 切换
+// Tab switch
 document.querySelectorAll('.product-tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
         var target = this.dataset.tab;
@@ -559,7 +559,7 @@ document.querySelectorAll('.product-tab').forEach(function(tab) {
     });
 });
 
-// 产品询盘表单提交
+// Product inquiry form submit
 document.getElementById('inquiryForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var btn = document.getElementById('inquiryBtn');

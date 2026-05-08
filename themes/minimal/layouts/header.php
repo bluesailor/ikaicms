@@ -222,7 +222,7 @@ function getChannelUrl(array $channel): string {
                 </nav>
 
                 <!-- Mobile Hamburger -->
-                <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-600" aria-label="菜单">
+                <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-600" aria-label="メニュー">
                     <div class="hamburger" id="hamburgerIcon">
                         <span></span>
                         <span></span>

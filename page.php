@@ -174,7 +174,7 @@ while ($tempChannel) {
 }
 ?>
 
-<!-- 页面头部 -->
+<!-- Page header -->
 <?php
 $breadcrumbItems = [];
 foreach ($breadcrumbs as $bc) {
@@ -186,11 +186,11 @@ require theme_path('partials/page-hero.php');
 <section class="py-12">
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap lg:flex-nowrap gap-8">
-            <!-- 主内容区 -->
+            <!-- Main content area -->
             <div class="w-full <?php echo !empty($sidebarChannels) ? 'lg:flex-1' : ''; ?>">
 
                 <?php if ($channel['type'] === 'album'): ?>
-                <!-- 相册类型展示 -->
+                <!-- Album type display -->
                 <?php if (($content && $content['content']) || ($albumData && $albumData['description'])): ?>
                 <div class="bg-white rounded-lg shadow p-6 mb-6">
                     <?php if ($content && $content['content']): ?>
@@ -230,7 +230,7 @@ require theme_path('partials/page-hero.php');
                 <?php endif; ?>
 
                 <?php elseif ($content): ?>
-                <!-- 单页类型展示 -->
+                <!-- Page type display -->
                 <article class="bg-white rounded-lg shadow p-6 md:p-8">
                     <?php if ($content['cover']): ?>
                     <div class="mb-6">
@@ -243,7 +243,7 @@ require theme_path('partials/page-hero.php');
                         <?php echo parseShortcodes($content['content']); ?>
                     </div>
 
-                    <!-- 图片相册 -->
+                    <!-- Image album -->
                     <?php if ($content['images']): ?>
                     <?php $images = json_decode($content['images'], true) ?: []; ?>
                     <?php if (!empty($images)): ?>
@@ -266,7 +266,7 @@ require theme_path('partials/page-hero.php');
                 <?php endif; ?>
             </div>
 
-            <!-- 侧边栏导航 -->
+            <!-- Sidebar navigation -->
             <?php if (!empty($sidebarChannels)): ?>
             <div class="w-full lg:w-64">
                 <div class="bg-white rounded-lg shadow">
@@ -283,7 +283,7 @@ require theme_path('partials/page-hero.php');
                     </div>
                 </div>
 
-                <!-- 联系方式 -->
+                <!-- Contact info -->
                 <div class="bg-white rounded-lg shadow mt-6">
                     <div class="px-4 py-3 border-b font-bold text-dark"><?php echo __('footer_contact'); ?></div>
                     <div class="p-4 space-y-3 text-sm">

@@ -25,7 +25,7 @@ $contents = $hChannel['contents'];
         <?php if (!empty($contents)): ?>
 
         <?php if ($hChannel['is_product'] ?? false): ?>
-        <!-- 产品：带分类导航的卡片网格 -->
+        <!-- Product: grid with category nav -->
         <?php $categories = $hChannel['categories'] ?? []; ?>
         <?php if (!empty($categories)): ?>
         <div class="flex flex-wrap justify-center gap-3 mb-8" id="productCategoryNav">
@@ -72,7 +72,7 @@ $contents = $hChannel['contents'];
         </div>
 
         <?php elseif ($channelType === 'case'): ?>
-        <!-- 案例：卡片网格 -->
+        <!-- Case: card grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php foreach ($contents as $item): ?>
             <a href="<?php echo contentUrl($item); ?>" class="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition group">
@@ -103,7 +103,7 @@ $contents = $hChannel['contents'];
         </div>
 
         <?php else: ?>
-        <!-- 文章/新闻：列表样式（只显示有封面图的） -->
+        <!-- Article/News: list (cover only) -->
         <?php $withCover = array_filter($contents, fn($i) => !empty($i['cover'])); ?>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <?php foreach (array_slice($withCover, 0, 4) as $item):
@@ -130,7 +130,7 @@ $contents = $hChannel['contents'];
         <?php endif; ?>
 
         <?php else: ?>
-        <!-- 无内容占位 -->
+        <!-- Empty state -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <?php for ($i = 0; $i < 3; $i++): ?>
             <div class="bg-white rounded-lg shadow-md overflow-hidden">

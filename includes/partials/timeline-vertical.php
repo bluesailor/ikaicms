@@ -20,7 +20,7 @@ if (empty($groupedTimelines)) return;
     foreach ($groupedTimelines as $year => $events):
     ?>
 
-    <!-- 年份标记 -->
+    <!-- Year marker -->
     <div class="timeline-year flex items-center justify-center my-8" data-aos="fade-up">
         <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gray-300"></div>
         <div class="mx-4 px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white font-bold text-xl rounded-full shadow-lg">
@@ -60,15 +60,15 @@ if (empty($groupedTimelines)) return;
          data-aos="<?php echo $isLeft ? 'fade-right' : 'fade-left'; ?>"
          data-aos-delay="<?php echo ($index % 3) * 100; ?>">
 
-        <!-- 中间的连接线 -->
+        <!-- Center connector line -->
         <div class="hidden md:block absolute left-1/2 -translate-x-1/2 w-1 h-full bg-gradient-to-b from-gray-200 to-gray-300 -z-10"></div>
 
-        <!-- 中间的圆点 -->
+        <!-- Center dot -->
         <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 w-5 h-5 <?php echo $dotColor; ?> rounded-full border-4 border-white shadow-lg z-10 items-center justify-center">
             <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
         </div>
 
-        <!-- 内容卡片 - 桌面端左右交替 -->
+        <!-- Content card (desktop alternating) -->
         <div class="w-full md:w-5/12 <?php echo $isLeft ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'; ?>">
             <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group">
                 <div class="h-2 bg-gradient-to-r <?php echo $colorClass; ?>"></div>
@@ -128,7 +128,7 @@ if (empty($groupedTimelines)) return;
     endforeach;
     ?>
 
-    <!-- 时间线结束标记 -->
+    <!-- Timeline end marker -->
     <div class="flex items-center justify-center mt-12" data-aos="fade-up">
         <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gray-300"></div>
         <div class="mx-4 w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center shadow-lg">
